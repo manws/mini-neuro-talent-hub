@@ -1,0 +1,84 @@
+Page {
+  background: #FFFFFF;
+}
+
+.login-text {
+  width: 100%;
+  height: 100%;
+  font-size: 34rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: 600;
+}
+
+.logo-image {
+  width: 560rpx;
+  height: 160rpx;
+  margin-top: 106rpx;
+  margin-left: 95rpx;
+}
+
+.login-btn {
+  width: 590rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-left: 80rpx;
+  border-radius: 40rpx;
+  margin-top: 136rpx;
+  font-size: 28rpx;
+  text-align: center;
+  color: #FFFFFF;
+  display: inline-block;
+  cursor: pointer;
+  background-color: #2F7FFD;
+}
+
+.login-btn:active {
+  opacity: 0.8;
+}
+
+.input-layout {
+  width: 590rpx;
+  height: 112rpx;
+  align-items: center;
+  margin-left: 80rpx;
+  border-bottom: solid 1rpx #EEEEEE;
+}
+
+.icon-img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.input {
+  width: 0;
+  flex: 1;
+  height: 100rpx;
+  padding: 12 0rpx;
+  font-size: 34rpx;
+  color: #333333;
+  margin-left: 23rpx;
+}
+
+.info-text {
+  margin-top: 40rpx;
+}
+
+.noaccount-text {
+  font-size: 28rpx;
+  color: #999999;
+  line-height: 40rpx;
+}
+
+.click-register {
+  font-size: 28rpx;
+  color: #136BFF;
+  line-height: 40rpx;
+  cursor: pointer;
+}
+
+.click-register:active {
+  opacity: 0.8;
+}

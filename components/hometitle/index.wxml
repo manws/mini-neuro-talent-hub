@@ -1,0 +1,4 @@
+<view class="layout" style="height: {{toolBarHeight}}px;">
+  <image class="icon" src="{{icon}}"></image>
+  <text class="title">{{title}}</text>
+</view>

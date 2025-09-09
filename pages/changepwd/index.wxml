@@ -1,0 +1,16 @@
+<view class="flex-style-base input-layout" style="margin-top: 88rpx;">
+  <image class="icon-img" src="../../assets/ic-pwd.png"></image>
+  <input bindinput="handlePwd" password="{{true}}" class="input" placeholder="请输入旧密码" placeholder-style="color:#999999;" />
+</view>
+
+<view class="flex-style-base input-layout">
+  <image class="icon-img" src="../../assets/ic-pwd.png"></image>
+  <input bindinput="handleNewPwd" password="{{true}}" class="input" placeholder="请输入新密码" placeholder-style="color:#999999;" />
+</view>
+
+<view class="flex-style-base input-layout">
+  <image class="icon-img" src="../../assets/ic-pwd.png"></image>
+  <input bindinput="handleRenewPwd" password="{{true}}" class="input" placeholder="请再次输入新密码" placeholder-style="color:#999999;" />
+</view>
+
+<text class="login-btn" bindtap="handleLogin">提交</text>

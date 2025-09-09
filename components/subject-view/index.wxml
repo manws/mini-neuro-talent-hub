@@ -1,0 +1,4 @@
+<view>
+  <common-field wx:for="{{subjectFieldList}}" wx:key="{{index}}" codegroup="{{codegroup[item.fieldCode]}}" field="{{item}}" index="{{index}}" bind:onFieldChangeListener="fieldChangeListener" isEdit="{{isEdit}}">
+  </common-field>
+</view>

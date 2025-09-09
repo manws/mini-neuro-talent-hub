@@ -1,0 +1,25 @@
+.op-layout {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.monitor-btn {
+    width: 684rpx;
+    text-align: center;
+    display: inline-block;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin: 26rpx 32rpx;
+    background-color: #136BFF;
+    border-radius: 56rpx;
+    color: white;
+    font-size: 28rpx;
+}
+
+.monitor-btn:active {
+    opacity: 0.8;
+}

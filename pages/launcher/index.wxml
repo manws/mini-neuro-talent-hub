@@ -1,0 +1,10 @@
+<view class="splash-container">
+  <view class="content-layer">
+    <view class="logo-wrapper">
+      <image class="logo-image" mode="aspectFit" src="../../assets/logo.png"></image>
+       <view class="title-wrapper">
+      <text class="app-title">神经内科人才建设</text>
+    </view>
+    </view>
+  </view>
+</view>

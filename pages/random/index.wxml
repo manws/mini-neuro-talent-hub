@@ -1,0 +1,90 @@
+<wxs module="function">
+  var getRandomDate = function (str) {
+    if (str) {
+      return str.split(" ")[0];
+    }
+    return '';
+  }
+
+  var getRandomTime = function (str) {
+    if (str) {
+      var arr = str.split(" ")
+      if (arr.length == 2) {
+        return arr[1];
+      }
+      return '';
+    }
+    return '';
+  }
+
+  module.exports = {
+    getRandomDate: getRandomDate,
+    getRandomTime: getRandomTime
+  }
+</wxs>
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base" style="justify-content: flex-start;align-items: center;" bindtap="toggleProjectList">
+          <image wx:if="{{ showProjectPopup }}" class="expand-arrow" image-fit="aspectFit" src="../../assets/icon-up-arrow.png"></image>
+          <image wx:else class="expand-arrow" image-fit="aspectFit" src="../../assets/icon-down-arrow.png"></image>
+          <text class="name-text">{{projectCode}}</text>
+        </view>
+      </toolbar>
+    </view>
+
+    <van-search value="{{ searchText }}" clearable bind:search="onSearch" bind:change="onChange" class="search-bar" placeholder="输入受试者编码进行搜索"></van-search>
+  </view>
+  <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" bindscroll="bindScroll"  refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+    <view class="flex-style-column item-layout layout-style" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
+      <view class="random-header flex-style-base">
+        <image class="img-random-user" src="../../assets/icon-random-user.png"></image>
+        <view class="random-subjectCode">
+          <text class="default-title-color" style="color:white;">{{item.subjectCode}}</text>
+          <text wx:if="{{item.groudId}}" style="color:white;" class="default-title-color"> - {{item.groudId}}</text>
+        </view>
+        <text style="color:white;">{{item.subjectStateId}}</text>
+      </view>
+
+      <view class="flex-style-column random-body">
+        <view class="flex-style-base" style="width:100%;">
+          <text class="random-name">性别</text>
+          <view class="random-value">
+            <image wx:if="{{item.sex == '男'}}" class="img-sex" src="../../assets/icon-man.png"></image>
+            <image wx:if="{{item.sex == '女'}}" class="img-sex" src="../../assets/icon-woman.png"></image>
+          </view>
+          <text class="random-name">年龄</text>
+          <text class="random-value">{{item.age ? item.age : ''}}</text>
+        </view>
+        <view class="flex-style-base" style="margin: 10px 0">
+          <text class="random-name">随机码</text>
+          <text class="random-value">{{item.randomCode ? item.randomCode : ''}}</text>
+          <text class="random-name">随机化人</text>
+          <text class="random-value">{{item.randomBy ? item.randomBy : ''}}</text>
+        </view>
+
+        <view class="flex-style-base">
+          <text class="random-name">随机日期</text>
+          <text class="random-value">{{function.getRandomDate(item.randomOn)}}</text>
+          <text class="random-name">随机时间</text>
+          <text class="random-value">{{function.getRandomTime(item.randomOn)}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
+      <image class="empty-image" src="../../assets/empty.png"></image>
+      <text class="flex-style-base empty-text">数据为空</text>
+    </view>
+    <mp-loading type="circle" wx:if="{{loadMoring}}">加载中...</mp-loading>
+    <text style="text-align: center;margin-top: 50rpx;display: block;" wx:if="{{showNoMore}}">没有更多了</text>
+    <view style="height: 50rpx;"></view>
+  </scroll-view>
+
+  <view class="flex-style-base plus-subject-layout" bindtap="plusSubject">
+    <image class="plus-icon" src="../../assets/icon-plus-subject.png"></image>
+  </view>
+</view>
+
+<project-choose-popup show="{{ showProjectPopup }}" bind:change="handleProjectChange" bind:onClose="handleProjectChoosePopupClose"></project-choose-popup>

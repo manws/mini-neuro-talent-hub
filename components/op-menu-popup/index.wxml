@@ -1,0 +1,54 @@
+<van-popup position="bottom" round safe-area-inset-bottom safe-area-tab-bar show="{{ show }}" bind:click-overlay="onClose">
+  <view class="pop-layout">
+    <view class="pop-title">随机化操作</view>
+
+    <view wx:if="{{!existPermission}}" class="flex-style-base" style="height:120px;">
+      <text class="empty-text">没有任何可操作权限~~</text>
+    </view>
+
+    <van-grid style="margin-top: 32rpx;" column-num="3" border="{{false}}">
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isEdit}}" use-slot bind:click="handleEdit">
+        <image class="img" mode="aspectFit" src="{{menu_edit}}"></image>
+        <text class="pop-operation-item-name">编辑</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isRandom}}" use-slot bind:click="handleRandom">
+        <image class="img" mode="aspectFit" src="{{menu_random}}"></image>
+        <text class="pop-operation-item-name">随机化</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isFailure}}" use-slot bind:click="handleFailure">
+        <image class="img" mode="aspectFit" src="{{menu_failure}}"></image>
+        <text class="pop-operation-item-name">筛选失败</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isInvalid}}" use-slot bind:click="handleInvalid">
+        <image class="img" mode="aspectFit" src="{{menu_invalid}}"></image>
+        <text class="pop-operation-item-name">作废</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isAbort}}" use-slot bind:click="handleisAbort">
+        <image class="img" mode="aspectFit" src="{{menu_abort}}"></image>
+        <text class="pop-operation-item-name">中止</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isOver}}" use-slot bind:click="handleOver">
+        <image class="img" mode="aspectFit" src="{{menu_over}}"></image>
+        <text class="pop-operation-item-name">完成</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isDelete}}" use-slot bind:click="handleDelete">
+        <image class="img" mode="aspectFit" src="{{menu_delete}}"></image>
+        <text class="pop-operation-item-name">删除</text>
+      </van-grid-item>
+
+      <van-grid-item class="pop-operation-item" wx:if="{{permission.isDoBlind}}" use-slot bind:click="handleDoBlind">
+        <image class="img" mode="aspectFit" src="{{menu_doblind}}"></image>
+        <text class="pop-operation-item-name">揭盲</text>
+      </van-grid-item>
+
+    </van-grid>
+  </view>
+  <view style="height: 1rpx;background-color: #AFAFAF; margin-top: 20rpx;"></view>
+  <view class="btn-close" bindtap="onClose">关闭</view>
+</van-popup>

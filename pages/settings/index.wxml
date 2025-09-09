@@ -1,0 +1,9 @@
+<view class="flex-style-base item-layout" style="margin-top: 32rpx;" bindtap="toChangePwd">
+  <text class="item-text">修改密码</text>
+  <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+</view>
+
+<view class="flex-style-base item-layout" style="margin-top: 32rpx;" bindtap="logout">
+  <text class="item-text">退出登录</text>
+  <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+</view>

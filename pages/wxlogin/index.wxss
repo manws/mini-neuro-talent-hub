@@ -1,0 +1,61 @@
+Page {
+    background: #FFFFFF;
+}
+
+.login-text {
+  width: 100%;
+  height: 100%;
+  font-size: 34rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: 600;
+}
+
+.logo-image {
+  width: 560rpx;
+  height: 160rpx;
+  margin-top: 106rpx;
+  margin-left: 95rpx;
+}
+
+.login-btn {
+  width: 450rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  margin-top: 80rpx;
+  font-size: 28rpx;
+  text-align: center;
+  color: #FFFFFF;
+  display: inline-block;
+  cursor: pointer;
+  background-color: #2F7FFD;
+}
+
+.login-btn:active {
+  opacity: 0.8;
+}
+
+.deal-layout {
+  width: calc(100% - 160rpx);
+  margin-left: 80rpx;
+  margin-right: 80rpx;
+  justify-content: flex-start;
+  margin-top: 24rpx;
+  display: inline-block;
+}
+
+.deal-tips {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 50rpx;
+}
+
+.deal-text {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #136BFF;
+  line-height: 50rpx;
+}

@@ -1,0 +1,18 @@
+<navbar></navbar>
+<toolbar>
+  <text class="login-text">登录</text>
+</toolbar>
+<image class="logo-image" src="../../assets/logo-bg.png"></image>
+<button class="login-btn" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style="width: 450rpx;height: 80rpx;font-size: 28rpx;line-height: 80rpx;text-align: center;background-color: {{radioStatus ? '#2F7FFD' : '#666666'}};color: white;padding: 0;margin-left: 150rpx;" disabled="{{!radioStatus}}">微信一键登录</button>
+<view class="deal-layout">
+  <radio checked="{{radioStatus}}" color="#136BFF" bindtap="handleRadioClick"/>
+  <text class="deal-tips">已阅读并同意以下协议</text>
+  <text class="deal-text" bindtap="toOpen1">《服务协议》</text>
+  <text class="deal-tips">、</text>
+  <text class="deal-text" bindtap="toOpen2">《隐私保护要点说明》</text>
+  <text class="deal-tips">、</text>
+  <text class="deal-text" bindtap="toOpen3">《隐私保护政策》</text>
+  <text class="deal-tips">和</text>
+  <text class="deal-text" bindtap="toOpen4">《未成年人个人信息处理声明》</text>
+</view>
+<!-- <buttonclass="login-btn" style="width: 450rpx;height: 80rpx;font-size: 28rpx;line-height: 80rpx;text-align: center;background-color: #2F7FFD;color: white;padding: 0;margin-left: 150rpx;" bindtap="getProfile">获取授权</button> -->

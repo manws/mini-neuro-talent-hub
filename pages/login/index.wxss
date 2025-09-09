@@ -1,0 +1,131 @@
+Page {
+  background: #FFFFFF;
+  height: 100%;
+}
+
+.layout-center {
+  height: 100%;
+  align-items: center;
+}
+
+.login-text {
+  width: 100%;
+  height: 100%;
+  font-size: 34rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: 600;
+}
+
+.logo-image {
+  width: 186rpx;
+  height: 186rpx;
+  margin-top: 88rpx;
+}
+
+.login-btn {
+  width: 622rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  margin-top: 88rpx;
+  font-size: 32rpx;
+  text-align: center;
+  color: #FFFFFF;
+  display: inline-block;
+  cursor: pointer;
+  background-color: #01549C;
+}
+
+.login-btn:active {
+  opacity: 0.8;
+}
+
+.login-wx {
+  width: 622rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  margin-top: 42rpx;
+  font-size: 32rpx;
+  text-align: center;
+  color: #00549C;
+  display: inline-block;
+  cursor: pointer;
+  background-color: rgba(1,84,156,0.10);
+}
+
+.input-layout {
+  width: 622rpx;
+  height: 112rpx;
+  align-items: center;
+  border-bottom: solid 1rpx #EEEEEE;
+}
+
+.icon-img {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 16rpx;
+}
+
+.input {
+  width: 0;
+  flex: 1;
+  height: 96rpx;
+  padding-left: 24rpx;
+  color: #333333;
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  letter-spacing: 0;
+  line-height: 48rpx;
+  font-weight: 400;
+  caret-color: #01549C;
+}
+
+.info-text-layout {
+  width: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.info-text {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 36rpx;
+  font-weight: 400;
+}
+
+.op-text-layout {
+  width: 590rpx;
+  margin-top: 46rpx;
+  justify-content: space-between;
+}
+
+.op-text {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.noaccount-text {
+  font-size: 28rpx;
+  color: #999999;
+  line-height: 40rpx;
+}
+
+.click-register {
+  font-size: 28rpx;
+  color: #136BFF;
+  line-height: 40rpx;
+  cursor: pointer;
+}
+
+.click-register:active {
+  opacity: 0.8;
+}

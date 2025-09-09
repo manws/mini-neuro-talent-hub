@@ -1,0 +1,20 @@
+<view class="flex-style-column container">
+  <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}">
+    <subject-view subjectFieldList="{{subjectFieldList}}" codegroup="{{codegroup}}" subjectCodeInfo="{{subjectCodeInfo}}" isEdit="{{isEdit}}" bind:onSubjectFieldListChange="onSubjectFieldListChange"></subject-view>
+    <view style="height: 150rpx;"></view>
+    <view wx:if="{{showFooter}}" class="flex-style-base btn-footer">
+      <view class="btn-cancel flex-style-base" bindtap="handleCancel">
+        <text>取消</text>
+      </view>
+      <view class="btn-position flex-style-base" bindtap="handlePosition">
+        <text>确定</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <op-menu-popup show="{{showOperationPop}}" permission="{{permission}}"></op-menu-popup>
+
+  <view wx:if="{{subject.id && !isEdit}}" class="flex-style-base op-menu-layout" bindtap="showOpPopup">
+    <image class="menu-icon" src="../../assets/icon-menu.svg"></image>
+  </view>
+</view>

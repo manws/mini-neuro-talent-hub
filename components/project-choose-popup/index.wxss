@@ -1,0 +1,145 @@
+.flex-style-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.flex-style-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.pop-layout {
+  z-index: 9999;
+  border-radius: 16rpx 16rpx 0 0;
+  background-color: white;
+  padding: 24rpx 0rpx;
+  padding-bottom: 0;
+  height: calc(70vh);
+}
+
+.pop-header {
+  justify-content: space-between;
+}
+
+.pop-content-body {
+  height: 0;
+  flex-grow: 1;
+  position: relative;
+}
+
+.pop-close-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 32rpx;
+}
+
+.please-choose-text {
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: bold;
+}
+
+.scroll-view {
+  height: 0;
+  flex: 1;
+  margin-top: 26rpx;
+}
+
+.empty-layout {
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.empty-image {
+  width: 288rpx;
+  height: 264rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-top: 32rpx;
+}
+
+
+.item-layout {
+  background-color: #0099FF33;
+  padding: 24rpx;
+  padding-top: 32rpx;
+  margin: 0 32rpx;
+  border-radius: 12rpx;
+  margin-bottom: 24rpx;
+}
+
+.item-layout:active {
+  opacity: 0.8;
+}
+
+.item-name {
+  color: #333333;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.header-layout {
+  width: 100%;
+}
+
+.search-bar {
+  width: 100%;
+  background-color: white;
+}
+
+.weui-search-bar__form {
+  background-color: #F9F9F9;
+  border-radius: 32rpx;
+}
+
+.van-search__content {
+  background-color: #FFFFFF;
+}
+
+.van-search__content--square {
+  border-radius: 32rpx !important;
+}
+
+.title {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+.random-scheme-name {
+  margin-top: 24rpx;
+  margin-bottom: 12rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.item-num-text {
+  width: 0;
+  flex: 1;
+  justify-content: flex-start;
+  color: #666666;
+}
+
+
+.van-popup--bottom {
+  padding-bottom: 0 !important;
+}
+
+.van-popup--safe {
+  padding-bottom: 0 !important;
+}
+
+.van-popup--bottom .van-popup--safe {
+  padding-bottom: 0 !important;
+}

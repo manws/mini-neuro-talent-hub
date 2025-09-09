@@ -1,0 +1,34 @@
+.weui-tabs {
+    width: 100%;
+}
+
+.weui-tabs-bar__wrp {
+    width: 100%;
+    background: #fff;
+    height: 88rpx;
+}
+
+.weui-tabs-bar__content {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.weui-tabs-bar__item {
+    display: inline-block;
+    position: relative;
+   height: 88rpx;
+}
+
+.indictor-line {
+    height: 4rpx;
+    width: 52rpx;
+    margin-left: calc(50% - 26rpx);
+    border-radius: 2rpx;
+}
+
+.weui-tabs-bar__title {
+    display: inline-block;
+    height: 84rpx;
+    line-height: 84rpx;
+    font-size: 32rpx;
+}

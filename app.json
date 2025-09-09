@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/launcher/index",
+    "pages/login/index",
+    "pages/register/index",
+    "pages/wxlogin/index",
+    "pages/project/index",
+    "pages/mine/index",
+    "pages/random/index",
+    "pages/subject-detail/index",
+    "pages/settings/index",
+    "pages/changepwd/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "CTMS",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#abb4bf",
+    "selectedColor": "#0C97EE",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/random/index",
+        "text": "随即管理",
+        "iconPath": "assets/ic-random.png",
+        "selectedIconPath": "assets/ic-random-actived.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "assets/ic-mine.png",
+        "selectedIconPath": "assets/ic-mine-actived.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "navbar": "./components/navbar/index",
+    "toolbar": "./components/toolbar/index",
+    "hometitle": "./components/hometitle/index",
+    "bottombtn": "./components/bottombtn/index",
+    "listempty": "./components/listempty/index",
+    "mp-loading": "weui-miniprogram/loading/loading",
+    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
+    "common-field": "./components/common-field/index",
+    "subject-view": "./components/subject-view/index",
+    "op-menu-popup": "./components/op-menu-popup/index"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  }
+}

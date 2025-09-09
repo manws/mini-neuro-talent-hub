@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#01549C",
+  "usingComponents": {
+    "van-checkbox": "@vant/weapp/checkbox/index"
+  },
+  "backgroundColor": "#FFFFFF"
+}

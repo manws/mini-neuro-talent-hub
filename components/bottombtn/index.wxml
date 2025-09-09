@@ -1,0 +1,3 @@
+<view class="op-layout custom-class">
+    <text bindtap="handleClick" style="background-color: {{btnBgColor}};" class="monitor-btn">{{btnText}}</text>
+</view>

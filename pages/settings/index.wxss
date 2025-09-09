@@ -1,0 +1,25 @@
+.item-layout {
+  width: calc(100% - 64rpx);
+  height: 120rpx;
+  margin: 32rpx 24rpx;
+  border-radius: 24rpx;
+  background-color: white;
+  justify-content: flex-start;
+}
+
+.item-layout:active {
+  background-color: #EDEDED;
+}
+
+.item-text {
+  font-size: 32rpx;
+  margin-left: 32rpx;
+  color: #333333;
+  flex: 1;
+}
+
+.arrow {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 32rpx;
+}

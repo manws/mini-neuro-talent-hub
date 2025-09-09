@@ -1,0 +1,21 @@
+<van-popup show="{{ show }}" position="bottom" custom-style="background-color: white;border-radius: 16rpx 16rpx 0 0;" bind:close="onClose">
+  <view class="flex-style-column pop-layout">
+    <view class="flex-style-base pop-header">
+      <text></text>
+      <text class="please-choose-text">选择中心</text>
+      <image class="pop-close-icon" src="../../assets/ic-close.png" bindtap="onClose"></image>
+    </view>
+    <view class="flex-style-column pop-content-body">
+      <van-search value="{{ searchText }}" clearable bind:change="onChange" class="search-bar" placeholder="根据中心名称搜索"></van-search>
+      <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}">
+        <view wx:if="{{!item.hidden}}" class="flex-style-column item-layout layout-style" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
+          <text class="title">{{item.codeValue1 ? item.codeValue1 : ''}}{{item.codeValue2 ? item.codeValue2 : ''}}</text>
+        </view>
+        <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
+          <image class="empty-image" src="../../assets/empty.png"></image>
+          <text class="flex-style-base empty-text">数据为空</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</van-popup>

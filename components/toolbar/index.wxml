@@ -1,0 +1,3 @@
+<view class="layout" style="height: {{toolBarHeight}}px;line-height: {{toolBarHeight}}px;">
+  <slot></slot>
+</view>

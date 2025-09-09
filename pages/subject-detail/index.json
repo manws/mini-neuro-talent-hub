@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "新增受试者",
+    "usingComponents": {},
+    "backgroundColor": "#FFFFFF",
+    "disableScroll": true,
+    "backgroundTextStyle": "dark",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0C97EE"
+}

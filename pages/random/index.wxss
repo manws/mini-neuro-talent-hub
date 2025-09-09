@@ -1,0 +1,159 @@
+page {
+  height: 100%;
+}
+
+.container {
+  align-items: flex-start;
+  height: 100vh;
+}
+
+.expand-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 32rpx;
+}
+
+.name-text {
+  font-size: 36rpx;
+  color: white;
+  font-weight: 600;
+}
+
+.scroll-view {
+  width: 100%;
+  height: 0;
+  flex: 1;
+  padding-top: 16rpx;
+}
+
+.item-layout {
+  background-color: white;
+  margin: 0 32rpx;
+  border-radius: 12rpx;
+  margin-bottom: 24rpx;
+}
+
+.item-layout:active {
+  opacity: 0.8;
+}
+
+.item-name {
+  color: #333333;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.header-layout {
+  width: 100%;
+  background-color: #0C97EE;
+}
+
+.search-bar {
+  width: 100%;
+  background-color: white;
+}
+
+.weui-search-bar__form {
+  background-color: #F9F9F9;
+  border-radius: 32rpx;
+}
+
+.van-search__content {
+  background-color: #FFFFFF;
+}
+
+.van-search__content--square {
+  border-radius: 32rpx !important;
+}
+
+.title {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+.random-scheme-name {
+  margin-top: 24rpx;
+  margin-bottom: 12rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.item-num-text {
+  width: 0;
+  flex: 1;
+  justify-content: flex-start;
+  color: #666666;
+}
+
+.random-header {
+  width: calc(100% - 64rpx);
+  background-color: #0C97EE;
+  padding: 20rpx 32rpx;
+  border-top-left-radius: 12rpx;
+  border-top-right-radius: 12rpx;
+}
+
+.img-random-user {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.random-subjectCode {
+  flex-grow: 1;
+  color: white;
+  margin-left: 12rpx;
+}
+
+.img-sex {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.random-name {
+  font-size: 28rpx;
+  width: 130rpx;
+  color: #333333;
+}
+
+.random-value {
+  font-size: 28rpx;
+  width: 0;
+  flex-grow: 1;
+  color: #666666;
+}
+
+.random-body {
+  width:calc(100% - 48rpx);
+  margin-top:10px;
+  border-bottom-left-radius: 12rpx;
+  border-bottom-right-radius: 12rpx;
+  justify-content: flex-start;
+  padding: 0 24rpx;
+  padding-bottom: 20rpx;
+}
+
+.plus-subject-layout {
+  width: 100rpx;
+  height: 100rpx;
+  position: fixed;
+  right: 64rpx;
+  bottom: 64rpx;
+  background-color: #d4237a;
+  border-radius: 50rpx;
+  box-shadow: 1rpx 10rpx 10rpx rgba(155, 155, 155, 0.5);
+}
+
+.plus-subject-layout:active {
+  opacity: 0.8;
+}
+
+.plus-icon {
+  width: 60rpx;
+  height: 60rpx;
+}

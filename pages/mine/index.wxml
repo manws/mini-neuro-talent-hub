@@ -1,0 +1,46 @@
+<view class="flex-style-column _contianer">
+  <image class="header-bg" src="../../assets/main-bg.png"></image>
+  <view style="width: 100%;">
+    <navbar></navbar>
+    <toolbar>
+      <view class="flex-style-base" style="justify-content: flex-start;align-items: center;">
+      </view>
+    </toolbar>
+    <view class="flex-style-column" style="align-items: center;width: 100%;">
+      <view class="header-img-layout">
+        <image class="header-img" src="../../assets/default-header.png"></image>
+      </view>
+      <text class="name-text" style="margin-top: 24rpx;">{{userInfo.userName}}</text>
+      <view class="flex-style-base">
+        <text class="sub-text">{{userInfo.phone}}</text>
+        <text class="sub-text">{{userInfo.email}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{false}}" class="flex-style-base item-layout" style="margin-top: 160rpx;">
+      <image src="../../assets/icon-notice.png" class="icon"></image>
+      <text class="item-text">通知消息</text>
+      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+    </view>
+
+    <view class="flex-style-base item-layout" style="margin-top: 160rpx;">
+      <image src="../../assets/icon-notice.png" class="icon"></image>
+      <text class="item-text">权限管理</text>
+      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+    </view>
+
+    <view class="flex-style-base item-layout" style="margin-top: 32rpx;">
+      <image src="../../assets/icon-notice.png" class="icon"></image>
+      <text class="item-text">用户管理</text>
+      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+    </view>
+
+    <view class="flex-style-base item-layout" style="margin-top: 32rpx;" bindtap="toSettings">
+      <image src="../../assets/icon-settings.png" class="icon"></image>
+      <text class="item-text">设置</text>
+      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+    </view>
+
+
+  </view>
+</view>

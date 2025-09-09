@@ -1,0 +1,124 @@
+<view class="item-container">
+  <view class="item-title">
+    <text>{{index + 1}}.</text>
+    <text>{{field.fieldName}}</text>
+  </view>
+
+  <!-- 静态标签 -->
+  <view class="item-content" wx:if="{{field.fieldTypeId === 0}}">
+    {{field.value}}
+  </view>
+
+  <!-- 数字 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 1}}">
+    <view class="flex-style-base" style="justify-content: flex-start;">
+      <van-field input-class="item-number-field" type="digit" input-align="center" value="{{ field.value }}" placeholder="请输入..." bindchange="handleChangeNumber" disabled="{{disabled}}" />
+      <text style="margin-left:20px;">{{field.tail}}</text>
+    </view>
+  </view>
+
+  <!-- 单行文本 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 2}}">
+    <van-field value="{{ field.value }}" placeholder="{{field.hint ? field.hint : '请输入...'}}" bindchange="handleChangeText" disabled="{{disabled || field.noEdit}}" />
+  </view>
+
+  <!-- 多行文本 -->
+  <view class="item-content" class="item-content" wx:elif="{{field.fieldTypeId === 3}}">
+    <van-field value="{{ field.value }}" type="textarea" autosize placeholder="请输入..." bindchange="handleChangeText" disabled="{{disabled}}" />
+  </view>
+
+  <!-- 日期 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 4}}">
+    <view class="flex-style-base" style="width:calc(100%);margin-top: 24rpx;" bindtap="handleDate">
+      <image style="width: 32rpx;height: 32rpx;" src="../../assets/icon-date.png" />
+      <text style="flex-grow: 1;padding-left: 24rpx;line-height: 80rpx;">{{field.value ? field.value : ''}}</text>
+      <image style="width: 32rpx;height: 32rpx;" src="../../assets/ic_right_arrow.png" />
+    </view>
+  </view>
+
+  <!-- 时间 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 5}}">
+    <view class="flex-style-base" style="width:calc(100%);margin-top: 24rpx;" bindtap="handleTime">
+      <image style="width: 32rpx;height: 32rpx;" src="../../assets/icon-time.png" />
+      <text style="flex-grow:1;padding-left: 24rpx;line-height: 80rpx;">{{field.value ? field.value : ''}}</text>
+      <image style="width: 32rpx;height: 32rpx;" src="../../assets/ic_right_arrow.png" />
+    </view>
+  </view>
+
+  <!-- 单选 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 6}}">
+    <van-radio-group value="{{ field.value }}" bind:change="handleRadioChange">
+      <van-radio class="item-radio" wx:for="{{codegroup}}" wx:key="{{index}}" name="{{item.codeId}}" disabled="{{disabled}}">{{item.codeValue1}}</van-radio>
+    </van-radio-group>
+  </view>
+
+  <!-- 下拉 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 7}}">
+    <view class="flex-style-base" bindtap="dropChoose">
+      <text wx:if="{{dropValue}}" style="flex-grow:1;">{{dropValue}}</text>
+      <input wx:else style="flex-grow:1;" value="{{dropValue}}" placeholder="请选择" disabled />
+      <image style="width: 32rpx;height: 32rpx;" src="../../assets/ic_right_arrow.png" />
+    </view>
+  </view>
+
+  <!-- 多选 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 8}}">
+    <van-checkbox-group value="{{ field.value }}" bind:change="handleCheckboxChange" disabled="{{disabled}}">
+      <van-checkbox wx:for="{{codegroup}}" name="{{item.codeId}}">{{item.codeValue1}}</van-checkbox>
+    </van-checkbox-group>
+  </view>
+
+  <!-- 自动生成 -->
+  <view class="item-content" wx:elif="{{field.fieldTypeId === 11}}">
+    <text>{{field.value}}</text>
+  </view>
+
+</view>
+
+<!-- <van-action-sheet show="{{ showSheet }}" actions="{{ codegroup }}" cancel-text="取消" bind:close="onSheetClose" bind:select="onSheetSelect" bind:cancel="onSheetClose" /> -->
+
+<site-codegroup-popup show="{{ showSheet }}" dataList="{{codegroup}}" bind:change="onSheetSelect"></site-codegroup-popup>
+
+<van-popup custom-class="pop-container" overlay-style="background: rgba(0, 0, 0, 0.3);" show="{{ showDatePop }}" bind:close="clickOverlay">
+  <view class="flex-style-base" style="width:calc(100%);">
+    <text class="pop-container-title">请输入日期</text>
+  </view>
+
+  <view style="margin: 0px 16px;">
+    <van-field value="{{ dateStr }}" type="number" autosize placeholder="请输入日期数字" bindchange="handleChangeDate" />
+  </view>
+  <view style="padding:0 16px;">
+    <text style="padding:6px 16px 0px 16px;font-size:0.75rem;">{{dateTip}}</text>
+  </view>
+
+  <view class="flex-style-base" style="justify-content: center;margin-top:16px;">
+    <view class="btn-cancel flex-style-base" bindtap="handleDateCancel">
+      <text>取消</text>
+    </view>
+    <view class="btn-position flex-style-base" bindtap="handleDatePosition">
+      <text>确定</text>
+    </view>
+  </view>
+</van-popup>
+
+<van-popup custom-class="pop-container" overlay-style="background: rgba(0, 0, 0, 0.3);" show="{{ showTimePop }}" bind:close="clickOverlay">
+  <view class="flex-style-base" style="width:calc(100%);">
+    <text class="pop-container-title">请输入时间</text>
+  </view>
+
+  <view style="margin: 0px 16px;">
+    <van-field value="{{ timeStr }}" type="number" autosize placeholder="请输入四位时间数字" bindchange="handleChangeTime" />
+  </view>
+  <view style="padding:0 16px;">
+    <text style="padding:6px 16px 0px 16px;font-size:0.75rem;">提示：时间格式为四位，例如12：00，输入1200</text>
+  </view>
+
+  <view class="flex-style-base" style="justify-content: center;margin-top:16px;">
+    <view class="btn-cancel flex-style-base" bindtap="handleTimeCancel">
+      <text>取消</text>
+    </view>
+    <view class="btn-position flex-style-base" bindtap="handleTimePosition">
+      <text>确定</text>
+    </view>
+  </view>
+</van-popup>

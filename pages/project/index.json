@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "我的项目",
+    "usingComponents": {
+        "van-search": "@vant/weapp/search/index"
+    },
+    "backgroundColor": "#FFFFFF",
+    "disableScroll": true,
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0C97EE"
+}

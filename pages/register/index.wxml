@@ -1,0 +1,39 @@
+<navbar></navbar>
+<toolbar>
+  <text class="login-text">注册帐户</text>
+</toolbar>
+<image class="logo-image" src="../../assets/logo-bg.png"></image>
+
+<view class="flex-style-base input-layout" style="margin-top: 88rpx;">
+  <image class="icon-img" src="../../assets/icon-account.png"></image>
+  <input bindinput="handleUsernameChange" class="input" placeholder="请输入手机号" placeholder-style="color:#999999;" />
+</view>
+
+<view class="flex-style-base input-layout">
+  <image class="icon-img" src="../../assets/ic-pwd.png"></image>
+  <input bindinput="handleUserPwdChange" password="{{true}}" class="input" placeholder="请设置密码" placeholder-style="color:#999999;" />
+</view>
+
+<view class="flex-style-base input-layout">
+  <image class="icon-img" src="../../assets/ic-pwd.png"></image>
+  <input bindinput="handleReuserPwdChange" password="{{true}}" class="input" placeholder="请再次确认密码" placeholder-style="color:#999999;" />
+</view>
+
+<view class="deal-layout">
+  <radio checked="{{radioStatus}}" color="#136BFF" bindtap="handleRadioClick"/>
+  <text class="deal-tips">已阅读并同意以下协议</text>
+  <text class="deal-text" bindtap="toOpen1">《服务协议》</text>
+  <text class="deal-tips">、</text>
+  <text class="deal-text" bindtap="toOpen2">《隐私保护要点说明》</text>
+  <text class="deal-tips">、</text>
+  <text class="deal-text" bindtap="toOpen3">《隐私保护政策》</text>
+  <text class="deal-tips">和</text>
+  <text class="deal-text" bindtap="toOpen4">《未成年人个人信息处理声明》</text>
+</view>
+
+<text class="login-btn" bindtap="handleRegister">注册</text>
+
+<view class="flex-style-base info-text">
+  <text class="noaccount-text">已有账号？</text>
+  <text class="click-register" bindtap="handleLogin">去登录</text>
+</view>

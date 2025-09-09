@@ -1,0 +1,46 @@
+.flex-style-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.flex-style-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.pop-title {
+  font-size: 32rpx;
+  color: #333333;
+  text-align: center;
+}
+
+.btn-close {
+  font-size: 32rpx;
+  color: #666666;
+  text-align: center;
+  line-height: 80rpx;
+  height: 80rpx;
+}
+
+.pop-layout {
+  z-index: 9999;
+  border-radius: 16rpx 16rpx 0 0;
+  background-color: white;
+  padding: 24rpx 0rpx;
+  padding-bottom: 0;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-top: 32rpx;
+  margin-bottom: 32rpx;
+}
+
+
+.img {
+  width: 80rpx;
+  height: 80rpx;
+}

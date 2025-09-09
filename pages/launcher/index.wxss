@@ -1,0 +1,50 @@
+/* pages/launcher/launcher.wxss */
+Page {
+  background: #ffffff;
+}
+
+.splash-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50%;
+}
+
+.logo-image {
+  width: 218rpx;
+  height: 218rpx;
+}
+
+.title-wrapper {
+  margin-top: 24rpx;
+}
+
+.app-title {
+  border: 2rpx solid #FFFFFF;
+  font-family: SourceHanSansCN-Heavy;
+  font-size: 44rpx;
+  color: #01549C;
+  letter-spacing: 0.63rpx;
+  line-height: 50rpx;
+  font-weight: 900;
+}

@@ -1,0 +1,28 @@
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <van-search value="{{ searchText }}" clearable bind:search="onSearch" bind:change="onChange" class="search-bar" placeholder="输入项目编码进行搜索"></van-search>
+  </view>
+  <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+    <view class="flex-style-column item-layout layout-style" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
+      <text class="title">{{item.projectCode}}</text>
+      <text class="random-scheme-name">{{item.randomSchemeName}}</text>
+      <view class="flex-style-base" style="width: 100%;">
+        <view class="flex-style-base item-num-text">
+          <text class="label">目标受试者</text>
+          <text>{{item.subjectTotal}}</text>
+        </view>
+        <view class="flex-style-base item-num-text">
+          <text class="label">中心数</text>
+          <text>{{item.siteTotal}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
+      <image class="empty-image" src="../../assets/empty.png"></image>
+      <text class="flex-style-base empty-text">数据为空</text>
+    </view>
+    <mp-loading type="circle" wx:if="{{loadMoring}}">加载中...</mp-loading>
+    <text style="text-align: center;margin-top: 50rpx;display: block;" wx:if="{{showNoMore}}">没有更多了</text>
+    <view style="height: 50rpx;"></view>
+  </scroll-view>
+</view>
