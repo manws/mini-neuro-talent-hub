@@ -15,19 +15,33 @@
 }
 
 .name-text {
-  font-size: 36rpx;
-  color: #333333;
+  font-family: PingFangSC-Semibold;
+  font-size: 32rpx;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  line-height: 48rpx;
   font-weight: 600;
-  text-align: center;
-  margin-left: 24rpx;
+}
+
+.sub-icon {
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .sub-text {
-  font-size: 28rpx;
-  color: #666666;
-  font-weight: 600;
-  text-align: center;
-  margin-left: 24rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  line-height: 36rpx;
+  font-weight: 400;
+  margin-left: 12rpx;
+}
+
+.sub-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 32rpx;
 }
 
 .header-img-layout {
@@ -36,6 +50,7 @@
   border-radius: 50%;
   padding: 10rpx;
   margin-top: 32rpx;
+  margin-left: 32rpx;
   border: solid 2rpx rgba(255, 255, 255, 0.4);
 }
 
@@ -44,13 +59,81 @@
   height: 100%;
 }
 
-.item-layout {
-  width: calc(100% - 64rpx);
-  height: 120rpx;
-  margin: 32rpx 24rpx;
-  border-radius: 24rpx;
-  background-color: white;
+.my-score-layout {
+  width: 686rpx;
+  height: 750rpx;
+  background-image: linear-gradient(180deg, #CBE7FF 2%, #FFFFFF 98%);
+  border: 2rpx solid #FFFFFF;
+  box-shadow: 0 4rpx 8rpx 0 rgba(0, 13, 31, 0.06);
+  border-radius: 16rpx;
+  margin-left: 31rpx;
+  align-items: flex-start;
   justify-content: flex-start;
+  padding: 24rpx 32rpx;
+  box-sizing: border-box;
+}
+
+.my-score {
+  width: 100%;
+  height: 48rpx;
+  justify-content: space-between;
+}
+
+.my-score-text {
+  font-family: PingFangSC-Semibold;
+  font-size: 32rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 48rpx;
+  font-weight: 600;
+}
+
+.my-score-arrow {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.other-service {
+  width: 686rpx;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.03);
+  border-radius: 16rpx;
+  margin-top: 24rpx;
+  margin-left: 32rpx;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+.other-service-text {
+  height: 88rpx;
+  line-height: 88rpx;
+  font-family: PingFangSC-Semibold;
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 600;
+  margin-left: 32rpx;
+}
+
+.other-service-divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: #EDEDED;
+}
+
+.other-service-passsword {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 32rpx;
+}
+
+.other-service-chagnepasssword {
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 44rpx;
+  font-weight: 400;
+  margin-left: 12rpx;
+  flex-grow: 1;
 }
 
 .item-layout:active {

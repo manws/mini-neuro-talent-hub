@@ -11,7 +11,9 @@
     "pages/subject-detail/index",
     "pages/settings/index",
     "pages/changepwd/index",
-    "pages/history/index"
+    "pages/history/index",
+    "pages/report/index",
+    "pages/evaluation/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -22,7 +24,7 @@
   },
   "tabBar": {
     "color": "#abb4bf",
-    "selectedColor": "#0C97EE",
+    "selectedColor": "#01549C",
     "borderStyle": "white",
     "backgroundColor": "#fff",
     "list": [

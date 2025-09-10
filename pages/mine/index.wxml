@@ -1,46 +1,40 @@
 <view class="flex-style-column _contianer">
-  <image class="header-bg" src="../../assets/main-bg.png"></image>
+  <image class="header-bg" src="../../assets/top.png"></image>
   <view style="width: 100%;">
     <navbar></navbar>
     <toolbar>
       <view class="flex-style-base" style="justify-content: flex-start;align-items: center;">
       </view>
     </toolbar>
-    <view class="flex-style-column" style="align-items: center;width: 100%;">
+    <view class="flex-style-base" style="align-items: center;width: 100%;justify-content: flex-start;">
       <view class="header-img-layout">
         <image class="header-img" src="../../assets/default-header.png"></image>
       </view>
-      <text class="name-text" style="margin-top: 24rpx;">{{userInfo.userName}}</text>
-      <view class="flex-style-base">
-        <text class="sub-text">{{userInfo.phone}}</text>
-        <text class="sub-text">{{userInfo.email}}</text>
+      <view class="flex-style-column" style="margin-left:24rpx;flex-grow: 1;align-items: flex-start;">
+        <text class="name-text" style="margin-top: 24rpx;">陈某某</text>
+        <view class="flex-style-base" style="margin-top: 10rpx;">
+          <image class="sub-icon" src="../../assets/my-organization-icon.png"></image>
+          <text class="sub-text">首都医科大学宣武医院</text>
+        </view>
+      </view>
+      <image class="sub-arrow" src="../../assets/arrow-white.png"></image>
+    </view>
+    <view class="flex-style-base my-score-layout" style="margin-top: 35rpx;">
+      <view class="flex-style-base my-score">
+        <text class="my-score-text">我的评分</text>
+        <image class="my-score-arrow" src="../../assets/more.png"></image>
       </view>
     </view>
 
-    <view wx:if="{{false}}" class="flex-style-base item-layout" style="margin-top: 160rpx;">
-      <image src="../../assets/icon-notice.png" class="icon"></image>
-      <text class="item-text">通知消息</text>
-      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
+    <view class="flex-style-column other-service">
+      <text class="other-service-text">其他服务</text>
+      <view class="other-service-divider"></view>
+      <view class="flex-style-base" style="justify-content: flex-start;height: 88rpx;">
+        <image class="other-service-passsword" src="../../assets/password.png"></image>
+        <text class="other-service-chagnepasssword">修改密码</text>
+        <image class="my-score-arrow" style="margin-right: 32rpx;" src="../../assets/more.png"></image>
+      </view>
     </view>
-
-    <view class="flex-style-base item-layout" style="margin-top: 160rpx;">
-      <image src="../../assets/icon-notice.png" class="icon"></image>
-      <text class="item-text">权限管理</text>
-      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
-    </view>
-
-    <view class="flex-style-base item-layout" style="margin-top: 32rpx;">
-      <image src="../../assets/icon-notice.png" class="icon"></image>
-      <text class="item-text">用户管理</text>
-      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
-    </view>
-
-    <view class="flex-style-base item-layout" style="margin-top: 32rpx;" bindtap="toSettings">
-      <image src="../../assets/icon-settings.png" class="icon"></image>
-      <text class="item-text">设置</text>
-      <image src="../../assets/ic_right_arrow.png" class="arrow"></image>
-    </view>
-
 
   </view>
 </view>

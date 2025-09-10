@@ -129,20 +129,20 @@ input {
 .empty-layout {
   justify-content: center;
   align-items: center;
-  height: 60vh;
+  height: 50vh;
 }
 
 .empty-image {
-  width: 288rpx;
-  height: 264rpx;
+  width: 200rpx;
+  height: 184rpx;
 }
 
 .empty-text {
+  font-family: PingFangSC-Regular;
   font-size: 28rpx;
   color: #999999;
+  letter-spacing: 0;
+  line-height: 40rpx;
+  font-weight: 400;
   margin-top: 32rpx;
-}
-
-.layout-style {
-  align-items: flex-start;
 }

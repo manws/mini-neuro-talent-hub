@@ -1,2 +1,54 @@
-<!--pages/history/index.wxml-->
-<text>pages/history/index.wxml</text>
+<wxs module="function">
+  var getRandomDate = function (str) {
+    if (str) {
+      return str.split(" ")[0];
+    }
+    return '';
+  }
+
+  var getRandomTime = function (str) {
+    if (str) {
+      var arr = str.split(" ")
+      if (arr.length == 2) {
+        return arr[1];
+      }
+      return '';
+    }
+    return '';
+  }
+
+  module.exports = {
+    getRandomDate: getRandomDate,
+    getRandomTime: getRandomTime
+  }
+</wxs>
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base" style="align-items: center;width: 100%;">
+          <text class="name-text">历史评估</text>
+        </view>
+      </toolbar>
+    </view>
+
+    <!-- <van-search value="{{ searchText }}" clearable bind:search="onSearch" bind:change="onChange" class="search-bar" placeholder="输入受试者编码进行搜索"></van-search> -->
+  </view>
+  <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" bindscroll="bindScroll" refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+    <view class="item-layout" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
+      <image class="item-icon" src="../../assets/icon-history-assessment.png"></image>
+      <text class="item-text">2024年年终评估</text>
+      <text class="item-score">135分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
+    </view>
+    <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
+      <image class="empty-image" src="../../assets/no-new-illustration.png"></image>
+      <text class="flex-style-base empty-text">还没有评估，快去新增</text>
+      <text class="plus-assessment">新增评估</text>
+    </view>
+    <mp-loading type="circle" wx:if="{{loadMoring}}">加载中...</mp-loading>
+    <text style="text-align: center;margin-top: 50rpx;display: block;" wx:if="{{showNoMore}}">没有更多了</text>
+    <view style="height: 50rpx;"></view>
+  </scroll-view>
+</view>
