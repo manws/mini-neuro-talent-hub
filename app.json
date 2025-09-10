@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/assessment/index",
     "pages/launcher/index",
     "pages/login/index",
     "pages/register/index",
@@ -9,7 +10,8 @@
     "pages/random/index",
     "pages/subject-detail/index",
     "pages/settings/index",
-    "pages/changepwd/index"
+    "pages/changepwd/index",
+    "pages/history/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -25,16 +27,22 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/random/index",
-        "text": "随即管理",
-        "iconPath": "assets/ic-random.png",
-        "selectedIconPath": "assets/ic-random-actived.png"
+        "pagePath": "pages/assessment/index",
+        "text": "当前评估",
+        "iconPath": "assets/current-assessment-unselected.png",
+        "selectedIconPath": "assets/current-assessment-selected-backup.png"
+      },
+      {
+        "pagePath": "pages/history/index",
+        "text": "历史评估",
+        "iconPath": "assets/history-assessment-unselected.png",
+        "selectedIconPath": "assets/history-assessment-selected.png"
       },
       {
         "pagePath": "pages/mine/index",
         "text": "我的",
-        "iconPath": "assets/ic-mine.png",
-        "selectedIconPath": "assets/ic-mine-actived.png"
+        "iconPath": "assets/my-unselected.png",
+        "selectedIconPath": "assets/my-selected-backup.png"
       }
     ]
   },

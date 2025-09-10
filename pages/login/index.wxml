@@ -12,7 +12,7 @@
 
 <view class="flex-style-base op-text-layout">
   <text class="op-text" bindtap="handleRegister">立即注册</text>
-  <text class="op-text">忘记密码</text>
+  <text class="op-text" bindtap="handleForgetPwd">忘记密码</text>
 </view>
 
 <text class="login-btn" bindtap="handleLogin">登  录</text>

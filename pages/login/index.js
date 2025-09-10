@@ -57,6 +57,12 @@ Page({
     })
   },
 
+  handleForgetPwd() {
+    wx.navigateTo({
+      url: '/pages/changepwd/index',
+    })
+  },
+
   handleUserName(e) {
     this.setData({
       userName: e.detail.value

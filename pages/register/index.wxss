@@ -2,6 +2,11 @@ Page {
   background: #FFFFFF;
 }
 
+.layout-center {
+  height: 100%;
+  align-items: center;
+}
+
 .login-text {
   width: 100%;
   height: 100%;
@@ -14,25 +19,23 @@ Page {
 }
 
 .logo-image {
-  width: 450rpx;
-  height: 214rpx;
-  margin-top: 106rpx;
-  margin-left: 150rpx;
+  width: 186rpx;
+  height: 186rpx;
+  margin-top: 88rpx;
 }
 
 .login-btn {
-  width: 590rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  margin-left: 80rpx;
-  border-radius: 40rpx;
-  margin-top: 136rpx;
-  font-size: 28rpx;
+  width: 622rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  margin-top: 88rpx;
+  font-size: 32rpx;
   text-align: center;
   color: #FFFFFF;
   display: inline-block;
   cursor: pointer;
-  background-color: #2F7FFD;
+  background-color: #01549C;
 }
 
 .login-btn:active {
@@ -40,10 +43,9 @@ Page {
 }
 
 .input-layout {
-  width: 590rpx;
+  width: 622rpx;
   height: 112rpx;
   align-items: center;
-  margin-left: 80rpx;
   border-bottom: solid 1rpx #EEEEEE;
 }
 
@@ -55,11 +57,15 @@ Page {
 .input {
   width: 0;
   flex: 1;
-  height: 100rpx;
-  padding: 12 0rpx;
-  font-size: 34rpx;
+  height: 96rpx;
+  padding-left: 24rpx;
   color: #333333;
-  margin-left: 23rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  letter-spacing: 0;
+  line-height: 48rpx;
+  font-weight: 400;
+  caret-color: #01549C;
 }
 
 .info-text {
@@ -74,7 +80,7 @@ Page {
 
 .click-register {
   font-size: 28rpx;
-  color: #136BFF;
+  color: #01549C;
   line-height: 40rpx;
   cursor: pointer;
 }
@@ -84,24 +90,24 @@ Page {
 }
 
 .deal-layout {
-  width: calc(100% - 160rpx);
-  margin-left: 80rpx;
-  margin-right: 80rpx;
+  width: 622rpx;
   justify-content: flex-start;
   margin-top: 24rpx;
   display: inline-block;
 }
 
 .deal-tips {
+  font-family: PingFangSC-Regular;
   font-size: 24rpx;
-  color: #999999;
-  line-height: 34rpx;
-  line-height: 50rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 36rpx;
+  font-weight: 400;
 }
 
 .deal-text {
   font-size: 24rpx;
   line-height: 34rpx;
-  color: #136BFF;
+  color: #01549C;
   height: 50rpx;
 }

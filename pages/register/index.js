@@ -82,7 +82,7 @@ Page({
 
   handleLogin() {
     wx.redirectTo({
-      url: '/pages/a-doctor/login/index',
+      url: '/pages/login/index',
     })
   },
 
