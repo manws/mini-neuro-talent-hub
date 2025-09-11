@@ -14,7 +14,6 @@ Component({
    */
   data: {
     toolBarHeight: 44
-
   },
   
   lifetimes: {

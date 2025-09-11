@@ -4,7 +4,9 @@ Page({
    */
   data: {
     userName: '',
-    userPwd: ''
+    userPwd: '',
+    passwordVisible: true,
+    isSelectedBox: false
   },
 
   /**
@@ -15,6 +17,10 @@ Page({
   },
 
   async handleLogin() {
+    wx.switchTab({
+      url: '/pages/assessment/index',
+    })
+
     if (!this.data.userName) {
       wx.showToast({
         title: '请输入手机号',
@@ -74,5 +80,32 @@ Page({
     this.setData({
       userPwd: e.detail.value
     })
+  },
+  togglePasswordVisibility() {
+    this.setData({
+      passwordVisible: !this.data.passwordVisible
+    })
+  },
+  handleCheckboxChange() {
+    this.setData({
+      isSelectedBox: !this.data.isSelectedBox
+    })
+  },
+
+  getPhoneNumber(e) {
+    let code = e.detail.code
+    console.log("login", "[getPhoneNumber], code", JSON.stringify(e))
+    // code不存在，说明被拒绝了
+    if (code) {
+      this.setData({
+        phoneCode: code
+      })
+    } else {
+      wx.hideLoading()
+      wx.showToast({
+        title: '用户拒绝授权',
+        icon: 'none'
+      })
+    }
   }
 })

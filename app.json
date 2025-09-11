@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/assessment/index",
     "pages/launcher/index",
     "pages/login/index",
     "pages/register/index",
+    "pages/assessment/index",
     "pages/wxlogin/index",
     "pages/project/index",
     "pages/mine/index",

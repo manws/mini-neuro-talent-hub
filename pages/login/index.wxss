@@ -44,7 +44,7 @@ Page {
 }
 
 .login-wx {
-  width: 622rpx;
+  width: 622rpx !important;
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 44rpx;
@@ -55,11 +55,13 @@ Page {
   display: inline-block;
   cursor: pointer;
   background-color: rgba(1,84,156,0.10);
+  padding: 0rpx;
+  display: inline-block;
 }
 
 .input-layout {
   width: 622rpx;
-  height: 112rpx;
+  height: 108rpx;
   align-items: center;
   border-bottom: solid 1rpx #EEEEEE;
 }
@@ -68,6 +70,12 @@ Page {
   width: 32rpx;
   height: 32rpx;
   margin-left: 16rpx;
+}
+
+.password-hidden {
+  width: 32rpx;
+  height: 32rpx;
+  transition: opacity 0.3s;
 }
 
 .input {
