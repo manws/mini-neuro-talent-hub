@@ -13,7 +13,8 @@
     "pages/changepwd/index",
     "pages/history/index",
     "pages/report/index",
-    "pages/evaluation/index"
+    "pages/evaluation/index",
+    "pages/evaluation-result/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

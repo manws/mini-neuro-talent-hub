@@ -30,5 +30,4 @@
     <text wx:if="{{position < fieldLength - 1}}" class="flex-style-base op-text" bindtap="next">下一项</text>
     <text wx:if="{{position == fieldLength - 1}}" class="flex-style-base op-text" bindtap="submit">提交</text>
   </view>
-
 </view>

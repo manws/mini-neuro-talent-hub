@@ -1,0 +1,24 @@
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base toolbar-layout">
+          <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
+          <text class="title-text">医疗工作评估</text>
+        </view>
+      </toolbar>
+    </view>
+  </view>
+  <view class="flex-style-column success-layout">
+    <image class="doctor-icon" src="../../assets/submit-success.png"></image>
+    <text class="success-text">提交成功</text>
+    <view class="flex-style-base" style="margin-top: 24rpx;">
+      <text class="success-sub-text">您的XXX的总体评分为：</text>
+      <text class="success-score-text">120分</text>
+    </view>
+  </view>
+  <view class="flex-style-base op-group-layout">
+    <text class="flex-style-base op-text" bindtap="back">返回主页</text>
+  </view>
+</view>

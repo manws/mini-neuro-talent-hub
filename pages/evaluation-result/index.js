@@ -1,13 +1,10 @@
-// pages/evaluation/index.js
+// pages/evaluation-result/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    position: 0,
-    fieldLength: 10,
-    list: [{}, {}, {}, {},{}, {}, {}, {}, {}, {}]
 
   },
 
@@ -68,25 +65,5 @@ Page({
   },
   back() {
     wx.navigateBack()
-  },
-  previous() {
-    this.setData({
-      position: this.data.position - 1
-    })
-
-  },
-  next() {
-    this.setData({
-      position: this.data.position + 1
-    })
-  }, 
-  /**
-   * 提交表单数据
-   */
-  submit() {
-    wx.redirectTo({
-      url: '/pages/evaluation-result/index',
-    })
-
   }
 })

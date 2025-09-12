@@ -45,8 +45,8 @@ page {
 }
 
 .back-icon {
-  width: 64rpx;
-  height: 64rpx;
+  width: 48rpx;
+  height: 48rpx;
   position: absolute;
   left: 32rpx;
   transform: rotate(180deg);
