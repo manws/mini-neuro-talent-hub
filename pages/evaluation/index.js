@@ -5,6 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    position: 0,
+    fieldLength: 10,
+    list: [{}, {}, {}, {},{}, {}, {}, {}, {}, {}]
 
   },
 
@@ -61,6 +64,23 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
+
+  },
+  back() {
+    wx.navigateBack()
+  },
+  previous() {
+    this.setData({
+      position: this.data.position - 1
+    })
+
+  },
+  next() {
+    this.setData({
+      position: this.data.position + 1
+    })
+  }, 
+  submit() {
 
   }
 })

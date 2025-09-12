@@ -24,9 +24,9 @@
   <view style="flex: 1;"></view>
 
   <view class="flex-style-base info-text-layout">
-    <van-checkbox value="{{ isSelectedBox }}" checked-color="#01549C" icon-size="24rpx" shape="square">
-      <text class="info-text" bindtap="handleCheckboxChange">我已阅读并同意</text>
+    <van-checkbox value="{{ isSelectedBox }}" checked-color="#01549C" icon-size="24rpx" shape="square" bindtap="handleCheckboxChange">
     </van-checkbox>
+    <text class="info-text" bindtap="handleCheckboxChange">我已阅读并同意</text>
     <text class="info-text" style="color: #0066FF;">《用户服务协议》</text>
     <text class="info-text">和</text>
     <text class="info-text" style="color: #0066FF;">《隐私政策》</text>

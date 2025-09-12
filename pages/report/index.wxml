@@ -1,2 +1,105 @@
-<!--pages/report/index.wxml-->
-<text>pages/report/index.wxml</text>
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base toolbar-layout">
+          <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
+          <text class="title-text">查看报告</text>
+        </view>
+      </toolbar>
+    </view>
+  </view>
+  <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
+    <view class="report-group-layout">
+      <view class="flex-style-base title-layout">
+        <image class="background-title-img" src="../../assets/background-title-bar.png"></image>
+        <image class="medical-work-icon" src="../../assets/icon-medical-work.png"></image>
+        <text class="report-label-text">医疗工作评估</text>
+      </view>
+      <view class="flex-style-base report-group-title">
+        <text>临床工作量及岗位胜任</text>
+      </view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-count">34</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">出院数</text>
+        <text class="report-group-item-count">4</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">差错或纠纷</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+
+      <view class="flex-style-base report-group-title" style="margin-top: 24rpx;margin-bottom: 24rpx;">
+        <text>临床工作量及岗位胜任</text>
+      </view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-count">34</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">出院数</text>
+        <text class="report-group-item-count">4</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">差错或纠纷</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+    </view>
+
+    <view class="report-group-layout" style="margin-top: 32rpx;">
+      <view class="flex-style-base title-layout">
+        <image class="background-title-img" src="../../assets/background-title-bar.png"></image>
+        <image class="medical-work-icon" src="../../assets/teaching-work-assessment.png"></image>
+        <text class="report-label-text">教学工作评估</text>
+      </view>
+      <view class="flex-style-base report-group-title">
+        <text>临床工作量及岗位胜任</text>
+      </view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-count">34</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">出院数</text>
+        <text class="report-group-item-count">4</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">差错或纠纷</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+
+      <view class="flex-style-base report-group-title" style="margin-top: 24rpx;margin-bottom: 24rpx;">
+        <text>临床工作量及岗位胜任</text>
+      </view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-count">34</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">出院数</text>
+        <text class="report-group-item-count">4</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">差错或纠纷</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+    </view>
+    <view style="height: 50rpx;"></view>
+  </scroll-view>
+</view>

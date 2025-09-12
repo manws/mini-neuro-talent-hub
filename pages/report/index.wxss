@@ -1,1 +1,125 @@
-/* pages/report/index.wxss */
+page {
+  height: 100%;
+}
+
+.container {
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #F6F6F6;
+}
+
+.header-layout {
+  width: 100%;
+  background-color: #01549C;
+}
+
+.scroll-view {
+  width: 100%;
+  height: 0;
+  flex: 1;
+  padding-top: 16rpx;
+}
+
+.toolbar-layout {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 64rpx;
+  height: 64rpx;
+  position: absolute;
+  left: 32rpx;
+  transform: rotate(180deg);
+}
+
+.title-text {
+  font-family: PingFangSC-Semibold;
+  font-size: 36rpx;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 50rpx;
+  font-weight: 600;
+}
+
+.title-layout {
+  height: 88rpx;
+  justify-content: flex-start;
+}
+
+.report-group-layout {
+  background-color: #FFFFFF;
+}
+
+.background-title-img {
+  width: 468rpx;
+  height: 88rpx;
+  position: absolute;
+}
+
+.medical-work-icon {
+  width: 54rpx;
+  height: 54rpx;
+  margin-left: 32rpx;
+}
+
+.report-label-text {
+  font-family: PingFangSC-Semibold;
+  font-size: 34rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 56rpx;
+  font-weight: 600;
+  margin-left: 16rpx;
+  margin-top: 0rpx;
+}
+
+.report-group-title {
+  width: 686rpx;
+  height: 88rpx;
+  background-color: #F6F6F6;
+  font-family: PingFangSC-Semibold;
+  font-size: 32rpx;
+  color: #333333;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 46rpx;
+  font-weight: 600;
+  margin-left: 32rpx;
+  margin-top: 24rpx;
+}
+
+.report-group-item-layout {
+  width: 686rpx;
+  height: 88rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  margin-left: 32rpx;
+}
+
+.report-group-item-text {
+  font-family: PingFangSC-Medium;
+  font-size: 30rpx;
+  color: #333333;
+  letter-spacing: 0;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.report-group-item-count {
+  font-family: PingFangSC-Semibold;
+  font-size: 30rpx;
+  color: #01549C;
+  letter-spacing: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+.report-group-item-line {
+  width: 686rpx;
+  height: 1rpx;
+  margin-left: 32rpx;
+  background-color: #EEEEEE;
+}

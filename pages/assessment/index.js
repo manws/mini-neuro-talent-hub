@@ -14,19 +14,14 @@ Page({
       currentPage: 1,
       pageSize: 10
     },
-    dataList: [{}],
+    dataList: [{}, {}, {}, {}],
     searchText: '',
-    projectCode: '',
-    showProjectPopup: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.setData({
-      projectCode: getApp().globalData.project.projectCode
-    })
   },
 
   /**
@@ -40,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.onPullDownRefresh();
+   // this.onPullDownRefresh();
   },
 
   /**
@@ -101,15 +96,6 @@ Page({
    */
   onShareAppMessage() {
 
-  },
-
-  /**
-   * 展示项目列表
-   */
-  toggleProjectList() {
-    this.setData({
-      showProjectPopup: !this.data.showProjectPopup
-    })
   },
 
   getData() {
@@ -174,8 +160,12 @@ Page({
 
   handleClick(e) {
     const subject = e.currentTarget.dataset.item;
+    // wx.navigateTo({
+    //   url: `/pages/subject-detail/index?id=${subject.id}&subjectCode=${subject.subjectCode}`
+    // })
+
     wx.navigateTo({
-      url: `/pages/subject-detail/index?id=${subject.id}&subjectCode=${subject.subjectCode}`
+      url: `/pages/evaluation/index`
     })
   },
 
@@ -188,25 +178,6 @@ Page({
     this.setData({
       searchText: e.detail,
     });
-  },
-
-  handleProjectChoosePopupClose(e) {
-    this.setData({
-      showProjectPopup: false
-    })
-  },
-
-  handleProjectChange(e) {
-    const project = e.detail;
-    wx.setStorageSync('project', project)
-    getApp().globalData.project = project
-
-    this.setData({
-      projectCode: project.projectCode
-    })
-
-    this.onPullDownRefresh()
-
   },
 
   bindScroll(e, e1) {

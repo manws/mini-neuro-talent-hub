@@ -1,2 +1,34 @@
-<!--pages/evaluation/index.wxml-->
-<text>pages/evaluation/index.wxml</text>
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base toolbar-layout">
+          <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
+          <text class="title-text">查看报告</text>
+        </view>
+      </toolbar>
+    </view>
+  </view>
+  <swiper current="{{position}}" class="swiper-view">
+    <swiper-item wx:for="{{list}}" wx:key="{{index}}"class="swiper-item-view">
+      <view class="flex-style-column" style="height: 100%;">
+        <text class="title">{{index + 1}}. 门诊和急诊工作量（门诊/急诊岗位满分70分，病房岗位满分20分）</text>
+        <view class="flex-style-base input-layout">
+          <input bindinput="handleInpput" class="input" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
+        </view>
+        <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
+          <text class="tips">评分标准：科室要求的任务量及出诊时间，得分=20/70*任务量完成率;急诊正副主诊、重症(病房岗位)、住院总医师、外派、科秘岗位本项按分计算，其它临床岗位医师未承担临床工作科室平均值计算。</text>
+        </scroll-view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view class="flex-style-base op-group-layout">
+    <text wx:if="{{position == 0}}" class="flex-style-base op-text-zero">上一项</text>
+    <text wx:if="{{position > 0}}" class="flex-style-base op-text-pre" bindtap="previous">上一项</text>
+    <text wx:if="{{position < fieldLength - 1}}" class="flex-style-base op-text" bindtap="next">下一项</text>
+    <text wx:if="{{position == fieldLength - 1}}" class="flex-style-base op-text" bindtap="submit">提交</text>
+  </view>
+
+</view>

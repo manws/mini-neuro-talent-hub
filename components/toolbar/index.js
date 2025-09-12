@@ -6,7 +6,6 @@ Component({
   properties: {
     icon: String,
     title: String
-
   },
 
   /**
