@@ -5,7 +5,7 @@
       <toolbar>
         <view class="flex-style-base toolbar-layout">
           <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
-          <text class="title-text">查看报告</text>
+          <text class="title-text">2024年年终评估</text>
         </view>
       </toolbar>
     </view>
@@ -37,23 +37,56 @@
       <view class="report-group-item-line"></view>
 
       <view class="flex-style-base report-group-title" style="margin-top: 24rpx;margin-bottom: 24rpx;">
-        <text>临床工作量及岗位胜任</text>
+        <text>诊疗能力和专业技能</text>
       </view>
       <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-text">诊疗能力和专业技能</text>
         <text class="report-group-item-count">34</text>
       </view>
       <view class="report-group-item-line"></view>
       <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">出院数</text>
+        <text class="report-group-item-text">开展评估、检查、操作或手术</text>
+        <text class="report-group-item-count">4</text>
+      </view>
+      <view class="report-group-item-line"></view>
+
+      <view class="flex-style-base report-group-title" style="margin-top: 24rpx;margin-bottom: 24rpx;">
+        <text>突出临床业绩</text>
+      </view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">新技术、新业务开展情况</text>
+        <text class="report-group-item-count">34</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">受邀会诊</text>
         <text class="report-group-item-count">4</text>
       </view>
       <view class="report-group-item-line"></view>
       <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">差错或纠纷</text>
+        <text class="report-group-item-text">医疗保障任务</text>
         <text class="report-group-item-count">44</text>
       </view>
       <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">援外支边</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">急诊工作</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">获奖及评优</text>
+        <text class="report-group-item-count">44</text>
+      </view>
+      <view class="report-group-item-line"></view>
+      <view class="flex-style-base report-group-item-layout">
+        <text class="report-group-item-text">参与临床管理工作</text>
+        <text class="report-group-item-count">44</text>
+      </view>
     </view>
 
     <view class="report-group-layout" style="margin-top: 32rpx;">
@@ -63,42 +96,12 @@
         <text class="report-label-text">教学工作评估</text>
       </view>
       <view class="flex-style-base report-group-title">
-        <text>临床工作量及岗位胜任</text>
+        <text>导师资质</text>
       </view>
       <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">门诊和急诊工作量</text>
+        <text class="report-group-item-text">博士、硕士研究生导师</text>
         <text class="report-group-item-count">34</text>
       </view>
-      <view class="report-group-item-line"></view>
-      <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">出院数</text>
-        <text class="report-group-item-count">4</text>
-      </view>
-      <view class="report-group-item-line"></view>
-      <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">差错或纠纷</text>
-        <text class="report-group-item-count">44</text>
-      </view>
-      <view class="report-group-item-line"></view>
-
-      <view class="flex-style-base report-group-title" style="margin-top: 24rpx;margin-bottom: 24rpx;">
-        <text>临床工作量及岗位胜任</text>
-      </view>
-      <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">门诊和急诊工作量</text>
-        <text class="report-group-item-count">34</text>
-      </view>
-      <view class="report-group-item-line"></view>
-      <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">出院数</text>
-        <text class="report-group-item-count">4</text>
-      </view>
-      <view class="report-group-item-line"></view>
-      <view class="flex-style-base report-group-item-layout">
-        <text class="report-group-item-text">差错或纠纷</text>
-        <text class="report-group-item-count">44</text>
-      </view>
-      <view class="report-group-item-line"></view>
     </view>
     <view style="height: 50rpx;"></view>
   </scroll-view>

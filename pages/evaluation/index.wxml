@@ -10,7 +10,7 @@
       </toolbar>
     </view>
   </view>
-  <swiper current="{{position}}" class="swiper-view">
+  <swiper current="{{position}}" bindchange="swipterChange" class="swiper-view">
     <swiper-item wx:for="{{list}}" wx:key="{{index}}"class="swiper-item-view">
       <view class="flex-style-column" style="height: 100%;">
         <text class="title">{{index + 1}}. 门诊和急诊工作量（门诊/急诊岗位满分70分，病房岗位满分20分）</text>
