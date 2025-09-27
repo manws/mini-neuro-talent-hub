@@ -20,7 +20,6 @@ page {
   padding-top: 16rpx;
   margin-left: 32rpx;
   margin-top: 32rpx;
-  margin-bottom: 80rpx;
   box-sizing: border-box;
 }
 

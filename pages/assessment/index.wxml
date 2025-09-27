@@ -23,25 +23,25 @@
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
     <view class="item-layout" wx:if="{{ts02 !== null}}" bindtap="handleClick" data-type="ts02" data-id="2">
-      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <image class="item-icon" src="../../assets/teaching-work-assessment.png"></image>
       <text class="item-text">教学工作评估</text>
       <text class="item-score">{{ts02}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
     <view class="item-layout" wx:if="{{ts03 !== null}}" bindtap="handleClick" data-type="ts03" data-id="3">
-      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <image class="item-icon" src="../../assets/research-work-assessment.png"></image>
       <text class="item-text">科研工作评估</text>
       <text class="item-score">{{ts03}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
     <view class="item-layout" wx:if="{{ts04 !== null}}" bindtap="handleClick" data-type="ts04" data-id="4">
-      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <image class="item-icon" src="../../assets/talent-training-assessment.png"></image>
       <text class="item-text">人才培养评估</text>
       <text class="item-score">{{ts04}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
     <view class="item-layout" wx:if="{{ts05 !== null}}" bindtap="handleClick" data-type="ts05" data-id="5">
-      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <image class="item-icon" src="../../assets/research-public-welfare-assessment.png"></image>
       <text class="item-text">公益工作评估</text>
       <text class="item-score">{{ts05}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
@@ -56,3 +56,18 @@
     <view style="height: 50rpx;"></view>
   </scroll-view>
 </view>
+
+
+<van-popup custom-class="flex-style-column pop-container" overlay-style="background: rgba(0, 0, 0, 0.3);" show="{{ showPop }}" bind:close="clickOverlay">
+  <view class="flex-style-base pop-close-layout" bindtap="clickOverlay">
+    <image class="pop-ic-close" src="../../assets/ic-close.png"></image>
+  </view>
+  <image class="pop-icon" src="../../assets/assessment-popup.png"></image>
+  <text class="pop-tips">{{popTips}}</text>
+  <text class="pop-sub-text">关闭弹窗将返回当前评估界面</text>
+  <view class="flex-style-base" style="justify-content: center;margin-top:16px;">
+    <view class="pop-btn-position flex-style-base" bindtap="clickPosition">
+      <text>确定</text>
+    </view>
+  </view>
+</van-popup>

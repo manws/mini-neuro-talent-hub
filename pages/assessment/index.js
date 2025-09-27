@@ -4,13 +4,15 @@ Page({
     isTriggered: false,
     scoreTypeId: "",
     scoreTypeName: "",
-    state: 0,
+    state: null,
     ts01: null,
     ts02: null,
     ts03: null,
     ts04: null,
     ts05: null,
-    tsAll: null,
+    tsAll: '',
+    showPop: false,
+    popTips: '是否进行考核评估？'
   },
   onShow() {
     this.getUserScoreWxLast();
@@ -76,23 +78,10 @@ Page({
         });
         // 当state=0且scoreTypeId>0时弹出确认框
         if (state === 0 && scoreTypeId > 0) {
-          wx.showModal({
-            title: "提示",
-            content: `是否进行"${scoreTypeName}"考核评估？`,
-            showCancel: true,
-            cancelText: "取消",
-            confirmText: "确定",
-            success: async (modalRes) => {
-              if (modalRes.confirm) {
-                // 用户点击确定，调用userScoreInsert接口
-                console.log("用户确认完成评估");
-                await this.callUserScoreInsert(scoreTypeId);
-              } else if (modalRes.cancel) {
-                // 用户点击取消
-                console.log("用户取消完成评估");
-              }
-            },
-          });
+          this.setData({
+            popTips: `是否进行"${scoreTypeName}"考核评估？`,
+            showPop: true
+          })
         }
       }
     } catch (err) {
@@ -104,22 +93,25 @@ Page({
     }
   },
 
+  async clickPosition() {
+    await this.callUserScoreInsert(this.data.scoreTypeId);
+    this.setData({
+      showPop: false
+    })
+  },
+
+  clickOverlay() {
+    this.setData({
+      showPop: false
+    })
+  },
+
   /**
    * 调用userScoreInsert接口
    */
   async callUserScoreInsert(scoreTypeId) {
-    const param = {
-      // 根据需要添加参数
-    };
-
     try {
-      const res = await wx.API.userScoreInsert(scoreTypeId, param);
-      console.log("userScoreInsert接口调用成功:", res);
-      wx.showToast({
-        title: "评估完成",
-        icon: "success",
-      });
-      // 重新获取数据并刷新界面
+      await wx.API.userScoreInsert(scoreTypeId, {});
       await this.getUserScoreWxLast();
     } catch (err) {
       console.error("userScoreInsert接口调用失败:", err);

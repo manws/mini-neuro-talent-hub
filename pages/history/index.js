@@ -14,7 +14,7 @@ Page({
       currentPage: 1,
       pageSize: 10
     },
-    dataList: [{}, {}, {}, {}],
+    dataList: [],
     searchText: '',
   },
 
@@ -22,7 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+
   },
 
   /**
@@ -36,7 +36,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    // this.onPullDownRefresh();
+    this.onPullDownRefresh();
   },
 
   /**
@@ -104,15 +104,21 @@ Page({
       'orderTypeId': 0,
       'orderFieldCode': this.data.searchText
     })
-    wx.API.listSubject(param)
+    wx.API.userScoreWxList(param)
       .then(res => {
+        const { userScoreList } = res
+        res.page = {
+          currentPage: 1,
+          pageSize: 100,
+          totalNum: userScoreList.length
+        }
         this.setData({
           isTriggered: false,
           isRefreshing: false,
           loadMoring: false
         })
 
-        if (!res.body || !res.page) {
+        if (!userScoreList || !res.page) {
           this.setData({
             dataList: []
           })
@@ -127,11 +133,11 @@ Page({
             })
           }
           this.setData({
-            dataList: res.body
+            dataList: userScoreList
           })
 
         } else { // 上拉加载
-          this.data.dataList = this.data.dataList.concat(res.body)
+          this.data.dataList = this.data.dataList.concat(userScoreList)
           if (this.data.dataList.length == total) {
             this.setData({
               showNoMore: true
@@ -160,10 +166,11 @@ Page({
   },
 
   handleClick(e) {
-    const subject = e.currentTarget.dataset.item;
+    console.log(e, 'wwww')
+    const scoreTypeId = e.currentTarget.dataset.item.scoreTypeId;
     wx.navigateTo({
-      url: `/pages/subject-detail/index?id=${subject.id}&subjectCode=${subject.subjectCode}`
-    })
+      url: "/pages/report/index?scoreTypeId=" + scoreTypeId,
+    });
   },
 
   onSearch() {

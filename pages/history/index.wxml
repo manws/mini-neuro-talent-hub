@@ -15,13 +15,12 @@
     <view class="item-layout" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
       <image class="item-icon" src="../../assets/icon-history-assessment.png"></image>
       <text class="item-text">2024年年终评估</text>
-      <text class="item-score">135分</text>
+      <text class="item-score">{{item.tsAll}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
     <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
       <image class="empty-image" src="../../assets/no-new-illustration.png"></image>
-      <text class="flex-style-base empty-text">还没有评估，快去新增</text>
-      <text class="plus-assessment">新增评估</text>
+      <text class="flex-style-base empty-text">还没有评估</text>
     </view>
     <mp-loading type="circle" wx:if="{{loadMoring}}">加载中...</mp-loading>
     <text style="text-align: center;margin-top: 50rpx;display: block;" wx:if="{{showNoMore}}">没有更多了</text>

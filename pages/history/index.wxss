@@ -110,7 +110,7 @@ page {
 }
 
 .item-score {
-  width: 120rpx;
+  width: 180rpx;
   font-family: PingFangSC-Semibold;
   font-size: 36rpx;
   color: #333333;

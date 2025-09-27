@@ -11,7 +11,7 @@
     </view>
   </view>
   <swiper current="{{position}}" bindchange="swipterChange" class="swiper-view">
-    <swiper-item wx:for="{{scoreList}}" wx:key="{{index}}"class="swiper-item-view">
+    <swiper-item wx:for="{{scoreList}}" wx:key="{{index}}" class="swiper-item-view">
       <view class="flex-style-column" style="height: 100%;">
         <text class="title">{{index + 1}}. {{item.level2Name}} （{{item.level2Content}}）</text>
         <view class="flex-style-base input-layout">
@@ -23,6 +23,9 @@
       </view>
     </swiper-item>
   </swiper>
+  <view style="width: 100%;height: 80rpx;" class="flex-style-base">
+  <text style="color: #AFAFAF;">{{position + 1}}/{{fieldLength}}</text>
+  </view>
 
   <view class="flex-style-base op-group-layout">
     <text wx:if="{{position == 0}}" class="flex-style-base op-text-zero">上一项</text>

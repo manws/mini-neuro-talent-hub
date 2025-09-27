@@ -1,7 +1,7 @@
 {
     "navigationBarTitleText": "",
     "usingComponents": {
-        "van-search": "@vant/weapp/search/index",
+        "van-popup": "@vant/weapp/popup/index",
         "project-choose-popup": "/components/project-choose-popup/index"
     },
     "navigationStyle": "custom",
