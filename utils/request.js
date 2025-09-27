@@ -1,5 +1,5 @@
 // var base_url = wx.getAccountInfoSync().miniProgram.envVersion == 'develop' ? 'https://ctmstest.xhedc.com' : 'https://ctms.xhedc.com'
-const base_url = 'https://iwrs.xhedc.com'
+const base_url = 'https://snscore.xhedc.com'
 /**
  * 请求头
  */

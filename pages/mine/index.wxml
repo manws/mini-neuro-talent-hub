@@ -23,6 +23,9 @@
       <view class="flex-style-base my-score">
         <text class="my-score-text">我的评分</text>
         <image class="my-score-arrow" src="../../assets/more.png"></image>
+        <view class="canvas-layout">
+        <ec-canvas id="mychart-dom-graph" canvas-id="mychart-graph" ec="{{ ec }}"></ec-canvas>
+      </view>
       </view>
     </view>
 

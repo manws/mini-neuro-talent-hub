@@ -1,3 +1,4 @@
+import md5 from '../../utils/md5.js'
 Page({
   /**
    * 页面的初始数据
@@ -17,10 +18,6 @@ Page({
   },
 
   async handleLogin() {
-    wx.switchTab({
-      url: '/pages/assessment/index',
-    })
-
     if (!this.data.userName) {
       wx.showToast({
         title: '请输入手机号',
@@ -40,9 +37,14 @@ Page({
       title: '正在登录...',
       icon: 'loading'
     })
+
+    const loginOn = parseInt(Date.now() / 1000);
+    const sign = `userCode=${this.data.userName}&&userPwd=${this.data.userPwd}&&loginOn=${loginOn}&&key=xhedc_jiangbo_wangshuang_123!@#`
     const result = await wx.API.login({
       userCode: this.data.userName,
-      userPwd: this.data.userPwd
+      userPwd: this.data.userPwd,
+      loginOn: loginOn,
+      sign: md5(sign)
     })
     console.log(result, 'result2')
 
@@ -52,8 +54,9 @@ Page({
     let cookie = 'userId = ' + result.userId + '; userName = ' + encodeURI(result.userName)
     wx.setStorageSync('cookie', cookie)
     getApp().globalData.cookie = cookie
-    wx.redirectTo({
-      url: '/pages/project/index',
+
+    wx.switchTab({
+      url: '/pages/assessment/index',
     })
   },
 

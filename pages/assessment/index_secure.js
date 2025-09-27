@@ -23,26 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // 安全检查 globalData.project
     const app = getApp()
-    if (app && app.globalData && app.globalData.project) {
-      this.setData({
-        projectCode: app.globalData.project.projectCode || ''
-      })
-    } else {
-      // 如果没有项目信息，跳转到项目选择页面
-      wx.showModal({
-        title: '提示',
-        content: '请先选择项目',
-        showCancel: false,
-        success: () => {
-          wx.redirectTo({
-            url: '/pages/project/index'
-          })
-        }
-      })
-      return
-    }
   },
 
   /**

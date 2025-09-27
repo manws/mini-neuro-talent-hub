@@ -10,44 +10,44 @@ import {
  * 登录
  */
 const login = param => {
-  return postRequest('/api/v1/login', param)
+  return postRequest('/api/v2/User/login', param)
 }
 
 const changePwd = param => {
-  return putRequest('/api/v1/change-pwd', param)
+  return putRequest('/api/v2/User/change-pwd', param)
 }
 
 const logout = param => {
-  return postRequest('/api/v1/logout', param)
+  return postRequest('/api/v2/User/logout', param)
 }
 
 const projects = param => {
-  return getRequest('/api/v1/projects', param)
+  return getRequest('/api/v2/projects', param)
 }
 
 const listSubject = param => {
   const projectDB = getApp().globalData.project.projectDB
-  return postRequest(`/api/v1/list-subject/${projectDB}`, param)
+  return postRequest(`/api/v2/list-subject/${projectDB}`, param)
 }
 
 const newSubject = () => {
   const projectDB = getApp().globalData.project.projectDB
-  return getRequest(`/api/v1/new-subject/${projectDB}`)
+  return getRequest(`/api/v2/new-subject/${projectDB}`)
 }
 
 const getSubject = subjectId => {
   const projectDB = getApp().globalData.project.projectDB
-  return getRequest(`/api/v1/subjects/${projectDB}/${subjectId}`)
+  return getRequest(`/api/v2/subjects/${projectDB}/${subjectId}`)
 }
 
 const addSubject = param => {
   const projectDB = getApp().globalData.project.projectDB
-  return postRequest(`/api/v1/subjects/${projectDB}`, param)
+  return postRequest(`/api/v2/subjects/${projectDB}`, param)
 }
 
 const updateSubject = (subjectId, param) => {
   const projectDB = getApp().globalData.project.projectDB
-  return putRequest(`/api/v1/subjects/${projectDB}/${subjectId}`, param)
+  return putRequest(`/api/v2/subjects/${projectDB}/${subjectId}`, param)
 }
 
 

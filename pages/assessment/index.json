@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "我的项目",
+    "navigationBarTitleText": "",
     "usingComponents": {
         "van-search": "@vant/weapp/search/index",
         "project-choose-popup": "/components/project-choose-popup/index"

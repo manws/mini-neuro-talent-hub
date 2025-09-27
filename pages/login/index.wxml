@@ -13,13 +13,13 @@
     </view>
   </view>
 
-  <view class="flex-style-base op-text-layout">
+  <!-- <view class="flex-style-base op-text-layout">
     <text class="op-text" bindtap="handleRegister">立即注册</text>
     <text class="op-text" bindtap="handleForgetPwd">忘记密码</text>
-  </view>
+  </view> -->
 
   <text class="login-btn" bindtap="handleLogin">登 录</text>
-  <button class="login-wx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键登录</button>
+  <!-- <button class="login-wx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键登录</button> -->
 
   <view style="flex: 1;"></view>
 

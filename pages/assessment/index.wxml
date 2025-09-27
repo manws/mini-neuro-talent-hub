@@ -14,7 +14,6 @@
       <text class="assessment-score">评估总分：395</text>
       <text class="watch-report-text" bind:tap="watchReport">查看报告</text>
     </view>
-    <!-- <van-search value="{{ searchText }}" clearable bind:search="onSearch" bind:change="onChange" class="search-bar" placeholder="输入受试者编码进行搜索"></van-search> -->
   </view>
   <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" bindscroll="bindScroll" refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
     <view class="item-layout" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">

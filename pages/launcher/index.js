@@ -47,8 +47,8 @@ Page({
           url: '/pages/random/index',
         })
       } else {
-        wx.redirectTo({
-          url: '/pages/project/index',
+        wx.switchTab({
+          url: '/pages/assessment/index',
         })
       }
 
