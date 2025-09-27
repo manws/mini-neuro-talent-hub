@@ -11,7 +11,7 @@
     </view>
   </view>
   <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
-    <view class="report-group-layout">
+    <view wx:for="{{level2Data}}" class="report-group-layout">
       <view class="flex-style-base title-layout">
         <image class="background-title-img" src="../../assets/background-title-bar.png"></image>
         <image class="medical-work-icon" src="../../assets/icon-medical-work.png"></image>

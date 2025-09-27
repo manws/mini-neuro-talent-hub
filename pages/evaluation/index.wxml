@@ -11,14 +11,14 @@
     </view>
   </view>
   <swiper current="{{position}}" bindchange="swipterChange" class="swiper-view">
-    <swiper-item wx:for="{{list}}" wx:key="{{index}}"class="swiper-item-view">
+    <swiper-item wx:for="{{scoreList}}" wx:key="{{index}}"class="swiper-item-view">
       <view class="flex-style-column" style="height: 100%;">
-        <text class="title">{{index + 1}}. 门诊和急诊工作量（门诊/急诊岗位满分70分，病房岗位满分20分）</text>
+        <text class="title">{{index + 1}}. {{item.level2Name}} （{{item.level2Content}}）</text>
         <view class="flex-style-base input-layout">
-          <input bindinput="handleInpput" class="input" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
+          <input bindinput="handleInpput" data-data="{{item}}" class="input" type="digit" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
         </view>
         <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
-          <text class="tips">评分标准：科室要求的任务量及出诊时间，得分=20/70*任务量完成率;急诊正副主诊、重症(病房岗位)、住院总医师、外派、科秘岗位本项按分计算，其它临床岗位医师未承担临床工作科室平均值计算。</text>
+          <text class="tips">评分标准：{{item.level2Std}}</text>
         </scroll-view>
       </view>
     </swiper-item>

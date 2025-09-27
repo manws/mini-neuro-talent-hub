@@ -1,193 +1,132 @@
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    scrollTop: 0,
-    isRefreshing: false,
     loadMoring: false,
-    showNoMore: false,
     isTriggered: false,
-    dataStatus: "loading",
-    page: {
-      currentPage: 1,
-      pageSize: 10
-    },
-    dataList: [{}, {}, {}, {}],
-    searchText: '',
+    scoreTypeId: "",
+    scoreTypeName: "",
+    state: 0,
+    ts01: null,
+    ts02: null,
+    ts03: null,
+    ts04: null,
+    ts05: null,
+    tsAll: null,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
-   // this.onPullDownRefresh();
+    this.getUserScoreWxLast();
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  async onPullDownRefresh() {
-    if (this.data.isRefreshing) {
-      return
-    }
-    this.data.isRefreshing = true
-    this.data.page.currentPage = 1
-    this.setData({
-      showNoMore: false,
-      isTriggered: true,
-      page: this.data.page
-    })
-    await this.getData()
-    this.setData({
-      scrollTop: 0
-    })
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-    // 正在刷新和没有更多都不让上拉加载
-    if (this.data.isRefreshing || this.data.showNoMore || this.data.dataList.length < this.data.page.pageSize) {
-      return
-    }
-    this.data.isRefreshing = true
-    this.data.page.currentPage = 1 + this.data.page.currentPage
-    this.setData({
-      loadMoring: true,
-      showNoMore: false,
-      page: this.data.page
-    })
-
-    this.getData()
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  },
-
-  getData() {
-    let param = Object.assign(this.data.page, {
-      'orderTypeId': 0,
-      'orderFieldCode': this.data.searchText
-    })
-    wx.API.listSubject(param)
-      .then(res => {
-        this.setData({
-          isTriggered: false,
-          isRefreshing: false,
-          loadMoring: false
-        })
-
-        if (!res.body || !res.page) {
-          this.setData({
-            dataList: []
-          })
-          return
-        }
-        var total = res.page.totalNum
-        // 下拉刷新的场景
-        if (this.data.page.currentPage == 1) {
-          if (total >= 5 && total <= this.data.page.pageSize) {
-            this.setData({
-              showNoMore: true
-            })
-          }
-          this.setData({
-            dataList: res.body
-          })
-
-        } else { // 上拉加载
-          this.data.dataList = this.data.dataList.concat(res.body)
-          if (this.data.dataList.length == total) {
-            this.setData({
-              showNoMore: true
-            })
-          } else {
-            this.setData({
-              showNoMore: false
-            })
-          }
-          this.setData({
-            isTriggered: false,
-            dataList: this.data.dataList
-          })
-        }
-      }, err => {
-        wx.showToast({
-          title: err,
-          icon: 'none'
-        })
-        this.setData({
-          isTriggered: false,
-          isRefreshing: false,
-          loadMoring: false
-        });
-      })
-  },
-
   handleClick(e) {
-    const subject = e.currentTarget.dataset.item;
-    // wx.navigateTo({
-    //   url: `/pages/subject-detail/index?id=${subject.id}&subjectCode=${subject.subjectCode}`
-    // })
-
+    const { id } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `/pages/evaluation/index`
-    })
-  },
-
-  onSearch() {
-    this.onPullDownRefresh()
-  },
-
-  onChange(e) {
-    console.log(e)
-    this.setData({
-      searchText: e.detail,
+      url: `/pages/evaluation/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
     });
   },
 
+  onSearch() {
+    this.onPullDownRefresh();
+  },
+
+  onChange(e) {},
+
   bindScroll(e, e1) {
-    console.log(e, e1)
+    console.log(e, e1);
   },
 
   watchReport() {
     wx.navigateTo({
-      url: '/pages/report/index',
-    })
-  }
+      url: "/pages/report/index?scoreTypeId=" + this.data.scoreTypeId,
+    });
+  },
 
-})
+  /**
+   * 获取用户最新评分
+   */
+  async getUserScoreWxLast() {
+    const param = {
+      // 根据需要添加参数
+    };
+    try {
+      const res = await wx.API.userScoreWxLast(param);
+      console.log("用户最新评分数据:", res);
+      // 处理返回的数据
+      if (res) {
+        // 使用解构赋值承接返回值
+        const {
+          scoreTypeId,
+          scoreTypeName,
+          state,
+          ts01,
+          ts02,
+          ts03,
+          ts04,
+          ts05,
+          tsAll,
+        } = res;
+        // 可以将数据存储到页面数据中
+        this.setData({
+          scoreTypeId,
+          scoreTypeName,
+          state,
+          ts01,
+          ts02,
+          ts03,
+          ts04,
+          ts05,
+          tsAll: tsAll ? parseFloat(tsAll).toFixed(1) : '',
+        });
+        // 当state=0且scoreTypeId>0时弹出确认框
+        if (state === 0 && scoreTypeId > 0) {
+          wx.showModal({
+            title: "提示",
+            content: `是否进行"${scoreTypeName}"考核评估？`,
+            showCancel: true,
+            cancelText: "取消",
+            confirmText: "确定",
+            success: async (modalRes) => {
+              if (modalRes.confirm) {
+                // 用户点击确定，调用userScoreInsert接口
+                console.log("用户确认完成评估");
+                await this.callUserScoreInsert(scoreTypeId);
+              } else if (modalRes.cancel) {
+                // 用户点击取消
+                console.log("用户取消完成评估");
+              }
+            },
+          });
+        }
+      }
+    } catch (err) {
+      console.error("获取用户最新评分失败:", err);
+      wx.showToast({
+        title: "获取数据失败",
+        icon: "none",
+      });
+    }
+  },
+
+  /**
+   * 调用userScoreInsert接口
+   */
+  async callUserScoreInsert(scoreTypeId) {
+    const param = {
+      // 根据需要添加参数
+    };
+
+    try {
+      const res = await wx.API.userScoreInsert(scoreTypeId, param);
+      console.log("userScoreInsert接口调用成功:", res);
+      wx.showToast({
+        title: "评估完成",
+        icon: "success",
+      });
+      // 重新获取数据并刷新界面
+      await this.getUserScoreWxLast();
+    } catch (err) {
+      console.error("userScoreInsert接口调用失败:", err);
+      wx.showToast({
+        title: "操作失败",
+        icon: "none",
+      });
+    }
+  },
+});

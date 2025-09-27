@@ -14,8 +14,8 @@
     <image class="doctor-icon" src="../../assets/submit-success.png"></image>
     <text class="success-text">提交成功</text>
     <view class="flex-style-base" style="margin-top: 24rpx;">
-      <text class="success-sub-text">您的XXX的总体评分为：</text>
-      <text class="success-score-text">120分</text>
+      <text class="success-sub-text">您的总体评分为：</text>
+      <text class="success-score-text">{{scoreResult}}分</text>
     </view>
   </view>
   <view class="flex-style-base op-group-layout">

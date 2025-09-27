@@ -1,69 +1,29 @@
 // pages/report/index.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    level2Data: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+    const { scoreTypeId } = options;
+    if (scoreTypeId) {
+      this.callSingleAllL2(scoreTypeId);
+    }
   },
   back() {
     wx.navigateBack()
+  },
+  async callSingleAllL2(scoreTypeId) {
+    try {
+      const { level2Data } = await wx.API.userScoreSingleAllL2(scoreTypeId, {});
+      // 处理返回的数据
+      this.setData({
+        level2Data
+      });
+    } catch (err) {
+      wx.showToast({
+        title: '获取数据失败！！！',
+        icon: 'none'
+      });
+    }
   }
 })

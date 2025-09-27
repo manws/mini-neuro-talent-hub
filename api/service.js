@@ -21,43 +21,54 @@ const logout = param => {
   return postRequest('/api/v2/User/logout', param)
 }
 
-const projects = param => {
-  return getRequest('/api/v2/projects', param)
+// UserScore 相关接口
+const userScoreWxList = param => {
+  return postRequest('/api/v2/UserScore/wxList', param)
 }
 
-const listSubject = param => {
-  const projectDB = getApp().globalData.project.projectDB
-  return postRequest(`/api/v2/list-subject/${projectDB}`, param)
+const userScoreWxLast = param => {
+  return postRequest('/api/v2/UserScore/wxLast', param)
 }
 
-const newSubject = () => {
-  const projectDB = getApp().globalData.project.projectDB
-  return getRequest(`/api/v2/new-subject/${projectDB}`)
+const userScoreInsert = (scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScore/Insert/${scoreTypeId}`, param)
 }
 
-const getSubject = subjectId => {
-  const projectDB = getApp().globalData.project.projectDB
-  return getRequest(`/api/v2/subjects/${projectDB}/${subjectId}`)
+const userScoreUpdate = (scoreTypeId, levelId, param) => {
+  return postRequest(`/api/v2/UserScore/update/${scoreTypeId}/${levelId}`, param)
 }
 
-const addSubject = param => {
-  const projectDB = getApp().globalData.project.projectDB
-  return postRequest(`/api/v2/subjects/${projectDB}`, param)
+const userScoreSingle0 = (scoreTypeId, levelId, param) => {
+  return postRequest(`/api/v2/UserScore/singleL0/${scoreTypeId}/${levelId}`, param)
 }
 
-const updateSubject = (subjectId, param) => {
-  const projectDB = getApp().globalData.project.projectDB
-  return putRequest(`/api/v2/subjects/${projectDB}/${subjectId}`, param)
+const userScorePage = param => {
+  return postRequest('/api/v2/UserScore/page', param)
 }
 
+const userScoreSingleAll = (userId, scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScore/singleAll/${userId}/${scoreTypeId}`, param)
+}
+
+const userScoreSingleAllL1 = (scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScore/singleAllL1/${scoreTypeId}`, param)
+}
+
+const userScoreSingleAllL2 = (scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScore/singleAllL2/${scoreTypeId}`, param)
+}
 
 module.exports = {
   login,
+  changePwd,
   logout,
-  projects,
-  listSubject,
-  newSubject,
-  getSubject,
-  addSubject,
-  updateSubject
+  userScoreWxList,
+  userScoreWxLast,
+  userScoreInsert,
+  userScoreUpdate,
+  userScoreSingle0,
+  userScorePage,
+  userScoreSingleAll,
+  userScoreSingleAllL1,
+  userScoreSingleAllL2
 }

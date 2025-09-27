@@ -11,24 +11,48 @@
     </view>
 
     <view class="flex-style-base assessment-layout">
-      <text class="assessment-score">评估总分：395</text>
+      <text class="assessment-score">{{scoreTypeName}}总分：{{tsAll}}</text>
       <text class="watch-report-text" bind:tap="watchReport">查看报告</text>
     </view>
   </view>
-  <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" bindscroll="bindScroll" refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
-    <view class="item-layout" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
+  <scroll-view class="scroll-view" scroll-y>
+    <view class="item-layout" wx:if="{{ts01 !== null}}" bindtap="handleClick" data-type="ts01" data-id="1">
       <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
       <text class="item-text">医疗工作评估</text>
-      <text class="item-score">135分</text>
+      <text class="item-score">{{ts01}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
-    <view class="flex-style-column empty-layout" wx:if="{{dataList.length==0}}">
-      <image class="empty-image" src="../../assets/no-new-illustration.png"></image>
-      <text class="flex-style-base empty-text">还没有评估，快去新增</text>
-      <text class="plus-assessment">新增评估</text>
+    <view class="item-layout" wx:if="{{ts02 !== null}}" bindtap="handleClick" data-type="ts02" data-id="2">
+      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <text class="item-text">教学工作评估</text>
+      <text class="item-score">{{ts02}}分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
-    <mp-loading type="circle" wx:if="{{loadMoring}}">加载中...</mp-loading>
-    <text style="text-align: center;margin-top: 50rpx;display: block;" wx:if="{{showNoMore}}">没有更多了</text>
+    <view class="item-layout" wx:if="{{ts03 !== null}}" bindtap="handleClick" data-type="ts03" data-id="3">
+      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <text class="item-text">科研工作评估</text>
+      <text class="item-score">{{ts03}}分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
+    </view>
+    <view class="item-layout" wx:if="{{ts04 !== null}}" bindtap="handleClick" data-type="ts04" data-id="4">
+      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <text class="item-text">人才培养评估</text>
+      <text class="item-score">{{ts04}}分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
+    </view>
+    <view class="item-layout" wx:if="{{ts05 !== null}}" bindtap="handleClick" data-type="ts05" data-id="5">
+      <image class="item-icon" src="../../assets/medical-work-assessment.png"></image>
+      <text class="item-text">公益工作评估</text>
+      <text class="item-score">{{ts05}}分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
+    </view>
+    
+    <view class="flex-style-column empty-layout" wx:if="{{state==0 || state==-1}}">
+      <image class="empty-image" src="../../assets/no-new-illustration.png"></image>
+      <text wx:if="{{ state == -1 }}" class="flex-style-base empty-text">当前没有最新考核评估，或者最近考核评估已经结束</text>
+      <text wx:if="{{ state == 0 }}" class="flex-style-base empty-text">还没有评估，快去新增</text>
+      <text class="plus-assessment" wx:if="{{state==0}}">新增评估</text>
+    </view>
     <view style="height: 50rpx;"></view>
   </scroll-view>
 </view>
