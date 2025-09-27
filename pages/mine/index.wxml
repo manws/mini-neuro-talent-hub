@@ -11,10 +11,10 @@
         <image class="header-img" src="../../assets/default-header.png"></image>
       </view>
       <view class="flex-style-column" style="margin-left:24rpx;flex-grow: 1;align-items: flex-start;">
-        <text class="name-text" style="margin-top: 24rpx;">陈某某</text>
+        <text class="name-text" style="margin-top: 24rpx;">{{userInfo.userName}}</text>
         <view class="flex-style-base" style="margin-top: 10rpx;">
           <image class="sub-icon" src="../../assets/my-organization-icon.png"></image>
-          <text class="sub-text">首都医科大学宣武医院</text>
+          <text class="sub-text">{{userInfo.phone}}</text>
         </view>
       </view>
       <image class="sub-arrow" src="../../assets/arrow-white.png"></image>
