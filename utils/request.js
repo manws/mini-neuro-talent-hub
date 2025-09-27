@@ -80,6 +80,8 @@ function request(url, params, method, isReject = true) {
               wx.setStorageSync('token', token)
             }
             resolve(data.data ? data.data : result)
+          } else if (code === 200 && url.indexOf('changePwd') > -1) {
+            resolve(data)
           } else {
             if (isReject) {
               wx.hideLoading()

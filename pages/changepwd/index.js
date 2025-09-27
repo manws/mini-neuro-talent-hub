@@ -59,11 +59,10 @@ Page({
       title: '密码修改成功',
       icon: 'none'
     })
-    setTimeout(() => {
-      wx.reLaunch({
-        url: '/pages/login/index',
-      })
-    }, 2000)
+    wx.clearStorageSync()
+    wx.reLaunch({
+      url: '/pages/login/index',
+    })
   },
 
   handleRegister() {
@@ -95,5 +94,8 @@ Page({
     this.setData({
       renewPwd: detail.value
     })
+  },
+  back() {
+    wx.navigateBack();
   }
 })

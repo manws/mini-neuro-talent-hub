@@ -14,7 +14,7 @@ const login = param => {
 }
 
 const changePwd = param => {
-  return putRequest('/api/v2/User/change-pwd', param)
+  return postRequest('/api/v2/User/changePwd', param)
 }
 
 const logout = param => {

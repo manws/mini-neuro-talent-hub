@@ -1,4 +1,17 @@
-<view class="flex-style-column layout-center">
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base toolbar-layout">
+          <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
+          <text class="title-text">修改密码</text>
+        </view>
+      </toolbar>
+    </view>
+  </view>
+
+  <view class="flex-style-column layout-center">
   <view class="flex-style-base input-layout" style="margin-top: 88rpx;">
     <image class="icon-img" src="../../assets/password.png"></image>
     <input bindinput="handlePwd" password="{{true}}" class="input" placeholder="请输入旧密码" placeholder-style="color:#DEDEDE;" />
@@ -16,3 +29,7 @@
 
   <text class="login-btn" bindtap="handleLogin">提交</text>
 </view>
+
+</view>
+
+

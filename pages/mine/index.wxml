@@ -32,7 +32,7 @@
     <view class="flex-style-column other-service">
       <text class="other-service-text">其他服务</text>
       <view class="other-service-divider"></view>
-      <view class="flex-style-base" style="justify-content: flex-start;height: 88rpx;">
+      <view class="flex-style-base" style="justify-content: flex-start;height: 88rpx;" bindtap="changePwd">
         <image class="other-service-passsword" src="../../assets/password.png"></image>
         <text class="other-service-chagnepasssword">修改密码</text>
         <image class="my-score-arrow" style="margin-right: 32rpx;" src="../../assets/more.png"></image>

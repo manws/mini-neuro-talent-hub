@@ -3,6 +3,43 @@ Page {
   height: 100%;
 }
 
+
+.container {
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #F6F6F6;
+  align-items: center;
+}
+
+.header-layout {
+  width: 100%;
+  background-color: #01549C;
+}
+
+.toolbar-layout {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  left: 32rpx;
+  transform: rotate(180deg);
+}
+
+.title-text {
+  font-family: PingFangSC-Semibold;
+  font-size: 36rpx;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 50rpx;
+  font-weight: 600;
+}
+
 .layout-center {
   height: 100%;
   align-items: center;

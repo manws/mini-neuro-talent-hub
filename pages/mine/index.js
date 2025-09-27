@@ -21,12 +21,13 @@ function initChart(canvas, width, height, dpr) {
         { name: '公益工作\n78分', max: 130 }
       ],
       shape: 'polygon',
-      radius: '65%',
+      radius: '60%',
       center: ['50%', '50%'],
       splitNumber: 1,
       axisName: {
         color: '#333333',
-        fontSize: 16
+        fontSize: 14,
+        distance: 15
       },
       splitLine: {
         lineStyle: {
@@ -82,4 +83,9 @@ Page({
     });
   },
   onShow() {},
+  changePwd() {
+    wx.navigateTo({
+      url: '/pages/changepwd/index'
+    })
+  }
 });
