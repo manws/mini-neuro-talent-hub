@@ -5,7 +5,7 @@
       <toolbar>
         <view class="flex-style-base toolbar-layout">
           <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
-          <text class="title-text">查看报告</text>
+          <text class="title-text">查看详情</text>
         </view>
       </toolbar>
     </view>
@@ -15,7 +15,7 @@
       <view class="flex-style-column" style="height: 100%;">
         <text class="title">{{index + 1}}. {{item.level2Name}} （{{item.level2Content}}）</text>
         <view class="flex-style-base input-layout">
-          <input bindinput="handleInpput" data-data="{{item}}" class="input" type="digit" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
+          <input value="{{item.value == '0' ? '' : item.value}}" bindinput="handleInpput" data-data="{{item}}" class="input" type="digit" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
         </view>
         <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
           <text class="tips">评分标准：{{item.level2Std}}</text>

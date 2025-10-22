@@ -51,6 +51,7 @@ page {
 
 .report-group-layout {
   background-color: #FFFFFF;
+  margin-bottom: 32rpx;
 }
 
 .background-title-img {

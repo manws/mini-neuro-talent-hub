@@ -10,7 +10,7 @@ import {
  * 登录
  */
 const login = param => {
-  return postRequest('/api/v2/User/login', param)
+  return postRequest('/api/v2/User/login/wx', param)
 }
 
 const changePwd = param => {
@@ -58,6 +58,10 @@ const userScoreSingleAllL2 = (scoreTypeId, param) => {
   return postRequest(`/api/v2/UserScore/singleAllL2/${scoreTypeId}`, param)
 }
 
+const userScoreRadar = (param = {}) => {
+  return postRequest(`/api/v2/UserScore/radar`, param)
+}
+
 module.exports = {
   login,
   changePwd,
@@ -70,5 +74,6 @@ module.exports = {
   userScorePage,
   userScoreSingleAll,
   userScoreSingleAllL1,
-  userScoreSingleAllL2
+  userScoreSingleAllL2,
+  userScoreRadar
 }

@@ -12,7 +12,7 @@ Page({
     dataStatus: "loading",
     page: {
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10000
     },
     dataList: [],
     searchText: '',
@@ -109,8 +109,8 @@ Page({
         const { userScoreList } = res
         res.page = {
           currentPage: 1,
-          pageSize: 100,
-          totalNum: userScoreList.length
+          pageSize: 10000,
+          totalNum: userScoreList ? userScoreList.length : 0
         }
         this.setData({
           isTriggered: false,

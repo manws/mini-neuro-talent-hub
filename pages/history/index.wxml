@@ -14,7 +14,7 @@
   <scroll-view class="scroll-view" scroll-y scroll-top="{{scrollTop}}" bindscroll="bindScroll" refresher-enabled refresher-triggered="{{isTriggered}}" bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
     <view class="item-layout" data-index="{{index}}" data-item="{{item}}" wx:for="{{dataList}}" wx:key="index" bindtap="handleClick">
       <image class="item-icon" src="../../assets/icon-history-assessment.png"></image>
-      <text class="item-text">2024年年终评估</text>
+      <text class="item-text">{{item.scoreTypeName}}</text>
       <text class="item-score">{{item.tsAll}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>

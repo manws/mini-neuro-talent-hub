@@ -114,11 +114,12 @@ Page({
       await wx.API.userScoreInsert(scoreTypeId, {});
       await this.getUserScoreWxLast();
     } catch (err) {
+      await this.getUserScoreWxLast();
       console.error("userScoreInsert接口调用失败:", err);
-      wx.showToast({
-        title: "操作失败",
-        icon: "none",
-      });
+      // wx.showToast({
+      //   title: "操作失败",
+      //   icon: "none",
+      // });
     }
   },
 });

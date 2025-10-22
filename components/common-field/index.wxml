@@ -19,12 +19,12 @@
 
   <!-- 单行文本 -->
   <view class="item-content" wx:elif="{{field.fieldTypeId === 2}}">
-    <van-field value="{{ field.value }}" placeholder="{{field.hint ? field.hint : '请输入...'}}" bindchange="handleChangeText" disabled="{{disabled || field.noEdit}}" />
+    <van-field value="{{ field.value }}" placeholder="{{field.hint ? field.hint : '请输入...'}}" bindinput="handleChangeText" disabled="{{disabled || field.noEdit}}" />
   </view>
 
   <!-- 多行文本 -->
   <view class="item-content" class="item-content" wx:elif="{{field.fieldTypeId === 3}}">
-    <van-field value="{{ field.value }}" type="textarea" autosize placeholder="请输入..." bindchange="handleChangeText" disabled="{{disabled}}" />
+    <van-field value="{{ field.value }}" type="textarea" autosize placeholder="请输入..." bindinput="handleChangeText" disabled="{{disabled}}" />
   </view>
 
   <!-- 日期 -->

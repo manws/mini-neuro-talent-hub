@@ -116,7 +116,7 @@ Page({
             param[item.level2Code] = this.data.param[item.level2Code];
           }
         } else {
-          param[item.level2Code] = '0'
+          param[item.level2Code] = item.value ? item.value : '0'
         }
       });
       const { scoreResult } = await wx.API.userScoreUpdate(scoreTypeId, levelId, param);

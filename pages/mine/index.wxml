@@ -37,6 +37,12 @@
         <text class="other-service-chagnepasssword">修改密码</text>
         <image class="my-score-arrow" style="margin-right: 32rpx;" src="../../assets/more.png"></image>
       </view>
+      <view class="other-service-divider"></view>
+      <view class="flex-style-base" style="justify-content: flex-start;height: 88rpx;" bindtap="logout">
+        <image class="other-service-passsword" src="../../assets/account.png"></image>
+        <text class="other-service-chagnepasssword">退出登录</text>
+        <image class="my-score-arrow" style="margin-right: 32rpx;" src="../../assets/more.png"></image>
+      </view>
     </view>
 
   </view>
