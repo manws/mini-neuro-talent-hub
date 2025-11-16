@@ -11,7 +11,7 @@
     </view>
   </view>
   <swiper current="{{position}}" bindchange="swipterChange" class="swiper-view">
-    <swiper-item wx:for="{{scoreList}}" wx:key="{{index}}" class="swiper-item-view">
+    <swiper-item wx:for="{{scoreList}}" wx:key="index" class="swiper-item-view">
       <view class="flex-style-column" style="height: 100%;">
         <text class="title">{{index + 1}}. {{item.level2Name}} （{{item.level2Content}}）</text>
         <view class="flex-style-base input-layout">
@@ -19,12 +19,19 @@
         </view>
         <scroll-view class="scroll-view" scroll-y bindscroll="bindScroll">
           <text class="tips">评分标准：{{item.level2Std}}</text>
+          <view wx:if="{{item.isUploadImg == 1}}" class="flex-style-base" style="margin-top: 48rpx;justify-content: flex-start;">
+            <text class="upload-img">上传图片</text>
+            <text class="upload-tips">（支持PNG、JPG格式，图片小于2M）</text>
+          </view>
+          <view style="height: 24rpx;"></view>
+          <van-uploader wx:if="{{item.isUploadImg == 1}}" accept="image" file-list="{{ fileList }}" image-fit="aspectFill" preview-size="196rpx" deletable="{{ true }}" bind:after-read="fileAfterRead" bind:delete="fileDeleteImg" multiple="{{true}}" max-size="{{1048576 * 20}}" max-count="9">
+          </van-uploader>
         </scroll-view>
       </view>
     </swiper-item>
   </swiper>
   <view style="width: 100%;height: 80rpx;" class="flex-style-base">
-  <text style="color: #AFAFAF;">{{position + 1}}/{{fieldLength}}</text>
+    <text style="color: #AFAFAF;">{{position + 1}}/{{fieldLength}}</text>
   </view>
 
   <view class="flex-style-base op-group-layout">

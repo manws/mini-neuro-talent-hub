@@ -150,4 +150,35 @@ page {
   line-height: 44rpx;
   font-weight: 400;
   margin-top: 32rpx;
+  display: inline-block;
+}
+
+.upload-image-layout {
+  flex-wrap: wrap;
+}
+
+.upload-image {
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.van-uploader__preview {
+  margin: 0 16rpx 16rpx 0;
+}
+
+.upload-img {
+  font-family: PingFangSC-Semibold;
+  font-size: 32rpx;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 46rpx;
+  font-weight: 600;
+}
+
+.upload-tips {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #666666;
+  letter-spacing: 0;
+  font-weight: 400;
 }

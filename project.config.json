@@ -21,7 +21,9 @@
     "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "babelSetting": {
-      "ignore": [],
+      "ignore": [
+        "miniprogram_npm/*"
+      ],
       "disablePlugins": [],
       "outputPath": ""
     },
@@ -36,7 +38,8 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "useStaticServer": true,
-    "ignoreUploadUnusedFiles": true,
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false,
     "compileWorklet": false,
     "localPlugins": false,
     "condition": false,

@@ -1,5 +1,7 @@
 // var base_url = wx.getAccountInfoSync().miniProgram.envVersion == 'develop' ? 'https://ctmstest.xhedc.com' : 'https://ctms.xhedc.com'
 const base_url = 'https://snscore.xhedc.com'
+const token_flag = 'sn-score-token';
+
 /**
  * 请求头
  */
@@ -42,10 +44,9 @@ function put(url, params, isReject = true) {
 function request(url, params, method, isReject = true) {
   let token = getApp().globalData.token ? getApp().globalData.token : wx.getStorageSync('token')
   if (token) {
-    header.Authorization = token;
+    header[token_flag] = token;
   }
   let cookie = getApp().globalData.cookie ? getApp().globalData.cookie : wx.getStorageSync('cookie')
- console.log(cookie, ' cookie')
   if (cookie) {
     header.Cookie = cookie;
   }
@@ -71,17 +72,15 @@ function request(url, params, method, isReject = true) {
             result,
             message
           } = data
-          if (data.code == 4001 || !data) {
-            handleTokenFail()
-          } else if (code === 200 && result) {
-            const token = header.Authorization
+          if (code === 255) {
+            handleTokenFail(message)
+          } else if (code === 200) {
+            const token = header[token_flag]
             if (token) {
               getApp().globalData.token = token
               wx.setStorageSync('token', token)
             }
             resolve(data.data ? data.data : result)
-          } else if (code === 200 && url.indexOf('changePwd') > -1) {
-            resolve(data)
           } else {
             if (isReject) {
               wx.hideLoading()
@@ -91,10 +90,8 @@ function request(url, params, method, isReject = true) {
               })
               reject(message ? message : '请求失败')
             } else {
-              resolve({
-                status: false,
-                data: message ? message : '请求失败'
-              })
+              console.log('message3', message, code, result)
+              resolve({message: message ? message : '请求失败'})
             }
           }
         } else {
@@ -108,12 +105,13 @@ function request(url, params, method, isReject = true) {
           } else {
             resolve({
               status: false,
-              data: "请求异常"
+              message: "请求异常"
             })
           }
         }
       },
       fail: function (error) {
+        console.log('request-error:', error)
         if (isReject) {
           wx.hideLoading()
           wx.showToast({
@@ -140,18 +138,18 @@ function dealParams(params) {
   return params;
 }
 
-function handleTokenFail() {
+function handleTokenFail(message) {
   wx.hideLoading()
   // 清除所有缓存数据
   wx.clearStorageSync()
   wx.showModal({
     title: '提示',
-    content: '当前账号已超时或在异地登录，点击确定跳转到登录界面。',
+    content: message ? message : '当前账号已超时或在异地登录，点击确定跳转到登录界面。',
     showCancel: false,
     confirmText: '确定',
     complete: () => {
       wx.reLaunch({
-        url: '/pages/launcher/index'
+        url: '/pages/login/index'
       });
     }
   })
@@ -164,5 +162,6 @@ module.exports = {
   postRequest: post,
   getRequest: get,
   putRequest: put,
-  baseUrl: base_url
+  baseUrl: base_url,
+  token_flag: token_flag
 }

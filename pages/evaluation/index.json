@@ -2,5 +2,7 @@
   "navigationStyle": "custom",
   "backgroundColor": "#FFFFFF",
   "disableScroll": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "van-uploader": "@vant/weapp/uploader/index"
+  }
 }
