@@ -36,7 +36,7 @@ Page({
 
   watchReport() {
     wx.navigateTo({
-      url: "/pages/report/index?scoreTypeId=" + this.data.scoreTypeId,
+      url: "/pages/report/index?scoreTypeId=" + this.data.scoreTypeId + "&scoreTypeName=" + this.data.scoreTypeName,
     });
   },
 

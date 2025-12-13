@@ -153,7 +153,8 @@ page {
 .pop-icon {
   width: 120rpx;
   height: 120rpx;
-  margin-top: 80rpx;
+  top: 60rpx;
+  position: absolute;
 }
 
 .pop-tips {
@@ -164,6 +165,8 @@ page {
   line-height: 56rpx;
   font-weight: 600;
   margin-top: 50rpx;
+  padding: 40rpx;
+  margin-top: 150rpx;
 }
 
 .pop-sub-text {
@@ -182,7 +185,7 @@ page {
   height: 80rpx;
   background: #01549C;
   border-radius: 56rpx;
-  margin-top: 130rpx;
+  margin-top: 100rpx;
   font-family: PingFangSC-Semibold;
   font-size: 28rpx;
   color: #FFFFFF;
@@ -190,4 +193,5 @@ page {
   text-align: center;
   line-height: 40rpx;
   font-weight: 600;
+  margin-bottom: 40rpx;
 }

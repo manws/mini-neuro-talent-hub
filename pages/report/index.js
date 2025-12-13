@@ -2,12 +2,16 @@
 Page({
   data: {
     level2Data: {},
-    level2DataKeys: []
+    level2DataKeys: [],
+    title: ""
   },
   onLoad(options) {
-    const { scoreTypeId } = options;
+    const { scoreTypeId, scoreTypeName } = options;
     if (scoreTypeId) {
       this.callSingleAllL2(scoreTypeId);
+    }
+    if (scoreTypeName) {
+      this.setData({title: scoreTypeName})
     }
   },
   back() {

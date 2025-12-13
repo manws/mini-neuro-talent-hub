@@ -20,7 +20,7 @@
       <toolbar>
         <view class="flex-style-base toolbar-layout">
           <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
-          <text class="title-text">2024年年终评估</text>
+          <text class="title-text">{{title}}</text>
         </view>
       </toolbar>
     </view>

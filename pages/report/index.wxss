@@ -94,8 +94,8 @@ page {
 
 .report-group-item-layout {
   width: 686rpx;
-  height: 88rpx;
-  padding: 0 24rpx;
+  min-height: 88rpx;
+  padding: 12rpx 24rpx;
   box-sizing: border-box;
   margin-left: 32rpx;
 }

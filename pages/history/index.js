@@ -168,8 +168,9 @@ Page({
   handleClick(e) {
     console.log(e, 'wwww')
     const scoreTypeId = e.currentTarget.dataset.item.scoreTypeId;
+    const scoreTypeName = e.currentTarget.dataset.item.scoreTypeName;
     wx.navigateTo({
-      url: "/pages/report/index?scoreTypeId=" + scoreTypeId,
+      url: "/pages/report/index?scoreTypeId=" + scoreTypeId + "&scoreTypeName=" + scoreTypeName,
     });
   },
 

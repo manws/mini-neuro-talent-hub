@@ -13,7 +13,8 @@
   <swiper current="{{position}}" bindchange="swipterChange" class="swiper-view">
     <swiper-item wx:for="{{scoreList}}" wx:key="index" class="swiper-item-view">
       <view class="flex-style-column" style="height: 100%;">
-        <text class="title">{{index + 1}}. {{item.level2Name}} （{{item.level2Content}}）</text>
+        <text wx:if="{{!!item.level2Content}}" class="title">{{index + 1}}. {{item.level2Name}} 【{{item.level2Content}}】</text>
+        <text wx:if="{{!item.level2Content}}" class="title">{{index + 1}}. {{item.level2Name}}</text>
         <view class="flex-style-base input-layout">
           <input value="{{item.value == '0' ? '' : item.value}}" bindinput="handleInpput" data-data="{{item}}" class="input" type="digit" placeholder="请输入打分" placeholder-style="color:#D9D9D9;" />
         </view>
