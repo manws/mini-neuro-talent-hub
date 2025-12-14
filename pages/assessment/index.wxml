@@ -46,6 +46,13 @@
       <text class="item-score">{{ts05}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
+
+    <view class="item-layout" bindtap="handleClick" data-id="6">
+      <image class="item-icon" src="../../assets/assessment-popup.png"></image>
+      <text class="item-text">评分</text>
+      <text class="item-score">{{ts06}}分</text>
+      <image class="item-arrow-icon" src="../../assets/more.png"></image>
+    </view>
     
     <view class="flex-style-column empty-layout" wx:if="{{state==0 || state==-1}}">
       <image class="empty-image" src="../../assets/no-new-illustration.png"></image>

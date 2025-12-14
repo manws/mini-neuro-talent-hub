@@ -1,0 +1,43 @@
+<view class="flex-style-column container">
+  <view class="flex-style-column header-layout">
+    <view style="width: 100%;">
+      <navbar></navbar>
+      <toolbar>
+        <view class="flex-style-base toolbar-layout">
+          <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
+          <text class="title-text">查看详情</text>
+        </view>
+      </toolbar>
+    </view>
+  </view>
+
+  <view class="flex-style-column" style="height: 100%;margin-top: 48rpx;">
+    <view class="flex-style-base item-layout">
+      <text class="text-label">医疗工作</text>
+      <van-rate value="{{ tsValue01 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange1" />
+    </view>
+
+    <view class="flex-style-base item-layout">
+      <text class="text-label">教学工作</text>
+      <van-rate value="{{ tsValue02 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange2" />
+    </view>
+
+    <view class="flex-style-base item-layout">
+      <text class="text-label">科研工作</text>
+      <van-rate value="{{ tsValue03 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange3" />
+    </view>
+
+    <view class="flex-style-base item-layout">
+      <text class="text-label">人才培养</text>
+      <van-rate value="{{ tsValue04 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange4" />
+    </view>
+
+    <view class="flex-style-base item-layout">
+      <text class="text-label">公益工作</text>
+      <van-rate value="{{ tsValue05 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange5" />
+    </view>
+  </view>
+  <view class="flex-style-base op-group-layout">
+    <text class="flex-style-base op-text" bindtap="submit">提交</text>
+  </view>
+</view>

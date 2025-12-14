@@ -14,7 +14,9 @@
     "pages/history/index",
     "pages/report/index",
     "pages/evaluation/index",
-    "pages/evaluation-result/index"
+    "pages/evaluation-result/index",
+    "pages/evaluation-medical-work/index",
+    "pages/rate/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -10,18 +10,29 @@ Page({
     ts03: null,
     ts04: null,
     ts05: null,
-    tsAll: '',
+    ts06: 0,
+    tsAll: "",
     showPop: false,
-    popTips: '是否进行考核评估？'
+    popTips: "是否进行考核评估？",
   },
   onShow() {
     this.getUserScoreWxLast();
   },
   handleClick(e) {
     const { id } = e.currentTarget.dataset;
-    wx.navigateTo({
-      url: `/pages/evaluation/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
-    });
+    if (id == 1) {
+      wx.navigateTo({
+        url: `/pages/evaluation-medical-work/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
+      });
+    } else if (id == 6) {
+      wx.navigateTo({
+        url: `/pages/rate/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/evaluation/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
+      });
+    }
   },
 
   onSearch() {
@@ -36,7 +47,11 @@ Page({
 
   watchReport() {
     wx.navigateTo({
-      url: "/pages/report/index?scoreTypeId=" + this.data.scoreTypeId + "&scoreTypeName=" + this.data.scoreTypeName,
+      url:
+        "/pages/report/index?scoreTypeId=" +
+        this.data.scoreTypeId +
+        "&scoreTypeName=" +
+        this.data.scoreTypeName,
     });
   },
 
@@ -74,14 +89,14 @@ Page({
           ts03,
           ts04,
           ts05,
-          tsAll: tsAll ? parseFloat(tsAll).toFixed(1) : '',
+          tsAll: tsAll ? parseFloat(tsAll).toFixed(1) : "",
         });
         // 当state=0且scoreTypeId>0时弹出确认框
         if (state === 0 && scoreTypeId > 0) {
           this.setData({
             popTips: `是否进行"${scoreTypeName}"考核评估？`,
-            showPop: true
-          })
+            showPop: true,
+          });
         }
       }
     } catch (err) {
@@ -96,14 +111,14 @@ Page({
   async clickPosition() {
     await this.callUserScoreInsert(this.data.scoreTypeId);
     this.setData({
-      showPop: false
-    })
+      showPop: false,
+    });
   },
 
   clickOverlay() {
     this.setData({
-      showPop: false
-    })
+      showPop: false,
+    });
   },
 
   /**
