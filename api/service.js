@@ -73,6 +73,18 @@ const userScoreRadar = (param = {}) => {
   return postRequest(`/api/v2/UserScore/radar`, param);
 };
 
+const SaveContent = (scoreTypeId, level0Id, param = {}) => {
+  return postRequest(`/api/v2/Content/SaveContent/${scoreTypeId}/${level0Id}`, param);
+};
+
+const contentResult = (scoreTypeId, level0Id, param = {}) => {
+  return postRequest(`/api/v2/Content/contentResult/${scoreTypeId}/${level0Id}`, param);
+};
+
+const contentShow = (userId, scoreTypeId, level0Id, param = {}) => {
+  return postRequest(`/api/v2/Content/contentShow/${userId}/${scoreTypeId}/${level0Id}`, param);
+};
+
 const uploadImage = (scoreTypeId, level0Id, level1Id, level2code, file) => {
   // 验证文件参数
   if (!file || !file.url) {
@@ -178,4 +190,7 @@ module.exports = {
   userScoreRadar,
   uploadImage,
   delImage,
+  SaveContent,
+  contentResult,
+  contentShow
 };

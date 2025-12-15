@@ -21,7 +21,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  async onLoad(options) {
     const { id, scoreTypeId } = options;
     console.log("接收到的参数:", { id, scoreTypeId });
 
@@ -35,7 +35,9 @@ Page({
     this.loadMedicalWorkData();
     
     // 加载本地存储的数据
-    this.loadLocalStorageData();
+    // this.loadLocalStorageData();
+    const { contentResult } = await wx.API.contentResult(scoreTypeId, id)
+    this.loadFormData(contentResult);
   },
 
   /**
@@ -553,11 +555,20 @@ Page({
     console.log("最终提交的数据:", JSON.stringify(finalData, null, 2));
     
     // 保存数据到本地存储
-    this.saveToLocalStorage(finalData);
+    // this.saveToLocalStorage(finalData);
     
     // 这里可以调用API提交数据
-    // const { scoreTypeId, id } = this.data;
+    const { scoreTypeId, id } = this.data;
+    await this.saveContent(scoreTypeId, id, finalData)
     // await this.callUserScoreUpdate(scoreTypeId, id);
+  },
+
+  async saveContent(scoreTypeId, levelId, param) {
+    const { scoreResult } = await wx.API.SaveContent(scoreTypeId, levelId, param)
+    console.log('saveContent', JSON.stringify(scoreResult))
+    wx.redirectTo({
+      url: "/pages/evaluation-result/index?scoreResult=" + scoreResult,
+    });
   },
 
   /**
