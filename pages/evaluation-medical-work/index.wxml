@@ -50,7 +50,7 @@ module.exports.isOptionSelected = isOptionSelected;
                 <view wx:if="{{subItem.subField && subItem.subField.type === 'text' && subItem.showSubFieldDescription}}" class="description-input">
                   <text class="description-label">{{subItem.subField.title}}</text>
                   <textarea 
-                    value="{{formData[subItem.level2Code] && formData[subItem.level2Code].description || ''}}" 
+                    value="{{(formData[subItem.level2Code] && formData[subItem.level2Code].description) || ''}}" 
                     bindinput="handleInput" 
                     data-fieldcode="{{subItem.level2Code}}" 
                     data-datakey="{{subItem.subField.fieldCode}}"
@@ -157,7 +157,7 @@ module.exports.isOptionSelected = isOptionSelected;
                 <view wx:if="{{subItem.showDescription}}" class="description-input">
                   <text class="description-label">{{subItem.descriptionLabel}}</text>
                   <textarea 
-                    value="{{formData[subItem.level2Code] && formData[subItem.level2Code].description || ''}}" 
+                    value="{{(formData[subItem.level2Code] && formData[subItem.level2Code].description) || ''}}" 
                     bindinput="handleInput" 
                     data-fieldcode="{{subItem.level2Code}}" 
                     data-datakey="{{subItem.descDataKey}}"
@@ -188,7 +188,7 @@ module.exports.isOptionSelected = isOptionSelected;
               <view wx:if="{{item.subField && item.subField.type === 'text' && item.showSubFieldDescription}}" class="description-input">
                 <text class="description-label">{{item.subField.title}}</text>
                 <textarea 
-                  value="{{formData[item.level2Code] && formData[item.level2Code].description || ''}}" 
+                  value="{{(formData[item.level2Code] && formData[item.level2Code].description) || ''}}" 
                   bindinput="handleInput" 
                   data-fieldcode="{{item.level2Code}}" 
                   data-datakey="{{item.subField.fieldCode}}"
@@ -269,7 +269,7 @@ module.exports.isOptionSelected = isOptionSelected;
               <view wx:if="{{item.showDescription}}" class="description-input">
                 <text class="description-label">{{item.descriptionLabel}}</text>
                 <textarea 
-                  value="{{formData[item.level2Code] && formData[item.level2Code].description || ''}}" 
+                  value="{{(formData[item.level2Code] && formData[item.level2Code].description) || ''}}" 
                   bindinput="handleInput" 
                   data-fieldcode="{{item.level2Code}}" 
                   data-datakey="{{item.descDataKey}}"

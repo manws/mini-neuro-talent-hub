@@ -526,24 +526,46 @@ Page({
    * 更新依赖项的显示状态
    */
   updateDependentItemsVisibility(fieldcode, selectedValue) {
-    const currentItem = this.data.scoreList[this.data.position];
+    console.log(`更新依赖项显示状态 - fieldcode: ${fieldcode}, selectedValue: ${selectedValue}`);
     
-    // 如果是分组，检查子项的依赖关系
-    if (currentItem.isGroup && currentItem.groupChildren) {
-      currentItem.groupChildren.forEach((subItem, subIndex) => {
-        if (subItem.dependsOn === fieldcode) {
-          const shouldShow = selectedValue === subItem.showWhenValue;
+    // 检查所有页面的依赖关系，而不仅仅是当前页面
+    this.data.scoreList.forEach((item, itemIndex) => {
+      if (item.isGroup && item.groupChildren) {
+        // 处理分组项目的依赖关系
+        item.groupChildren.forEach((subItem, subIndex) => {
+          if (subItem.dependsOn === fieldcode) {
+            const shouldShow = selectedValue === subItem.showWhenValue;
+            console.log(`检查依赖项 ${subItem.fieldCode} - 依赖于 ${fieldcode}, 应该显示: ${shouldShow}`);
+            
+            this.setData({
+              [`scoreList[${itemIndex}].groupChildren[${subIndex}].isVisible`]: shouldShow
+            });
+            
+            // 如果隐藏了依赖项，清空其数据
+            if (!shouldShow) {
+              console.log(`隐藏依赖项 ${subItem.fieldCode}，清空其数据`);
+              this.clearDependentItemData(subItem);
+            }
+          }
+        });
+      } else {
+        // 处理单个项目的依赖关系
+        if (item.dependsOn === fieldcode) {
+          const shouldShow = selectedValue === item.showWhenValue;
+          console.log(`检查依赖项 ${item.fieldCode} - 依赖于 ${fieldcode}, 应该显示: ${shouldShow}`);
+          
           this.setData({
-            [`scoreList[${this.data.position}].groupChildren[${subIndex}].isVisible`]: shouldShow
+            [`scoreList[${itemIndex}].isVisible`]: shouldShow
           });
           
           // 如果隐藏了依赖项，清空其数据
           if (!shouldShow) {
-            this.clearDependentItemData(subItem);
+            console.log(`隐藏依赖项 ${item.fieldCode}，清空其数据`);
+            this.clearDependentItemData(item);
           }
         }
-      });
-    }
+      }
+    });
     
     // 依赖项显示状态改变后，重新检查页面完整性
     this.checkAndUpdatePageCompleteness();
@@ -554,15 +576,18 @@ Page({
    */
   clearDependentItemData(item) {
     const fieldcode = item.fieldCode;
+    console.log(`清空依赖项数据 - fieldcode: ${fieldcode}`);
     
     // 清空formData
     if (this.data.formData[fieldcode]) {
       delete this.data.formData[fieldcode];
+      console.log(`已删除formData[${fieldcode}]`);
     }
     
     // 清空param中的主字段数据
     if (item.dataKey && this.data.param[item.dataKey]) {
       delete this.data.param[item.dataKey];
+      console.log(`已删除param[${item.dataKey}]`);
     }
     
     // 如果有 subField，也要清空 subField 的数据
@@ -570,13 +595,15 @@ Page({
       const subFieldKey = item.subField.fieldCode;
       if (this.data.param[subFieldKey]) {
         delete this.data.param[subFieldKey];
+        console.log(`已删除param[${subFieldKey}]`);
       }
     }
     
-    // 同步更新页面数据
+    // 强制刷新整个formData对象，确保页面数据更新
     this.setData({
-      [`formData.${fieldcode}`]: null
+      formData: this.data.formData
     });
+    console.log(`已刷新formData，当前formData:`, this.data.formData);
   },
 
   /**
@@ -598,16 +625,22 @@ Page({
       this.clearDescriptionData(currentItem, fieldcode);
     }
     
-    // 检查当前项是否有 subField 描述功能（新格式）
-    if (currentItem.subField && currentItem.subField.type === 'text' && currentItem.fieldCode === fieldcode) {
-      const showDescription = this.shouldShowSubFieldDescription(currentItem, selectedValue);
-      this.setData({
-        [`scoreList[${this.data.position}].showSubFieldDescription`]: showDescription
-      });
-      
-      // 如果隐藏描述框，清空描述内容
-      if (!showDescription) {
-        this.clearSubFieldDescriptionData(currentItem, fieldcode);
+    // 检查当前项是否有 subField 功能（新格式）
+    if (currentItem.subField && currentItem.fieldCode === fieldcode) {
+      if (currentItem.subField.type === 'text') {
+        // subField 为 text 类型，处理描述框显隐
+        const showDescription = this.shouldShowSubFieldDescription(currentItem, selectedValue);
+        this.setData({
+          [`scoreList[${this.data.position}].showSubFieldDescription`]: showDescription
+        });
+        
+        // 如果隐藏描述框，清空描述内容
+        if (!showDescription) {
+          this.clearSubFieldDescriptionData(currentItem, fieldcode);
+        }
+      } else {
+        // subField 为其他类型（如 single_choice），需要清空 subField 的值
+        this.clearSubFieldData(currentItem, fieldcode);
       }
     }
     
@@ -627,16 +660,22 @@ Page({
           }
         }
         
-        // 检查新格式的 subField 描述功能
-        if (subItem.fieldCode === fieldcode && subItem.subField && subItem.subField.type === 'text') {
-          const showDescription = this.shouldShowSubFieldDescription(subItem, selectedValue);
-          this.setData({
-            [`scoreList[${this.data.position}].groupChildren[${subIndex}].showSubFieldDescription`]: showDescription
-          });
-          
-          // 如果隐藏描述框，清空描述内容
-          if (!showDescription) {
-            this.clearSubFieldDescriptionData(subItem, fieldcode);
+        // 检查新格式的 subField 功能
+        if (subItem.fieldCode === fieldcode && subItem.subField) {
+          if (subItem.subField.type === 'text') {
+            // subField 为 text 类型，处理描述框显隐
+            const showDescription = this.shouldShowSubFieldDescription(subItem, selectedValue);
+            this.setData({
+              [`scoreList[${this.data.position}].groupChildren[${subIndex}].showSubFieldDescription`]: showDescription
+            });
+            
+            // 如果隐藏描述框，清空描述内容
+            if (!showDescription) {
+              this.clearSubFieldDescriptionData(subItem, fieldcode);
+            }
+          } else {
+            // subField 为其他类型（如 single_choice），需要清空 subField 的值
+            this.clearSubFieldData(subItem, fieldcode);
           }
         }
       });
@@ -667,13 +706,19 @@ Page({
    * 清空 subField 描述相关数据
    */
   clearSubFieldDescriptionData(item, fieldcode) {
+    console.log(`清空subField描述数据 - fieldcode: ${fieldcode}, item:`, item);
+    
     // 清空formData中的描述
     if (this.data.formData[fieldcode]) {
+      // 同时更新 this.data.formData 和页面数据
       this.data.formData[fieldcode].description = '';
-      // 同步更新页面数据
+      
+      // 强制更新页面数据，确保输入框立即清空
       this.setData({
-        [`formData.${fieldcode}.description`]: ''
+        formData: this.data.formData
       });
+      
+      console.log(`已清空formData[${fieldcode}].description`);
     }
     
     // 清空param中的描述数据（subField的描述使用subField的fieldCode作为key）
@@ -681,6 +726,49 @@ Page({
       const subFieldKey = item.subField.fieldCode;
       if (this.data.param[subFieldKey]) {
         delete this.data.param[subFieldKey];
+        console.log(`已清空param[${subFieldKey}]`);
+      }
+    }
+  },
+
+  /**
+   * 清空 subField 相关数据（适用于所有类型的 subField）
+   */
+  clearSubFieldData(item, fieldcode) {
+    console.log(`清空subField数据 - fieldcode: ${fieldcode}, subField类型: ${item.subField?.type}`);
+    
+    if (!item.subField) {
+      return;
+    }
+    
+    // 清空formData中的subField相关数据
+    if (this.data.formData[fieldcode]) {
+      if (item.subField.type === 'single_choice') {
+        // 清空单选值
+        this.data.formData[fieldcode].subSelectedValue = '';
+        console.log(`已清空formData[${fieldcode}].subSelectedValue`);
+      } else if (item.subField.type === 'text') {
+        // 清空文本描述
+        this.data.formData[fieldcode].description = '';
+        console.log(`已清空formData[${fieldcode}].description`);
+      } else if (item.subField.type === 'multiple_choice') {
+        // 清空多选值
+        this.data.formData[fieldcode].subSelectedValues = [];
+        console.log(`已清空formData[${fieldcode}].subSelectedValues`);
+      }
+      
+      // 强制更新页面数据
+      this.setData({
+        formData: this.data.formData
+      });
+    }
+    
+    // 清空param中的subField数据
+    if (item.subField.fieldCode) {
+      const subFieldKey = item.subField.fieldCode;
+      if (this.data.param[subFieldKey]) {
+        delete this.data.param[subFieldKey];
+        console.log(`已清空param[${subFieldKey}]`);
       }
     }
   },
