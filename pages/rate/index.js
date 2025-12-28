@@ -57,8 +57,9 @@ Page({
       scoreTypeId,
     });
 
-    if (scoreTypeId && id) {
-     // this.callSingleL0(scoreTypeId, id);
+    
+    if (scoreTypeId) {
+     this.GetUserScore6(scoreTypeId);
     }
   },
   swipterChange(e) {
@@ -124,36 +125,27 @@ Page({
       })
       return
     }
-    await this.callUserScoreUpdate(scoreTypeId, id);
+    await this.updateUserScore6(scoreTypeId, id);
   },
 
   /**
    * 调用singleL0接口
    */
-  async callSingleL0(scoreTypeId, levelId) {
+  async GetUserScore6(scoreTypeId) {
     try {
-      const res = await wx.API.userScoreSingle0(scoreTypeId, levelId, {});
-      console.log("singleL0接口调用成功:", res);
+      const { userSocreResult6 } = await wx.API.GetUserScore6(scoreTypeId, {});
+      console.log("singleL0接口调用成功:", userSocreResult6);
 
       // 处理返回的数据
-      if (res) {
-        const { scoreResult, scoreList } = res;
+      if (userSocreResult6) {
         // 将数据存储到页面数据中
         this.setData({
-          scoreResult,
-          scoreList,
-          fieldLength: scoreList.length,
+          tsValue01: userSocreResult6.Q1,
+          tsValue02: userSocreResult6.Q2,
+          tsValue03: userSocreResult6.Q3,
+          tsValue04: userSocreResult6.Q4,
+          tsValue05: userSocreResult6.Q5
         });
-        const imgList = scoreList && scoreList.length >0 && scoreList[0].imgList ? scoreList[0].imgList : []
-        const fileList = []
-        imgList.forEach(item => {
-          fileList.push({
-            url: item
-          })
-        })
-        this.setData({
-          fileList: fileList
-        })
       }
     } catch (err) {
       console.error("singleL0接口调用失败:", err);
@@ -167,24 +159,18 @@ Page({
   /**
    * 调用userScoreUpdate接口
    */
-  async callUserScoreUpdate(scoreTypeId, levelId) {
+  async updateUserScore6(scoreTypeId, levelId) {
     try {
-      const param = {};
-      this.data.scoreList.forEach((item) => {
-        if (this.data.param[item.level2Code]) {
-          if (
-            this.data.param.hasOwnProperty(item.level2Code) &&
-            this.data.param
-          ) {
-            param[item.level2Code] = this.data.param[item.level2Code];
-          }
-        } else {
-          param[item.level2Code] = item.value ? item.value : "0";
-        }
-      });
-      const { scoreResult } = await wx.API.userScoreUpdate(
+      const param = {
+        Q1: this.data.tsValue01,
+        Q2: this.data.tsValue02,
+        Q3: this.data.tsValue03,
+        Q4: this.data.tsValue04,
+        Q5: this.data.tsValue05,
+      };
+      
+      const { scoreResult } = await wx.API.updateUserScore6(
         scoreTypeId,
-        levelId,
         param
       );
       wx.redirectTo({

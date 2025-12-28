@@ -20,7 +20,7 @@ Page({
   },
   handleClick(e) {
     const { id } = e.currentTarget.dataset;
-    if (id == 1) {
+    if (id != 6) {
       wx.navigateTo({
         url: `/pages/evaluation-medical-work/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
       });
@@ -77,6 +77,7 @@ Page({
           ts03,
           ts04,
           ts05,
+          ts06,
           tsAll,
         } = res;
         // 可以将数据存储到页面数据中
@@ -89,6 +90,7 @@ Page({
           ts03,
           ts04,
           ts05,
+          ts06,
           tsAll: tsAll ? parseFloat(tsAll).toFixed(1) : "",
         });
         // 当state=0且scoreTypeId>0时弹出确认框
@@ -126,7 +128,7 @@ Page({
    */
   async callUserScoreInsert(scoreTypeId) {
     try {
-      await wx.API.userScoreInsert(scoreTypeId, {});
+      await wx.API.userScoreInit(scoreTypeId, {});
       await this.getUserScoreWxLast();
     } catch (err) {
       await this.getUserScoreWxLast();

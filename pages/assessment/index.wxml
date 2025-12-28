@@ -49,7 +49,7 @@
 
     <view class="item-layout" bindtap="handleClick" data-id="6">
       <image class="item-icon" src="../../assets/assessment-popup.png"></image>
-      <text class="item-text">评分</text>
+      <text class="item-text">自我评估</text>
       <text class="item-score">{{ts06}}分</text>
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>

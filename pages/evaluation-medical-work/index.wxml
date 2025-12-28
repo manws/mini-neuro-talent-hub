@@ -24,17 +24,34 @@
               
               <!-- 单选题 -->
               <view wx:if="{{subItem.type === 'single_choice'}}" class="form-item">
-                <radio-group bindchange="handleRadioChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.dataKey}}" data-radiotype="main">
+                <radio-group bindchange="handleRadioChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.fieldCode}}" data-radiotype="main">
                   <label wx:for="{{subItem.codegroup}}" wx:key="code" wx:for-item="option" class="radio-item">
                     <radio value="{{option.code}}" checked="{{formData[subItem.level2Code] && formData[subItem.level2Code].selectedValue === option.code}}"/>
                     <text class="radio-text">{{option.label}}</text>
                   </label>
                 </radio-group>
+                
+                <!-- 新格式：single_choice + text subField -->
+                <view wx:if="{{subItem.subField && subItem.subField.type === 'text' && subItem.showSubFieldDescription}}" class="description-input">
+                  <text class="description-label">{{subItem.subField.title}}</text>
+                  <textarea 
+                    value="{{formData[subItem.level2Code] && formData[subItem.level2Code].description || ''}}" 
+                    bindinput="handleInput" 
+                    data-fieldcode="{{subItem.level2Code}}" 
+                    data-datakey="{{subItem.subField.fieldCode}}"
+                    data-inputtype="description"
+                    class="textarea" 
+                    placeholder="请输入描述" 
+                    placeholder-style="color:#D9D9D9;"
+                    auto-height="{{true}}"
+                    maxlength="-1"
+                  />
+                </view>
               </view>
 
               <!-- 多选题 -->
               <view wx:if="{{subItem.type === 'multiple_choice'}}" class="form-item">
-                <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.dataKey}}" value="{{formData[subItem.level2Code] && formData[subItem.level2Code].selectedValues || []}}">
+                <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.fieldCode}}" value="{{formData[subItem.level2Code] && formData[subItem.level2Code].selectedValues || []}}">
                   <label wx:for="{{subItem.codegroup}}" wx:key="code" wx:for-item="option" class="checkbox-item">
                     <checkbox value="{{option.code}}"/>
                     <text class="checkbox-text">{{option.label}}</text>
@@ -49,7 +66,7 @@
                     value="{{formData[subItem.level2Code] && formData[subItem.level2Code].value || ''}}" 
                     bindinput="handleInput" 
                     data-fieldcode="{{subItem.level2Code}}" 
-                    data-datakey="{{subItem.dataKey}}"
+                    data-datakey="{{subItem.fieldCode}}"
                     class="input" 
                     type="number" 
                     placeholder="请输入数字" 
@@ -65,13 +82,24 @@
                     value="{{formData[subItem.level2Code] && formData[subItem.level2Code].value}}" 
                     bindinput="handleInput" 
                     data-fieldcode="{{subItem.level2Code}}" 
-                    data-datakey="{{subItem.dataKey}}"
+                    data-datakey="{{subItem.fieldCode}}"
                     class="textarea" 
                     placeholder="请输入内容" 
                     placeholder-style="color:#D9D9D9;"
                     auto-height="{{true}}"
                     maxlength="-1"
                   />
+                </view>
+                
+                <!-- 新格式：text + single_choice subField -->
+                <view wx:if="{{subItem.subField && subItem.subField.type === 'single_choice'}}" class="radio-section">
+                  <text class="radio-title">{{subItem.subField.title}}</text>
+                  <radio-group bindchange="handleRadioChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.subField.fieldCode}}" data-radiotype="sub">
+                    <label wx:for="{{subItem.subField.codegroup}}" wx:key="code" wx:for-item="option" class="radio-item">
+                      <radio value="{{option.code}}" checked="{{formData[subItem.level2Code] && formData[subItem.level2Code].subSelectedValue === option.code}}"/>
+                      <text class="radio-text">{{option.label}}</text>
+                    </label>
+                  </radio-group>
                 </view>
               </view>
 
@@ -134,17 +162,34 @@
           <view wx:if="{{!item.isGroup}}" class="single-item">
             <!-- 单选题 -->
             <view wx:if="{{item.type === 'single_choice'}}" class="form-item">
-              <radio-group bindchange="handleRadioChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.dataKey}}" data-radiotype="main">
+              <radio-group bindchange="handleRadioChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.fieldCode}}" data-radiotype="main">
                 <label wx:for="{{item.codegroup}}" wx:key="code" wx:for-item="option" class="radio-item">
                   <radio value="{{option.code}}" checked="{{formData[item.level2Code] && formData[item.level2Code].selectedValue === option.code}}"/>
                   <text class="radio-text">{{option.label}}</text>
                 </label>
               </radio-group>
+              
+              <!-- 新格式：single_choice + text subField -->
+              <view wx:if="{{item.subField && item.subField.type === 'text' && item.showSubFieldDescription}}" class="description-input">
+                <text class="description-label">{{item.subField.title}}</text>
+                <textarea 
+                  value="{{formData[item.level2Code] && formData[item.level2Code].description || ''}}" 
+                  bindinput="handleInput" 
+                  data-fieldcode="{{item.level2Code}}" 
+                  data-datakey="{{item.subField.fieldCode}}"
+                  data-inputtype="description"
+                  class="textarea" 
+                  placeholder="请输入描述" 
+                  placeholder-style="color:#D9D9D9;"
+                  auto-height="{{true}}"
+                  maxlength="-1"
+                />
+              </view>
             </view>
 
             <!-- 多选题 -->
             <view wx:if="{{item.type === 'multiple_choice'}}" class="form-item">
-              <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.dataKey}}" value="{{formData[item.level2Code] && formData[item.level2Code].selectedValues || []}}">
+              <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.fieldCode}}" value="{{formData[item.level2Code] && formData[item.level2Code].selectedValues || []}}">
                 <label wx:for="{{item.codegroup}}" wx:key="code" wx:for-item="option" class="checkbox-item">
                   <checkbox value="{{option.code}}"/>
                   <text class="checkbox-text">{{option.label}}</text>
@@ -159,7 +204,7 @@
                   value="{{formData[item.level2Code] && formData[item.level2Code].value || ''}}" 
                   bindinput="handleInput" 
                   data-fieldcode="{{item.level2Code}}" 
-                  data-datakey="{{item.dataKey}}"
+                  data-datakey="{{item.fieldCode}}"
                   class="input" 
                   type="number" 
                   placeholder="请输入数字" 
@@ -175,13 +220,24 @@
                   value="{{formData[item.level2Code] && formData[item.level2Code].value}}" 
                   bindinput="handleInput" 
                   data-fieldcode="{{item.level2Code}}" 
-                  data-datakey="{{item.dataKey}}"
+                  data-datakey="{{item.fieldCode}}"
                   class="textarea" 
                   placeholder="请输入内容" 
                   placeholder-style="color:#D9D9D9;"
                   auto-height="{{true}}"
                   maxlength="-1"
                 />
+              </view>
+              
+              <!-- 新格式：text + single_choice subField -->
+              <view wx:if="{{item.subField && item.subField.type === 'single_choice'}}" class="radio-section">
+                <text class="radio-title">{{item.subField.title}}</text>
+                <radio-group bindchange="handleRadioChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.subField.fieldCode}}" data-radiotype="sub">
+                  <label wx:for="{{item.subField.codegroup}}" wx:key="code" wx:for-item="option" class="radio-item">
+                    <radio value="{{option.code}}" checked="{{formData[item.level2Code] && formData[item.level2Code].subSelectedValue === option.code}}"/>
+                    <text class="radio-text">{{option.label}}</text>
+                  </label>
+                </radio-group>
               </view>
             </view>
 

@@ -5,7 +5,8 @@
       "2": "教学工作评估", 
       "3": "科研工作评估",
       "4": "人才培养评估",
-      "5": "公益工作评估"
+      "5": "公益工作评估",
+      "6": "自我评估"
     }
     return level0Map[id]
   }
@@ -34,6 +35,7 @@
         <image wx:if="{{item === '3'}}" class="medical-work-icon" src="../../assets/research-work-assessment.png"></image>
         <image wx:if="{{item === '4'}}" class="medical-work-icon" src="../../assets/talent-training-assessment.png"></image>
         <image wx:if="{{item === '5'}}" class="medical-work-icon" src="../../assets/research-public-welfare-assessment.png"></image>
+        <image wx:if="{{item === '6'}}" class="medical-work-icon" src="../../assets/my_self_-assessment.png"></image>
         <text class="report-label-text">{{ func.getLevel0Name(item) }}</text>
       </view>
       <view wx:for="{{level2Data[item]}}" wx:for-item="level1" wx:key="index">

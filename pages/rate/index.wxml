@@ -5,7 +5,7 @@
       <toolbar>
         <view class="flex-style-base toolbar-layout">
           <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
-          <text class="title-text">查看详情</text>
+          <text class="title-text">自我评估</text>
         </view>
       </toolbar>
     </view>

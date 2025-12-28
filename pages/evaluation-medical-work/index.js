@@ -1,5 +1,11 @@
 // pages/evaluation-medical-work/index.js
-import medicalWorkData from './medical_work.js';
+import generatedMedicalFormData from './generated_medical_work_form.js';
+import generatedTeachingFormData from './generated_teaching_form.js';
+import generatedResearchFormData from './generated_research_form.js';
+import generatedTalentFormData from './generated_talent_form.js';
+import generatedServiceFormData from './generated_service_form.js';
+
+
 
 Page({
   /**
@@ -31,8 +37,17 @@ Page({
       scoreTypeId,
     });
 
-    // 使用medical_work数据而不是调用接口
-    this.loadMedicalWorkData();
+    // 使用generated_form数据
+    const map = {
+      "1": generatedMedicalFormData,
+      "2": generatedTeachingFormData,
+      "3": generatedResearchFormData,
+      "4": generatedTalentFormData,
+      "5": generatedServiceFormData,
+    }
+    const generatedFormData = map[id]
+
+    this.loadGeneratedFormData(generatedFormData);
     
     // 加载本地存储的数据
     // this.loadLocalStorageData();
@@ -41,102 +56,131 @@ Page({
   },
 
   /**
-   * 加载medical_work数据
+   * 加载generated_form数据
    */
-  loadMedicalWorkData() {
-    // 将嵌套的数据结构扁平化为scoreList格式
-    const scoreList = this.flattenMedicalWorkData(medicalWorkData);
+  loadGeneratedFormData(generatedFormData) {
+    // 转换新格式数据为UI组件可用的scoreList格式
+    const scoreList = this.transformGeneratedFormData(generatedFormData);
     
     this.setData({
       scoreList,
       fieldLength: scoreList.length,
     });
     
+    console.log('转换后的scoreList:', scoreList);
+    
     // 初始检查第一页的完整性状态
     this.checkAndUpdatePageCompleteness();
   },
 
   /**
-   * 将medical_work数据扁平化
+   * 转换generated_form数据为UI组件格式
    */
-  flattenMedicalWorkData(data) {
+  transformGeneratedFormData(formData) {
     const result = [];
     
-    data.forEach(item => {
+    formData.forEach((item) => {
       if (item.type === 'group' && item.children) {
-        // 如果是分组，将整个分组作为一个item
-        result.push({
-          ...item,
-          level2Code: item.fieldCode,
-          level2Name: item.title,
-          level2Content: '',
-          value: '',
-          isGroup: true,
-          groupChildren: item.children.map((child, childIndex) => {
-            const baseKey = `${item.fieldCode}_${childIndex + 1}`;
-            
-            // 根据类型生成不同的dataKey
-            let dataKeys = {};
-            
-            if (child.type === 'text_with_radio') {
-              // 文本+单选：Q4_1_1, Q4_1_2
-              dataKeys = {
-                textDataKey: `${baseKey}_1`,
-                radioDataKey: `${baseKey}_2`
-              };
-            } else if (child.type === 'single_choice_with_text') {
-              // 单选+描述：Q7_1_1, Q7_1_2
-              dataKeys = {
-                mainDataKey: `${baseKey}_1`,
-                descDataKey: `${baseKey}_2`
-              };
-            } else {
-              // 其他类型：Q2_1, Q3_1等
-              dataKeys = {
-                dataKey: baseKey
-              };
-            }
-            
-            return {
-              ...child,
-              level2Code: child.fieldCode,
-              level2Name: child.title,
-              value: child.defaultValue || '',
-              isVisible: child.dependsOn ? false : true, // 有依赖关系的默认隐藏
-              ...dataKeys
-            };
-          })
-        });
+        // 处理分组类型
+        result.push(this.createGroupItem(item));
       } else {
-        // 直接添加到结果中
-        let dataKeys = {};
-        
-        if (item.type === 'single_choice_with_text') {
-          // 单个项目的单选+描述：Q8_1, Q8_2
-          dataKeys = {
-            mainDataKey: `${item.fieldCode}_1`,
-            descDataKey: `${item.fieldCode}_2`
-          };
-        } else {
-          // 其他单个项目：Q1, Q9等
-          dataKeys = {
-            dataKey: item.fieldCode
-          };
-        }
-        
-        result.push({
-          ...item,
-          level2Code: item.fieldCode,
-          level2Name: item.title,
-          level2Content: '',
-          value: item.defaultValue || '',
-          isGroup: false,
-          ...dataKeys
-        });
+        // 处理单个字段类型
+        result.push(this.createSingleItem(item));
       }
     });
     
     return result;
+  },
+
+  /**
+   * 创建分组项目
+   */
+  createGroupItem(groupItem) {
+    return {
+      ...groupItem,
+      level2Code: groupItem.fieldCode,
+      level2Name: groupItem.title,
+      level2Content: groupItem.description || '',
+      value: '',
+      isGroup: true,
+      groupChildren: groupItem.children.map((child) => {
+        return this.createFieldItem(child);
+      })
+    };
+  },
+
+  /**
+   * 创建单个项目
+   */
+  createSingleItem(item) {
+    const fieldItem = this.createFieldItem(item);
+    return {
+      ...fieldItem,
+      isGroup: false
+    };
+  },
+
+  /**
+   * 创建字段项目，保持原始结构
+   */
+  createFieldItem(item) {
+    const fieldItem = {
+      ...item,
+      level2Code: item.fieldCode,
+      level2Name: item.title,
+      level2Content: item.description || '',
+      value: item.defaultValue || '',
+      isVisible: this.getFieldVisibility(item),
+      dataKey: item.fieldCode // 直接使用 fieldCode 作为数据键
+    };
+    
+    // 如果有 subField，为其设置正确的数据键和显示状态
+    if (item.subField) {
+      fieldItem.subField = {
+        ...item.subField,
+        // subField 直接使用自己的 fieldCode 作为数据键
+        dataKey: item.subField.fieldCode
+      };
+      
+      // 初始化 subField 描述框的显示状态
+      if (item.type === 'single_choice' && item.subField.type === 'text') {
+        fieldItem.showSubFieldDescription = false; // 默认隐藏，等待选择值来决定
+      }
+    }
+    
+    return fieldItem;
+  },
+
+  /**
+   * 获取字段的初始可见性
+   */
+  getFieldVisibility(item) {
+    // 如果有 dependsOn，则默认隐藏（等待依赖项的值来决定）
+    if (item.dependsOn) {
+      return false;
+    }
+    
+    // 如果是 subField，检查 subField 的依赖关系
+    if (item.subField) {
+      // 如果 subField 有 dependsOn，则 subField 默认隐藏
+      if (item.subField.dependsOn) {
+        // 主字段显示，subField 根据依赖关系显示
+        return true;
+      }
+      
+      // 没有依赖关系的 subField 组合
+      if (item.type === 'text' && item.subField.type === 'single_choice') {
+        // text + single_choice subField: 都应该一直显示
+        return true;
+      }
+      if (item.type === 'single_choice' && item.subField.type === 'text') {
+        // single_choice + text subField: 主选择显示，描述框根据选择值显示
+        return true;
+      }
+    }
+    
+    // 默认显示
+    return true;
   },
   swipterChange(e) {
     const {
@@ -249,7 +293,7 @@ Page({
     if (currentItem.isGroup) {
       // 分组项目验证
       for (let subItem of currentItem.groupChildren) {
-        // 跳过不可见的项目
+        // 1. 如果不可见跳过
         if (subItem.isVisible === false) {
           console.log('跳过不可见项目:', subItem.fieldCode);
           continue;
@@ -265,6 +309,12 @@ Page({
         }
       }
     } else {
+      // 1. 如果不可见跳过
+      if (currentItem.isVisible === false) {
+        console.log('跳过不可见项目:', currentItem.fieldCode);
+        return true;
+      }
+      
       // 单个项目验证
       const fieldCode = currentItem.fieldCode;
       const fieldData = this.data.formData[fieldCode];
@@ -282,26 +332,41 @@ Page({
   isFieldDataComplete(item, fieldData) {
     console.log(`检查字段完整性 - 字段类型: ${item.type}, 字段代码: ${item.fieldCode}`, fieldData);
     
+    // 2. 如果是单选、多选和number必须要有值不能为空
     if (!fieldData) {
       console.log('字段数据为空');
       return false;
     }
     
+    // 处理有 subField 的情况
+    if (item.subField) {
+      return this.validateSubFieldData(item, fieldData);
+    }
+    
+    // 处理普通字段类型
     switch (item.type) {
       case 'single_choice':
+        // 单选题：必须有值
         const singleChoiceComplete = fieldData.selectedValue !== undefined && fieldData.selectedValue !== '';
         console.log(`单选题完整性: ${singleChoiceComplete}, selectedValue: ${fieldData.selectedValue}`);
         return singleChoiceComplete;
         
       case 'multiple_choice':
+        // 多选题：必须有值
         const multipleChoiceComplete = fieldData.selectedValues && fieldData.selectedValues.length > 0;
         console.log(`多选题完整性: ${multipleChoiceComplete}, selectedValues:`, fieldData.selectedValues);
         return multipleChoiceComplete;
         
-      case 'text':
       case 'number':
+        // 数字类型：必须有值
+        const numberComplete = fieldData.value !== undefined && fieldData.value !== '' && fieldData.value !== null;
+        console.log(`数字完整性: ${numberComplete}, value: ${fieldData.value}`);
+        return numberComplete;
+        
+      case 'text':
+        // 文本类型：可以为空，但如果有值就不能是空字符串
         const textComplete = fieldData.value !== undefined && fieldData.value !== '';
-        console.log(`文本/数字完整性: ${textComplete}, value: ${fieldData.value}`);
+        console.log(`文本完整性: ${textComplete}, value: ${fieldData.value}`);
         return textComplete;
         
       case 'text_with_radio':
@@ -335,6 +400,79 @@ Page({
   },
 
   /**
+   * 验证包含 subField 的字段数据
+   */
+  validateSubFieldData(item, fieldData) {
+    const { subField } = item;
+    
+    if (item.type === 'text' && subField.type === 'single_choice') {
+      // text + single_choice subField：两个都需要填写
+      const textComplete = fieldData.value !== undefined && fieldData.value !== '';
+      const radioComplete = fieldData.subSelectedValue !== undefined && fieldData.subSelectedValue !== '';
+      const isComplete = textComplete && radioComplete;
+      console.log(`text+subField完整性: ${isComplete}, text: ${fieldData.value}, radio: ${fieldData.subSelectedValue}`);
+      return isComplete;
+    }
+    
+    if (item.type === 'single_choice' && subField.type === 'text') {
+      // single_choice + text subField：主选择必填（单选必须有值），描述根据选择值判断
+      const mainComplete = fieldData.selectedValue !== undefined && fieldData.selectedValue !== '';
+      console.log(`single_choice+subField - 主选择: ${mainComplete}, selectedValue: ${fieldData.selectedValue}`);
+      
+      if (!mainComplete) {
+        return false;
+      }
+      
+      // 判断是否需要填写描述
+      const needsDescription = this.shouldShowSubFieldDescription(item, fieldData.selectedValue);
+      if (needsDescription) {
+        const descComplete = fieldData.description !== undefined && fieldData.description !== '';
+        console.log(`subField描述完整性: ${descComplete}, description: ${fieldData.description}`);
+        return descComplete;
+      }
+      
+      return true;
+    }
+    
+    if (item.type === 'number' && subField) {
+      // number + subField：数字必须有值
+      const numberComplete = fieldData.value !== undefined && fieldData.value !== '' && fieldData.value !== null;
+      console.log(`number+subField完整性: ${numberComplete}, value: ${fieldData.value}`);
+      
+      // 如果主字段不完整，直接返回false
+      if (!numberComplete) {
+        return false;
+      }
+      
+      // 检查subField（如果是单选类型）
+      if (subField.type === 'single_choice') {
+        const subComplete = fieldData.subSelectedValue !== undefined && fieldData.subSelectedValue !== '';
+        console.log(`number+subField单选完整性: ${subComplete}, subSelectedValue: ${fieldData.subSelectedValue}`);
+        return subComplete;
+      }
+      
+      return true;
+    }
+    
+    // 其他 subField 组合，默认返回 true
+    console.log('未知subField组合，默认返回true');
+    return true;
+  },
+
+  /**
+   * 判断是否应该显示 subField 描述框
+   */
+  shouldShowSubFieldDescription(item, selectedValue) {
+    // 如果 subField 有明确的依赖关系，使用依赖关系判断
+    if (item.subField && item.subField.dependsOn && item.subField.showWhenValue) {
+      return selectedValue === item.subField.showWhenValue;
+    }
+    
+    // 其他情况：选择 "1"（是）时显示描述框
+    return selectedValue === '1';
+  },
+
+  /**
    * 处理输入框输入事件
    */
   handleInput(e) {
@@ -350,7 +488,7 @@ Page({
     
     if (inputtype === 'description') {
       this.data.formData[fieldcode].description = value;
-      // 描述输入使用专门的descDataKey
+      // 描述输入使用专门的dataKey（通常是subField的fieldCode）
       this.data.param[finalKey] = value;
     } else {
       this.data.formData[fieldcode].value = value;
@@ -386,6 +524,7 @@ Page({
       this.updateDependentItemsVisibility(fieldcode, value);
     } else if (radiotype === 'sub') {
       this.data.formData[fieldcode].subSelectedValue = value;
+      // 对于 subField，使用传入的 datakey（通常是 subField.fieldCode）
       this.data.param[finalKey] = value;
     }
     
@@ -431,9 +570,17 @@ Page({
       delete this.data.formData[fieldcode];
     }
     
-    // 清空param中的数据
+    // 清空param中的主字段数据
     if (item.dataKey && this.data.param[item.dataKey]) {
       delete this.data.param[item.dataKey];
+    }
+    
+    // 如果有 subField，也要清空 subField 的数据
+    if (item.subField && item.subField.fieldCode) {
+      const subFieldKey = item.subField.fieldCode;
+      if (this.data.param[subFieldKey]) {
+        delete this.data.param[subFieldKey];
+      }
     }
     
     // 同步更新页面数据
@@ -448,7 +595,7 @@ Page({
   updateDescriptionVisibility(fieldcode, selectedValue) {
     const currentItem = this.data.scoreList[this.data.position];
     
-    // 检查当前项是否有描述功能
+    // 检查当前项是否有描述功能（旧格式）
     if (currentItem.hasDescription && currentItem.descriptionTriggerCode === selectedValue) {
       this.setData({
         [`scoreList[${this.data.position}].showDescription`]: true
@@ -461,9 +608,23 @@ Page({
       this.clearDescriptionData(currentItem, fieldcode);
     }
     
+    // 检查当前项是否有 subField 描述功能（新格式）
+    if (currentItem.subField && currentItem.subField.type === 'text' && currentItem.fieldCode === fieldcode) {
+      const showDescription = this.shouldShowSubFieldDescription(currentItem, selectedValue);
+      this.setData({
+        [`scoreList[${this.data.position}].showSubFieldDescription`]: showDescription
+      });
+      
+      // 如果隐藏描述框，清空描述内容
+      if (!showDescription) {
+        this.clearSubFieldDescriptionData(currentItem, fieldcode);
+      }
+    }
+    
     // 如果是分组，检查子项
     if (currentItem.isGroup && currentItem.groupChildren) {
       currentItem.groupChildren.forEach((subItem, subIndex) => {
+        // 检查旧格式的描述功能
         if (subItem.fieldCode === fieldcode && subItem.hasDescription) {
           const showDescription = selectedValue === subItem.descriptionTriggerCode;
           this.setData({
@@ -473,6 +634,19 @@ Page({
           // 如果隐藏描述框，清空描述内容
           if (!showDescription) {
             this.clearDescriptionData(subItem, fieldcode);
+          }
+        }
+        
+        // 检查新格式的 subField 描述功能
+        if (subItem.fieldCode === fieldcode && subItem.subField && subItem.subField.type === 'text') {
+          const showDescription = this.shouldShowSubFieldDescription(subItem, selectedValue);
+          this.setData({
+            [`scoreList[${this.data.position}].groupChildren[${subIndex}].showSubFieldDescription`]: showDescription
+          });
+          
+          // 如果隐藏描述框，清空描述内容
+          if (!showDescription) {
+            this.clearSubFieldDescriptionData(subItem, fieldcode);
           }
         }
       });
@@ -496,6 +670,28 @@ Page({
     const descKey = item.descDataKey;
     if (descKey && this.data.param[descKey]) {
       delete this.data.param[descKey];
+    }
+  },
+
+  /**
+   * 清空 subField 描述相关数据
+   */
+  clearSubFieldDescriptionData(item, fieldcode) {
+    // 清空formData中的描述
+    if (this.data.formData[fieldcode]) {
+      this.data.formData[fieldcode].description = '';
+      // 同步更新页面数据
+      this.setData({
+        [`formData.${fieldcode}.description`]: ''
+      });
+    }
+    
+    // 清空param中的描述数据（subField的描述使用subField的fieldCode作为key）
+    if (item.subField && item.subField.fieldCode) {
+      const subFieldKey = item.subField.fieldCode;
+      if (this.data.param[subFieldKey]) {
+        delete this.data.param[subFieldKey];
+      }
     }
   },
 
@@ -669,15 +865,113 @@ Page({
   getFinalJsonData() {
     const result = {};
     
-    // 遍历param中的所有数据
-    Object.keys(this.data.param).forEach(key => {
+    // 首先收集所有应该提交的字段
+    const allFields = this.getAllFieldCodes();
+    
+    // 为每个字段设置值
+    allFields.forEach(fieldInfo => {
+      const key = fieldInfo.fieldCode;
       const value = this.data.param[key];
+      
       if (value !== undefined && value !== null && value !== '') {
+        // 有值的情况，直接使用
         result[key] = value;
+      } else {
+        // 空值的情况，根据字段类型设置默认值
+        if (fieldInfo.type === 'number') {
+          // number 类型使用默认值，如果没有默认值则用 null
+          result[key] = fieldInfo.defaultValue !== undefined ? fieldInfo.defaultValue : null;
+        } else if (fieldInfo.type === 'text') {
+          // text 类型使用空字符串
+          result[key] = '';
+        } else {
+          // 其他类型使用 null
+          result[key] = null;
+        }
       }
     });
     
     return result;
+  },
+
+  /**
+   * 获取所有字段的信息（包括主字段和subField）
+   */
+  getAllFieldCodes() {
+    const allFields = [];
+    
+    this.data.scoreList.forEach(item => {
+      if (item.isGroup && item.groupChildren) {
+        // 处理分组项目
+        item.groupChildren.forEach(subItem => {
+          // 添加主字段
+          allFields.push({
+            fieldCode: subItem.fieldCode,
+            type: subItem.type,
+            defaultValue: subItem.defaultValue
+          });
+          
+          // 如果有 subField，也添加
+          if (subItem.subField) {
+            allFields.push({
+              fieldCode: subItem.subField.fieldCode,
+              type: subItem.subField.type,
+              defaultValue: subItem.subField.defaultValue
+            });
+          }
+        });
+      } else {
+        // 处理单个项目
+        // 添加主字段
+        allFields.push({
+          fieldCode: item.fieldCode,
+          type: item.type,
+          defaultValue: item.defaultValue
+        });
+        
+        // 如果有 subField，也添加
+        if (item.subField) {
+          allFields.push({
+            fieldCode: item.subField.fieldCode,
+            type: item.subField.type,
+            defaultValue: item.subField.defaultValue
+          });
+        }
+      }
+    });
+    
+    return allFields;
+  },
+
+  /**
+   * 根据数据键查找对应的字段信息
+   */
+  findFieldInfoByKey(key) {
+    // 遍历所有字段，查找匹配的 fieldCode
+    for (let item of this.data.scoreList) {
+      if (item.isGroup && item.groupChildren) {
+        for (let subItem of item.groupChildren) {
+          // 检查主字段
+          if (subItem.fieldCode === key) {
+            return subItem;
+          }
+          // 检查 subField
+          if (subItem.subField && subItem.subField.fieldCode === key) {
+            return subItem.subField;
+          }
+        }
+      } else {
+        // 检查主字段
+        if (item.fieldCode === key) {
+          return item;
+        }
+        // 检查 subField
+        if (item.subField && item.subField.fieldCode === key) {
+          return item.subField;
+        }
+      }
+    }
+    return null;
   },
 
   /**
@@ -906,20 +1200,51 @@ Page({
     
     console.log(`设置字段数据 - 字段: ${fieldCode}, 类型: ${item.type}`);
     
+    // 处理有 subField 的情况
+    if (item.subField) {
+      if (item.type === 'text' && item.subField.type === 'single_choice') {
+        // text + single_choice subField
+        const textKey = item.fieldCode; // 直接使用 fieldCode
+        const radioKey = item.subField.fieldCode; // subField 使用自己的 fieldCode
+        console.log(`text+subField - textKey: ${textKey}, radioKey: ${radioKey}`);
+        
+        if (flatData[textKey] !== undefined) {
+          formData[fieldCode].value = String(flatData[textKey]);
+        }
+        if (flatData[radioKey] !== undefined) {
+          formData[fieldCode].subSelectedValue = flatData[radioKey];
+        }
+      } else if (item.type === 'single_choice' && item.subField.type === 'text') {
+        // single_choice + text subField
+        const mainKey = item.fieldCode; // 直接使用 fieldCode
+        const descKey = item.subField.fieldCode; // subField 使用自己的 fieldCode
+        console.log(`single_choice+subField - mainKey: ${mainKey}, descKey: ${descKey}`);
+        
+        if (flatData[mainKey] !== undefined) {
+          formData[fieldCode].selectedValue = flatData[mainKey];
+        }
+        if (flatData[descKey] !== undefined) {
+          formData[fieldCode].description = flatData[descKey];
+        }
+      }
+      return; // 有 subField 的情况已处理完毕，直接返回
+    }
+    
+    // 处理普通字段类型
     switch (item.type) {
       case 'single_choice':
-        // 单选题：查找对应的dataKey
-        const singleChoiceKey = item.dataKey;
-        console.log(`单选题 - dataKey: ${singleChoiceKey}, 值: ${flatData[singleChoiceKey]}`);
+        // 单选题：直接使用 fieldCode
+        const singleChoiceKey = item.fieldCode;
+        console.log(`单选题 - fieldCode: ${singleChoiceKey}, 值: ${flatData[singleChoiceKey]}`);
         if (flatData[singleChoiceKey] !== undefined) {
           formData[fieldCode].selectedValue = flatData[singleChoiceKey];
         }
         break;
         
       case 'multiple_choice':
-        // 多选题：将逗号分隔的字符串转为数组
-        const multipleChoiceKey = item.dataKey;
-        console.log(`多选题 - 字段: ${fieldCode}, dataKey: ${multipleChoiceKey}, 原始值: "${flatData[multipleChoiceKey]}", 类型: ${typeof flatData[multipleChoiceKey]}`);
+        // 多选题：直接使用 fieldCode
+        const multipleChoiceKey = item.fieldCode;
+        console.log(`多选题 - 字段: ${fieldCode}, fieldCode: ${multipleChoiceKey}, 原始值: "${flatData[multipleChoiceKey]}", 类型: ${typeof flatData[multipleChoiceKey]}`);
         if (flatData[multipleChoiceKey] !== undefined && flatData[multipleChoiceKey] !== '') {
           const selectedArray = flatData[multipleChoiceKey].split(',');
           formData[fieldCode].selectedValues = selectedArray;
@@ -931,9 +1256,9 @@ Page({
         
       case 'text':
       case 'number':
-        // 文本/数字输入
-        const textKey = item.dataKey;
-        console.log(`文本/数字输入 - 字段: ${fieldCode}, dataKey: ${textKey}, 原始值: ${flatData[textKey]}, 类型: ${typeof flatData[textKey]}`);
+        // 文本/数字输入：直接使用 fieldCode
+        const textKey = item.fieldCode;
+        console.log(`文本/数字输入 - 字段: ${fieldCode}, fieldCode: ${textKey}, 原始值: ${flatData[textKey]}, 类型: ${typeof flatData[textKey]}`);
         if (flatData[textKey] !== undefined) {
           formData[fieldCode].value = String(flatData[textKey]); // 确保转为字符串
           console.log(`设置成功 - formData[${fieldCode}].value = ${formData[fieldCode].value}`);
@@ -941,7 +1266,7 @@ Page({
         break;
         
       case 'text_with_radio':
-        // 文本+单选组合
+        // 文本+单选组合（旧格式）
         const textDataKey = item.textDataKey;
         const radioDataKey = item.radioDataKey;
         console.log(`文本+单选 - textKey: ${textDataKey}, radioKey: ${radioDataKey}`);
@@ -954,7 +1279,7 @@ Page({
         break;
         
       case 'single_choice_with_text':
-        // 单选+描述组合
+        // 单选+描述组合（旧格式）
         const mainDataKey = item.mainDataKey;
         const descDataKey = item.descDataKey;
         console.log(`单选+描述 - mainKey: ${mainDataKey}, descKey: ${descDataKey}`);
@@ -975,10 +1300,11 @@ Page({
     this.data.scoreList.forEach((item, itemIndex) => {
       if (item.isGroup && item.groupChildren) {
         item.groupChildren.forEach((subItem, subIndex) => {
+          // 处理普通字段的依赖关系
           if (subItem.dependsOn) {
             // 查找依赖的字段值
             const dependentFieldData = this.data.formData[subItem.dependsOn];
-            if (dependentFieldData && dependentFieldData.selectedValue) {
+            if (dependentFieldData && dependentFieldData.selectedValue !== undefined) {
               const shouldShow = dependentFieldData.selectedValue === subItem.showWhenValue;
               this.setData({
                 [`scoreList[${itemIndex}].groupChildren[${subIndex}].isVisible`]: shouldShow
@@ -986,10 +1312,22 @@ Page({
             }
           }
           
-          // 更新描述框显示状态
+          // 处理 subField 的依赖关系和描述框显示
+          if (subItem.subField) {
+            const fieldData = this.data.formData[subItem.fieldCode];
+            if (fieldData && fieldData.selectedValue !== undefined) {
+              // 更新 subField 描述框显示状态
+              const shouldShowSubFieldDescription = this.shouldShowSubFieldDescription(subItem, fieldData.selectedValue);
+              this.setData({
+                [`scoreList[${itemIndex}].groupChildren[${subIndex}].showSubFieldDescription`]: shouldShowSubFieldDescription
+              });
+            }
+          }
+          
+          // 更新旧格式描述框显示状态
           if (subItem.hasDescription) {
             const fieldData = this.data.formData[subItem.fieldCode];
-            if (fieldData && fieldData.selectedValue) {
+            if (fieldData && fieldData.selectedValue !== undefined) {
               const shouldShowDescription = fieldData.selectedValue === subItem.descriptionTriggerCode;
               this.setData({
                 [`scoreList[${itemIndex}].groupChildren[${subIndex}].showDescription`]: shouldShowDescription
@@ -998,10 +1336,21 @@ Page({
           }
         });
       } else {
-        // 处理单个项目的描述框显示状态
+        // 处理单个项目的 subField 描述框显示状态
+        if (item.subField) {
+          const fieldData = this.data.formData[item.fieldCode];
+          if (fieldData && fieldData.selectedValue !== undefined) {
+            const shouldShowSubFieldDescription = this.shouldShowSubFieldDescription(item, fieldData.selectedValue);
+            this.setData({
+              [`scoreList[${itemIndex}].showSubFieldDescription`]: shouldShowSubFieldDescription
+            });
+          }
+        }
+        
+        // 处理单个项目的旧格式描述框显示状态
         if (item.hasDescription) {
           const fieldData = this.data.formData[item.fieldCode];
-          if (fieldData && fieldData.selectedValue) {
+          if (fieldData && fieldData.selectedValue !== undefined) {
             const shouldShowDescription = fieldData.selectedValue === item.descriptionTriggerCode;
             this.setData({
               [`scoreList[${itemIndex}].showDescription`]: shouldShowDescription

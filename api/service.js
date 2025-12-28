@@ -36,6 +36,18 @@ const userScoreInsert = (scoreTypeId, param) => {
   return postRequest(`/api/v2/UserScore/Insert/${scoreTypeId}`, param);
 };
 
+/**
+ * 提交用户分数
+ * @param {number} scoreTypeId - 分数类型ID
+ * @param {Object} param - 提交参数
+ * @returns {Promise} 返回请求Promise
+ */
+const userScoreInit = (scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScore/init/${scoreTypeId}`, param);
+};
+
+
+
 const userScoreUpdate = (scoreTypeId, levelId, param) => {
   return postRequest(
     `/api/v2/UserScore/update/${scoreTypeId}/${levelId}`,
@@ -65,6 +77,10 @@ const userScoreSingleAllL1 = (scoreTypeId, param) => {
   return postRequest(`/api/v2/UserScore/singleAllL1/${scoreTypeId}`, param);
 };
 
+const userScoreDetail = (scoreTypeId, param) => {
+  return postRequest(`/api/v2/UserScoreDetail/detail/${scoreTypeId}`, param);
+};
+
 const userScoreSingleAllL2 = (scoreTypeId, param) => {
   return postRequest(`/api/v2/UserScore/singleAllL2/${scoreTypeId}`, param);
 };
@@ -74,15 +90,23 @@ const userScoreRadar = (param = {}) => {
 };
 
 const SaveContent = (scoreTypeId, level0Id, param = {}) => {
-  return postRequest(`/api/v2/Content/SaveContent/${scoreTypeId}/${level0Id}`, param);
+  return postRequest(`/api/v2/ContentResult/updateContentResult/${scoreTypeId}/${level0Id}`, param);
 };
 
 const contentResult = (scoreTypeId, level0Id, param = {}) => {
-  return postRequest(`/api/v2/Content/contentResult/${scoreTypeId}/${level0Id}`, param);
+  return postRequest(`/api/v2/ContentResult/contentResult/${scoreTypeId}/${level0Id}`, param);
 };
 
 const contentShow = (userId, scoreTypeId, level0Id, param = {}) => {
-  return postRequest(`/api/v2/Content/contentShow/${userId}/${scoreTypeId}/${level0Id}`, param);
+  return postRequest(`/api/v2/ContentResult/contentShow/${userId}/${scoreTypeId}/${level0Id}`, param);
+};
+
+const updateUserScore6 = (scoreTypeId, param = {}) => {
+  return postRequest(`/api/v2/UserScore/updateUserScore6/${scoreTypeId}`, param);
+};
+
+const GetUserScore6 = (scoreTypeId, param = {}) => {
+  return postRequest(`/api/v2/UserScore/GetUserScore6/${scoreTypeId}`, param);
 };
 
 const uploadImage = (scoreTypeId, level0Id, level1Id, level2code, file) => {
@@ -181,6 +205,7 @@ module.exports = {
   userScoreWxList,
   userScoreWxLast,
   userScoreInsert,
+  userScoreInit,
   userScoreUpdate,
   userScoreSingle0,
   userScorePage,
@@ -192,5 +217,8 @@ module.exports = {
   delImage,
   SaveContent,
   contentResult,
-  contentShow
+  contentShow,
+  updateUserScore6,
+  GetUserScore6,
+  userScoreDetail
 };
