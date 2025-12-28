@@ -28,6 +28,12 @@ Page({
       5: '公益工作评估',
       6: '自我评估',
     }
+    if (id == 6) {
+      wx.navigateTo({
+        url: `/pages/rate/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
+      });
+      return
+    }
     wx.navigateTo({
       url: `/pages/evaluation-medical-work/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}&scoreTypeName=${map[id]}`,
     });

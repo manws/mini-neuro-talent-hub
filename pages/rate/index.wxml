@@ -13,27 +13,27 @@
 
   <view class="flex-style-column" style="height: 100%;margin-top: 48rpx;">
     <view class="flex-style-base item-layout">
-      <text class="text-label">医疗工作</text>
+      <text class="text-label">医疗工作评估</text>
       <van-rate value="{{ tsValue01 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange1" />
     </view>
 
     <view class="flex-style-base item-layout">
-      <text class="text-label">教学工作</text>
+      <text class="text-label">教学工作评估</text>
       <van-rate value="{{ tsValue02 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange2" />
     </view>
 
     <view class="flex-style-base item-layout">
-      <text class="text-label">科研工作</text>
+      <text class="text-label">科研工作评估</text>
       <van-rate value="{{ tsValue03 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange3" />
     </view>
 
     <view class="flex-style-base item-layout">
-      <text class="text-label">人才培养</text>
+      <text class="text-label">人才培养评估</text>
       <van-rate value="{{ tsValue04 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange4" />
     </view>
 
     <view class="flex-style-base item-layout">
-      <text class="text-label">公益工作</text>
+      <text class="text-label">公益工作评估</text>
       <van-rate value="{{ tsValue05 }}" size="{{ 32 }}" color="#ffd21e" void-icon="star" void-color="#eee" bind:change="onChange5" />
     </view>
   </view>

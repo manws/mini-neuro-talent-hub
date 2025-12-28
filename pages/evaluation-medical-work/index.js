@@ -24,6 +24,7 @@ Page({
     fileList: [],
     formData: {}, // 存储表单数据
     isCurrentPageComplete: false, // 当前页面数据是否完整
+    lastSubmitTime: 0, // 上次提交时间戳
   },
 
   /**
@@ -612,19 +613,6 @@ Page({
   updateDescriptionVisibility(fieldcode, selectedValue) {
     const currentItem = this.data.scoreList[this.data.position];
     
-    // 检查当前项是否有描述功能（旧格式）
-    if (currentItem.hasDescription && currentItem.descriptionTriggerCode === selectedValue) {
-      this.setData({
-        [`scoreList[${this.data.position}].showDescription`]: true
-      });
-    } else if (currentItem.hasDescription) {
-      this.setData({
-        [`scoreList[${this.data.position}].showDescription`]: false
-      });
-      // 清空描述内容
-      this.clearDescriptionData(currentItem, fieldcode);
-    }
-    
     // 检查当前项是否有 subField 功能（新格式）
     if (currentItem.subField && currentItem.fieldCode === fieldcode) {
       if (currentItem.subField.type === 'text') {
@@ -647,19 +635,6 @@ Page({
     // 如果是分组，检查子项
     if (currentItem.isGroup && currentItem.groupChildren) {
       currentItem.groupChildren.forEach((subItem, subIndex) => {
-        // 检查旧格式的描述功能
-        if (subItem.fieldCode === fieldcode && subItem.hasDescription) {
-          const showDescription = selectedValue === subItem.descriptionTriggerCode;
-          this.setData({
-            [`scoreList[${this.data.position}].groupChildren[${subIndex}].showDescription`]: showDescription
-          });
-          
-          // 如果隐藏描述框，清空描述内容
-          if (!showDescription) {
-            this.clearDescriptionData(subItem, fieldcode);
-          }
-        }
-        
         // 检查新格式的 subField 功能
         if (subItem.fieldCode === fieldcode && subItem.subField) {
           if (subItem.subField.type === 'text') {
@@ -685,23 +660,6 @@ Page({
   /**
    * 清空描述相关数据
    */
-  clearDescriptionData(item, fieldcode) {
-    // 清空formData中的描述
-    if (this.data.formData[fieldcode]) {
-      this.data.formData[fieldcode].description = '';
-      // 同步更新页面数据
-      this.setData({
-        [`formData.${fieldcode}.description`]: ''
-      });
-    }
-    
-    // 清空param中的描述数据
-    const descKey = item.descDataKey;
-    if (descKey && this.data.param[descKey]) {
-      delete this.data.param[descKey];
-    }
-  },
-
   /**
    * 清空 subField 描述相关数据
    */
@@ -802,6 +760,13 @@ Page({
    * 提交表单数据
    */
   async submit() {
+    // 防抖：检查距离上次提交是否小于1秒
+    const now = Date.now();
+    if (now - this.data.lastSubmitTime < 1000) {
+      return;
+    }
+    this.data.lastSubmitTime = now;
+
     // 验证当前页面数据完整性
     if (!this.validateCurrentPageData()) {
       return; // 如果验证失败，不允许提交
@@ -813,7 +778,7 @@ Page({
     
     // 这里可以调用API提交数据
     const { scoreTypeId, id } = this.data;
-    await this.saveContent(scoreTypeId, id, finalData)
+    await this.saveContent(scoreTypeId, id, finalData);
     // await this.callUserScoreUpdate(scoreTypeId, id);
   },
 
@@ -1275,17 +1240,6 @@ Page({
               });
             }
           }
-          
-          // 更新旧格式描述框显示状态
-          if (subItem.hasDescription) {
-            const fieldData = this.data.formData[subItem.fieldCode];
-            if (fieldData && fieldData.selectedValue !== undefined) {
-              const shouldShowDescription = fieldData.selectedValue === subItem.descriptionTriggerCode;
-              this.setData({
-                [`scoreList[${itemIndex}].groupChildren[${subIndex}].showDescription`]: shouldShowDescription
-              });
-            }
-          }
         });
       } else {
         // 处理单个项目的 subField 描述框显示状态
@@ -1295,17 +1249,6 @@ Page({
             const shouldShowSubFieldDescription = this.shouldShowSubFieldDescription(item, fieldData.selectedValue);
             this.setData({
               [`scoreList[${itemIndex}].showSubFieldDescription`]: shouldShowSubFieldDescription
-            });
-          }
-        }
-        
-        // 处理单个项目的旧格式描述框显示状态
-        if (item.hasDescription) {
-          const fieldData = this.data.formData[item.fieldCode];
-          if (fieldData && fieldData.selectedValue !== undefined) {
-            const shouldShowDescription = fieldData.selectedValue === item.descriptionTriggerCode;
-            this.setData({
-              [`scoreList[${itemIndex}].showDescription`]: shouldShowDescription
             });
           }
         }

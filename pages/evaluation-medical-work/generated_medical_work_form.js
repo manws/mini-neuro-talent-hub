@@ -596,7 +596,7 @@ export default [
           "description": "",
           "type": "text",
           "dependsOn": "Q12.1",
-          "showWhenValue": "0"
+          "showWhenValue": "1"
         },
         "codegroup": [
           {

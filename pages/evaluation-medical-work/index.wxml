@@ -153,22 +153,7 @@ module.exports.isOptionSelected = isOptionSelected;
                   </label>
                 </radio-group>
                 
-                <!-- 描述输入框 -->
-                <view wx:if="{{subItem.showDescription}}" class="description-input">
-                  <text class="description-label">{{subItem.descriptionLabel}}</text>
-                  <textarea 
-                    value="{{(formData[subItem.level2Code] && formData[subItem.level2Code].description) || ''}}" 
-                    bindinput="handleInput" 
-                    data-fieldcode="{{subItem.level2Code}}" 
-                    data-datakey="{{subItem.descDataKey}}"
-                    data-inputtype="description"
-                    class="textarea" 
-                    placeholder="请输入描述" 
-                    placeholder-style="color:#D9D9D9;"
-                    auto-height="{{true}}"
-                    maxlength="-1"
-                  />
-                </view>
+                <!-- subField 描述输入框 -->
               </view>
             </view>
           </view>
@@ -265,22 +250,7 @@ module.exports.isOptionSelected = isOptionSelected;
                 </label>
               </radio-group>
               
-              <!-- 描述输入框 -->
-              <view wx:if="{{item.showDescription}}" class="description-input">
-                <text class="description-label">{{item.descriptionLabel}}</text>
-                <textarea 
-                  value="{{(formData[item.level2Code] && formData[item.level2Code].description) || ''}}" 
-                  bindinput="handleInput" 
-                  data-fieldcode="{{item.level2Code}}" 
-                  data-datakey="{{item.descDataKey}}"
-                  data-inputtype="description"
-                  class="textarea" 
-                  placeholder="请输入描述" 
-                  placeholder-style="color:#D9D9D9;"
-                  auto-height="{{true}}"
-                  maxlength="-1"
-                />
-              </view>
+              <!-- subField 描述输入框 -->
             </view>
           </view>
 

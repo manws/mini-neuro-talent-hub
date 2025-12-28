@@ -133,18 +133,16 @@ Page({
    */
   async GetUserScore6(scoreTypeId) {
     try {
-      const { userSocreResult6 } = await wx.API.GetUserScore6(scoreTypeId, {});
-      console.log("singleL0接口调用成功:", userSocreResult6);
-
-      // 处理返回的数据
-      if (userSocreResult6) {
+      const { contentResult } = await wx.API.contentResult(scoreTypeId, 6)
+      console.log("singleL0接口调用成功:", contentResult, parseInt(contentResult.Q1));
+      if (contentResult) {
         // 将数据存储到页面数据中
         this.setData({
-          tsValue01: userSocreResult6.Q1,
-          tsValue02: userSocreResult6.Q2,
-          tsValue03: userSocreResult6.Q3,
-          tsValue04: userSocreResult6.Q4,
-          tsValue05: userSocreResult6.Q5
+          tsValue01: parseInt(contentResult.Q1),
+          tsValue02: parseInt(contentResult.Q2),
+          tsValue03: parseInt(contentResult.Q3),
+          tsValue04: parseInt(contentResult.Q4),
+          tsValue05: parseInt(contentResult.Q5)
         });
       }
     } catch (err) {
@@ -168,9 +166,8 @@ Page({
         Q4: this.data.tsValue04,
         Q5: this.data.tsValue05,
       };
-      
-      const { scoreResult } = await wx.API.updateUserScore6(
-        scoreTypeId,
+      const { scoreResult } = await wx.API.SaveContent(
+        scoreTypeId, 6,
         param
       );
       wx.redirectTo({
