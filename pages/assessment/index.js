@@ -20,19 +20,17 @@ Page({
   },
   handleClick(e) {
     const { id } = e.currentTarget.dataset;
-    if (id != 6) {
-      wx.navigateTo({
-        url: `/pages/evaluation-medical-work/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
-      });
-    } else if (id == 6) {
-      wx.navigateTo({
-        url: `/pages/rate/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
-      });
-    } else {
-      wx.navigateTo({
-        url: `/pages/evaluation/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}`,
-      });
+    const map = {
+      1: '医疗工作评估',
+      2: '教学工作评估',
+      3: '科研工作评估',
+      4: '人才培养评估',
+      5: '公益工作评估',
+      6: '自我评估',
     }
+    wx.navigateTo({
+      url: `/pages/evaluation-medical-work/index?id=${id}&scoreTypeId=${this.data.scoreTypeId}&scoreTypeName=${map[id]}`,
+    });
   },
 
   onSearch() {

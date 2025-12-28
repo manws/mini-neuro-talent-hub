@@ -185,14 +185,6 @@ export default [
         "fieldCode": "Q9.1",
         "title": "是否是副主诊和参与带教的住院医师",
         "type": "single_choice",
-        "subField": {
-          "fieldCode": "Q9.2",
-          "title": "完成所在病区的带教相应任务（完成月数）",
-          "type": "number",
-          "defaultValue": "0",
-          "dependsOn": "Q9.1",
-          "showWhenValue": "1"
-        },
         "codegroup": [
           {
             "code": "0",
@@ -203,6 +195,12 @@ export default [
             "label": "是"
           }
         ]
+      },
+      {
+        "fieldCode": "Q9.2",
+        "title": "完成所在病区的带教相应任务（完成月数）",
+        "type": "number",
+        "defaultValue": "0"
       }
     ]
   },
@@ -277,8 +275,6 @@ export default [
         "fieldCode": "Q12.2",
         "title": "是否完成相应工作，且未出现不良事件",
         "type": "single_choice",
-        "dependsOn": "Q12.1",
-        "showWhenValue": "1",
         "codegroup": [
           {
             "code": "0",
@@ -294,9 +290,7 @@ export default [
         "fieldCode": "Q12.3",
         "title": "工作共计多少个月",
         "type": "number",
-        "defaultValue": "0",
-        "dependsOn": "Q12.1",
-        "showWhenValue": "1"
+        "defaultValue": "0"
       }
     ]
   },

@@ -238,7 +238,7 @@ page {
   font-family: PingFangSC-Regular;
   font-size: 30rpx;
   color: #333333;
-  line-height: 44rpx;
+  line-height: 60rpx;
   flex: 1;
 }
 

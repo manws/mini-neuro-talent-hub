@@ -1,3 +1,18 @@
+<wxs module="utils">
+var isOptionSelected = function(formData, fieldCode, optionCode) {
+  if (!formData || !formData[fieldCode]) {
+    return false;
+  }
+  var selectedValues = formData[fieldCode].selectedValues;
+  if (!selectedValues) {
+    return false;
+  }
+  return selectedValues.indexOf(optionCode) !== -1;
+};
+
+module.exports.isOptionSelected = isOptionSelected;
+</wxs>
+
 <view class="flex-style-column container">
   <view class="flex-style-column header-layout">
     <view style="width: 100%;">
@@ -5,7 +20,7 @@
       <toolbar>
         <view class="flex-style-base toolbar-layout">
           <image class="back-icon" image-fit="aspectFit" src="../../assets/arrow-white.png" bind:tap="back"></image>
-          <text class="title-text">医疗工作评估</text>
+          <text class="title-text">{{title}}</text>
         </view>
       </toolbar>
     </view>
@@ -25,7 +40,7 @@
               <!-- 单选题 -->
               <view wx:if="{{subItem.type === 'single_choice'}}" class="form-item">
                 <radio-group bindchange="handleRadioChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.fieldCode}}" data-radiotype="main">
-                  <label wx:for="{{subItem.codegroup}}" wx:key="code" wx:for-item="option" class="radio-item">
+                  <label wx:for="{{subItem.codegroup}}" wx:key="code" wx:for-item="option" class="flex-style-base radio-item">
                     <radio value="{{option.code}}" checked="{{formData[subItem.level2Code] && formData[subItem.level2Code].selectedValue === option.code}}"/>
                     <text class="radio-text">{{option.label}}</text>
                   </label>
@@ -51,9 +66,9 @@
 
               <!-- 多选题 -->
               <view wx:if="{{subItem.type === 'multiple_choice'}}" class="form-item">
-                <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.fieldCode}}" value="{{formData[subItem.level2Code] && formData[subItem.level2Code].selectedValues || []}}">
+                <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{subItem.level2Code}}" data-datakey="{{subItem.fieldCode}}">
                   <label wx:for="{{subItem.codegroup}}" wx:key="code" wx:for-item="option" class="checkbox-item">
-                    <checkbox value="{{option.code}}"/>
+                    <checkbox value="{{option.code}}" checked="{{utils.isOptionSelected(formData, subItem.level2Code, option.code)}}"/>
                     <text class="checkbox-text">{{option.label}}</text>
                   </label>
                 </checkbox-group>
@@ -189,9 +204,9 @@
 
             <!-- 多选题 -->
             <view wx:if="{{item.type === 'multiple_choice'}}" class="form-item">
-              <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.fieldCode}}" value="{{formData[item.level2Code] && formData[item.level2Code].selectedValues || []}}">
+              <checkbox-group bindchange="handleCheckboxChange" data-fieldcode="{{item.level2Code}}" data-datakey="{{item.fieldCode}}">
                 <label wx:for="{{item.codegroup}}" wx:key="code" wx:for-item="option" class="checkbox-item">
-                  <checkbox value="{{option.code}}"/>
+                  <checkbox value="{{option.code}}" checked="{{utils.isOptionSelected(formData, item.level2Code, option.code)}}"/>
                   <text class="checkbox-text">{{option.label}}</text>
                 </label>
               </checkbox-group>

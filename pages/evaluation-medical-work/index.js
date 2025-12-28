@@ -4,6 +4,7 @@ import generatedTeachingFormData from './generated_teaching_form.js';
 import generatedResearchFormData from './generated_research_form.js';
 import generatedTalentFormData from './generated_talent_form.js';
 import generatedServiceFormData from './generated_service_form.js';
+import generatedMySelfFormData from './generated_my_self_form.js';
 
 
 
@@ -12,6 +13,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: '',
     position: 0,
     fieldLength: 0,
     scoreResult: "",
@@ -28,13 +30,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    const { id, scoreTypeId } = options;
+    const { id, scoreTypeId, scoreTypeName } = options;
     console.log("接收到的参数:", { id, scoreTypeId });
 
     // 保存页面参数到data中
     this.setData({
       id,
       scoreTypeId,
+      title: scoreTypeName
     });
 
     // 使用generated_form数据
@@ -44,13 +47,12 @@ Page({
       "3": generatedResearchFormData,
       "4": generatedTalentFormData,
       "5": generatedServiceFormData,
+      "6": generatedMySelfFormData
     }
     const generatedFormData = map[id]
 
     this.loadGeneratedFormData(generatedFormData);
     
-    // 加载本地存储的数据
-    // this.loadLocalStorageData();
     const { contentResult } = await wx.API.contentResult(scoreTypeId, id)
     this.loadFormData(contentResult);
   },
@@ -68,7 +70,7 @@ Page({
     });
     
     console.log('转换后的scoreList:', scoreList);
-    
+
     // 初始检查第一页的完整性状态
     this.checkAndUpdatePageCompleteness();
   },
@@ -332,7 +334,13 @@ Page({
   isFieldDataComplete(item, fieldData) {
     console.log(`检查字段完整性 - 字段类型: ${item.type}, 字段代码: ${item.fieldCode}`, fieldData);
     
-    // 2. 如果是单选、多选和number必须要有值不能为空
+    // 纯文本类型：不需要验证，直接返回true（即使数据为空）
+    if (item.type === 'text') {
+      console.log(`纯文本字段跳过验证: ${item.fieldCode}`);
+      return true;
+    }
+    
+    // 其他类型：如果是单选、多选和number必须要有值不能为空
     if (!fieldData) {
       console.log('字段数据为空');
       return false;
@@ -363,36 +371,6 @@ Page({
         console.log(`数字完整性: ${numberComplete}, value: ${fieldData.value}`);
         return numberComplete;
         
-      case 'text':
-        // 文本类型：可以为空，但如果有值就不能是空字符串
-        const textComplete = fieldData.value !== undefined && fieldData.value !== '';
-        console.log(`文本完整性: ${textComplete}, value: ${fieldData.value}`);
-        return textComplete;
-        
-      case 'text_with_radio':
-        // 文本+单选：两个都需要填写
-        const textWithRadioComplete = (fieldData.value !== undefined && fieldData.value !== '') &&
-               (fieldData.subSelectedValue !== undefined && fieldData.subSelectedValue !== '');
-        console.log(`文本+单选完整性: ${textWithRadioComplete}, value: ${fieldData.value}, subSelectedValue: ${fieldData.subSelectedValue}`);
-        return textWithRadioComplete;
-        
-      case 'single_choice_with_text':
-        // 单选+描述：单选必填，描述根据是否显示来判断
-        const hasMainSelection = fieldData.selectedValue !== undefined && fieldData.selectedValue !== '';
-        console.log(`单选+描述 - 主选择: ${hasMainSelection}, selectedValue: ${fieldData.selectedValue}`);
-        if (!hasMainSelection) {
-          return false;
-        }
-        
-        // 如果显示描述框，则描述也必填
-        if (item.showDescription) {
-          const descComplete = fieldData.description !== undefined && fieldData.description !== '';
-          console.log(`描述框完整性: ${descComplete}, description: ${fieldData.description}`);
-          return descComplete;
-        }
-        
-        return true;
-        
       default:
         console.log('未知字段类型，默认返回true');
         return true;
@@ -406,16 +384,23 @@ Page({
     const { subField } = item;
     
     if (item.type === 'text' && subField.type === 'single_choice') {
-      // text + single_choice subField：两个都需要填写
-      const textComplete = fieldData.value !== undefined && fieldData.value !== '';
+      // text + single_choice subField：文本不验证，只验证单选部分
+      if (!fieldData) {
+        // 如果数据为空，对于text类型直接返回true（不验证）
+        console.log(`text+subField数据为空，跳过验证`);
+        return true;
+      }
       const radioComplete = fieldData.subSelectedValue !== undefined && fieldData.subSelectedValue !== '';
-      const isComplete = textComplete && radioComplete;
-      console.log(`text+subField完整性: ${isComplete}, text: ${fieldData.value}, radio: ${fieldData.subSelectedValue}`);
-      return isComplete;
+      console.log(`text+subField完整性: ${radioComplete}, radio: ${fieldData.subSelectedValue}`);
+      return radioComplete;
     }
     
     if (item.type === 'single_choice' && subField.type === 'text') {
-      // single_choice + text subField：主选择必填（单选必须有值），描述根据选择值判断
+      // single_choice + text subField：主选择必填，描述框如果显示则也必填
+      if (!fieldData) {
+        console.log(`single_choice+subField数据为空`);
+        return false;
+      }
       const mainComplete = fieldData.selectedValue !== undefined && fieldData.selectedValue !== '';
       console.log(`single_choice+subField - 主选择: ${mainComplete}, selectedValue: ${fieldData.selectedValue}`);
       
@@ -423,19 +408,24 @@ Page({
         return false;
       }
       
-      // 判断是否需要填写描述
+      // 判断描述框是否显示，如果显示则需要验证
       const needsDescription = this.shouldShowSubFieldDescription(item, fieldData.selectedValue);
       if (needsDescription) {
         const descComplete = fieldData.description !== undefined && fieldData.description !== '';
-        console.log(`subField描述完整性: ${descComplete}, description: ${fieldData.description}`);
+        console.log(`subField描述框显示且需要验证 - 完整性: ${descComplete}, description: ${fieldData.description}`);
         return descComplete;
       }
       
+      console.log(`subField描述框未显示，跳过描述验证`);
       return true;
     }
     
     if (item.type === 'number' && subField) {
       // number + subField：数字必须有值
+      if (!fieldData) {
+        console.log(`number+subField数据为空`);
+        return false;
+      }
       const numberComplete = fieldData.value !== undefined && fieldData.value !== '' && fieldData.value !== null;
       console.log(`number+subField完整性: ${numberComplete}, value: ${fieldData.value}`);
       
@@ -703,6 +693,7 @@ Page({
    */
   handleCheckboxChange(e) {
     const { value } = e.detail;
+    console.log('handleCheckboxChange', value)
     const { fieldcode, datakey } = e.currentTarget.dataset;
     
     // 使用datakey作为最终数据的key
@@ -718,24 +709,6 @@ Page({
     // 检查并更新页面完整性状态
     this.checkAndUpdatePageCompleteness();
   },
-  debugCurrentPage() {
-    const currentItem = this.data.scoreList[this.data.position];
-    const isComplete = this.checkCurrentPageDataSilently();
-    
-    console.log('=== 调试信息 ===');
-    console.log('当前位置:', this.data.position);
-    console.log('当前项目:', currentItem);
-    console.log('表单数据:', this.data.formData);
-    console.log('参数数据:', this.data.param);
-    console.log('页面完整性:', isComplete);
-    console.log('按钮状态:', this.data.isCurrentPageComplete);
-    
-    wx.showModal({
-      title: '调试信息',
-      content: `页面完整性: ${isComplete}\n按钮状态: ${this.data.isCurrentPageComplete}\n详细信息请查看控制台`,
-      showCancel: false
-    });
-  },
 
   /**
    * 提交表单数据
@@ -750,9 +723,6 @@ Page({
     const finalData = this.getFinalJsonData();
     console.log("最终提交的数据:", JSON.stringify(finalData, null, 2));
     
-    // 保存数据到本地存储
-    // this.saveToLocalStorage(finalData);
-    
     // 这里可以调用API提交数据
     const { scoreTypeId, id } = this.data;
     await this.saveContent(scoreTypeId, id, finalData)
@@ -765,98 +735,6 @@ Page({
     wx.redirectTo({
       url: "/pages/evaluation-result/index?scoreResult=" + scoreResult,
     });
-  },
-
-  /**
-   * 保存数据到本地存储
-   */
-  saveToLocalStorage(data) {
-    try {
-      const { id, scoreTypeId } = this.data;
-      const storageKey = `medical_work_data_${scoreTypeId}_${id}`;
-      
-      const storageData = {
-        formData: data,
-        timestamp: Date.now(),
-        version: '1.0'
-      };
-      
-      wx.setStorageSync(storageKey, storageData);
-      console.log('数据已保存到本地存储:', storageKey, storageData);
-      
-      wx.showToast({
-        title: '数据已保存',
-        icon: 'success',
-        duration: 1500
-      });
-    } catch (error) {
-      console.error('保存到本地存储失败:', error);
-      wx.showToast({
-        title: '保存失败',
-        icon: 'error'
-      });
-    }
-  },
-
-  /**
-   * 从本地存储加载数据
-   */
-  loadLocalStorageData() {
-    try {
-      const { id, scoreTypeId } = this.data;
-      const storageKey = `medical_work_data_${scoreTypeId}_${id}`;
-      
-      const storageData = wx.getStorageSync(storageKey);
-      
-      if (storageData && storageData.formData) {
-        console.log('从本地存储加载数据:', storageData);
-        
-        // 直接加载数据，不显示确认对话框
-        this.loadFormData(storageData.formData);
-      } else {
-        console.log('本地存储中没有找到数据');
-      }
-    } catch (error) {
-      console.error('从本地存储加载数据失败:', error);
-    }
-  },
-
-  /**
-   * 格式化时间戳为可读格式
-   */
-  formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  },
-
-  /**
-   * 清除本地存储数据
-   */
-  clearLocalStorage() {
-    try {
-      const { id, scoreTypeId } = this.data;
-      const storageKey = `medical_work_data_${scoreTypeId}_${id}`;
-      
-      wx.removeStorageSync(storageKey);
-      console.log('本地存储数据已清除:', storageKey);
-      
-      wx.showToast({
-        title: '本地数据已清除',
-        icon: 'success'
-      });
-    } catch (error) {
-      console.error('清除本地存储失败:', error);
-      wx.showToast({
-        title: '清除失败',
-        icon: 'error'
-      });
-    }
   },
 
   /**
@@ -1144,6 +1022,8 @@ Page({
     // 转换扁平化数据为表单内部结构
     const convertedFormData = this.convertFlatDataToFormData(flatData);
     const convertedParam = { ...flatData };
+
+    console.log('convertedFormData', JSON.stringify(convertedFormData))
     
     console.log('转换后的表单数据:', convertedFormData);
     
@@ -1152,7 +1032,7 @@ Page({
       formData: convertedFormData,
       param: convertedParam
     });
-    
+
     // 更新依赖项的显示状态
     this.updateAllDependentItemsVisibility();
     
@@ -1166,9 +1046,11 @@ Page({
    * 将扁平化数据转换为表单内部数据结构
    */
   convertFlatDataToFormData(flatData) {
-    const formData = {};
+    // 基于现有的formData进行更新，而不是创建新的空对象
+    const formData = { ...this.data.formData };
     
     console.log('开始转换数据，scoreList:', this.data.scoreList);
+    console.log('现有formData:', formData);
     
     // 遍历scoreList，为每个字段设置数据
     this.data.scoreList.forEach(item => {
@@ -1187,6 +1069,7 @@ Page({
       }
     });
     
+    console.log('转换完成的formData:', formData);
     return formData;
   },
 
@@ -1208,10 +1091,10 @@ Page({
         const radioKey = item.subField.fieldCode; // subField 使用自己的 fieldCode
         console.log(`text+subField - textKey: ${textKey}, radioKey: ${radioKey}`);
         
-        if (flatData[textKey] !== undefined) {
+        if (flatData[textKey] !== undefined && flatData[textKey] !== null) {
           formData[fieldCode].value = String(flatData[textKey]);
         }
-        if (flatData[radioKey] !== undefined) {
+        if (flatData[radioKey] !== undefined && flatData[radioKey] !== null) {
           formData[fieldCode].subSelectedValue = flatData[radioKey];
         }
       } else if (item.type === 'single_choice' && item.subField.type === 'text') {
@@ -1220,10 +1103,10 @@ Page({
         const descKey = item.subField.fieldCode; // subField 使用自己的 fieldCode
         console.log(`single_choice+subField - mainKey: ${mainKey}, descKey: ${descKey}`);
         
-        if (flatData[mainKey] !== undefined) {
+        if (flatData[mainKey] !== undefined && flatData[mainKey] !== null) {
           formData[fieldCode].selectedValue = flatData[mainKey];
         }
-        if (flatData[descKey] !== undefined) {
+        if (flatData[descKey] !== undefined && flatData[descKey] !== null) {
           formData[fieldCode].description = flatData[descKey];
         }
       }
@@ -1236,7 +1119,7 @@ Page({
         // 单选题：直接使用 fieldCode
         const singleChoiceKey = item.fieldCode;
         console.log(`单选题 - fieldCode: ${singleChoiceKey}, 值: ${flatData[singleChoiceKey]}`);
-        if (flatData[singleChoiceKey] !== undefined) {
+        if (flatData[singleChoiceKey] !== undefined && flatData[singleChoiceKey] !== null) {
           formData[fieldCode].selectedValue = flatData[singleChoiceKey];
         }
         break;
@@ -1244,13 +1127,20 @@ Page({
       case 'multiple_choice':
         // 多选题：直接使用 fieldCode
         const multipleChoiceKey = item.fieldCode;
-        console.log(`多选题 - 字段: ${fieldCode}, fieldCode: ${multipleChoiceKey}, 原始值: "${flatData[multipleChoiceKey]}", 类型: ${typeof flatData[multipleChoiceKey]}`);
-        if (flatData[multipleChoiceKey] !== undefined && flatData[multipleChoiceKey] !== '') {
+        console.log(`多选题处理 - 字段: ${fieldCode}, fieldCode: ${multipleChoiceKey}`);
+        console.log(`原始值: "${flatData[multipleChoiceKey]}", 类型: ${typeof flatData[multipleChoiceKey]}`);
+        console.log(`现有formData[${fieldCode}]:`, formData[fieldCode]);
+        
+        if (flatData[multipleChoiceKey] !== undefined && flatData[multipleChoiceKey] !== '' && flatData[multipleChoiceKey] !== null) {
           const selectedArray = flatData[multipleChoiceKey].split(',');
           formData[fieldCode].selectedValues = selectedArray;
           console.log(`多选题设置成功 - formData[${fieldCode}].selectedValues =`, selectedArray);
         } else {
-          console.log(`多选题数据为空或未定义`);
+          // 如果没有现有数据，确保多选题有默认的空数组
+          if (!formData[fieldCode].selectedValues) {
+            formData[fieldCode].selectedValues = [];
+          }
+          console.log(`多选题数据为空或未定义，保持现有值:`, formData[fieldCode].selectedValues);
         }
         break;
         
@@ -1259,35 +1149,9 @@ Page({
         // 文本/数字输入：直接使用 fieldCode
         const textKey = item.fieldCode;
         console.log(`文本/数字输入 - 字段: ${fieldCode}, fieldCode: ${textKey}, 原始值: ${flatData[textKey]}, 类型: ${typeof flatData[textKey]}`);
-        if (flatData[textKey] !== undefined) {
+        if (flatData[textKey] !== undefined && flatData[textKey] !== null) {
           formData[fieldCode].value = String(flatData[textKey]); // 确保转为字符串
           console.log(`设置成功 - formData[${fieldCode}].value = ${formData[fieldCode].value}`);
-        }
-        break;
-        
-      case 'text_with_radio':
-        // 文本+单选组合（旧格式）
-        const textDataKey = item.textDataKey;
-        const radioDataKey = item.radioDataKey;
-        console.log(`文本+单选 - textKey: ${textDataKey}, radioKey: ${radioDataKey}`);
-        if (flatData[textDataKey] !== undefined) {
-          formData[fieldCode].value = flatData[textDataKey];
-        }
-        if (flatData[radioDataKey] !== undefined) {
-          formData[fieldCode].subSelectedValue = flatData[radioDataKey];
-        }
-        break;
-        
-      case 'single_choice_with_text':
-        // 单选+描述组合（旧格式）
-        const mainDataKey = item.mainDataKey;
-        const descDataKey = item.descDataKey;
-        console.log(`单选+描述 - mainKey: ${mainDataKey}, descKey: ${descDataKey}`);
-        if (flatData[mainDataKey] !== undefined) {
-          formData[fieldCode].selectedValue = flatData[mainDataKey];
-        }
-        if (flatData[descDataKey] !== undefined) {
-          formData[fieldCode].description = flatData[descDataKey];
         }
         break;
     }
