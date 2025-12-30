@@ -54,8 +54,13 @@ Page({
 
     this.loadGeneratedFormData(generatedFormData);
     
-    const { contentResult } = await wx.API.contentResult(scoreTypeId, id)
-    this.loadFormData(contentResult);
+    const res = await wx.API.contentResult(scoreTypeId, id)
+    console.log('WS_LOG', res)
+
+    if (res) {
+      const { contentResult } = res
+      this.loadFormData(contentResult);
+    }
   },
 
   /**

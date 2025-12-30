@@ -10,7 +10,7 @@ Page({
     ts03: null,
     ts04: null,
     ts05: null,
-    ts06: 0,
+    ts06: null,
     tsAll: "",
     showPop: false,
     popTips: "是否进行考核评估？",

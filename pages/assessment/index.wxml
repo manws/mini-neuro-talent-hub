@@ -47,7 +47,7 @@
       <image class="item-arrow-icon" src="../../assets/more.png"></image>
     </view>
 
-    <view class="item-layout" bindtap="handleClick" data-id="6">
+    <view class="item-layout" wx:if="{{ts06 !== null}}" bindtap="handleClick" data-type="ts06" data-id="6">
       <image class="item-icon" src="../../assets/assessment-popup.png"></image>
       <text class="item-text">自我评估</text>
       <text class="item-score">{{ts06}}分</text>
