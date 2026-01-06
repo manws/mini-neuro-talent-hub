@@ -172,6 +172,10 @@ export default [
       {
         "code": "5",
         "label": "本年度无考生者得平均分"
+      },
+      {
+        "code": "6",
+        "label": "以上皆不是"
       }
     ]
   },
@@ -329,6 +333,10 @@ export default [
       {
         "code": "5",
         "label": "本年度无考生者得平均分"
+      },
+      {
+        "code": "6",
+        "label": "以上皆不是"
       }
     ]
   },

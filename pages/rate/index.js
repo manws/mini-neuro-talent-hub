@@ -133,8 +133,11 @@ Page({
    */
   async GetUserScore6(scoreTypeId) {
     try {
-      const { contentResult } = await wx.API.contentResult(scoreTypeId, 6)
-      console.log("singleL0接口调用成功:", contentResult, parseInt(contentResult.Q1));
+      const res = await wx.API.contentResult(scoreTypeId, 6)
+      if (!res) {
+        return
+      }
+      const { contentResult } = res
       if (contentResult) {
         // 将数据存储到页面数据中
         this.setData({
@@ -166,10 +169,15 @@ Page({
         Q4: this.data.tsValue04,
         Q5: this.data.tsValue05,
       };
+      wx.showLoading({
+        title: '请求中...',
+        icon: 'loading'
+      })
       const { scoreResult } = await wx.API.SaveContent(
         scoreTypeId, 6,
         param
       );
+      wx.hideLoading()
       wx.redirectTo({
         url: "/pages/evaluation-result/index?scoreResult=" + scoreResult,
       });

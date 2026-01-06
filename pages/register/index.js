@@ -90,7 +90,7 @@ Page({
 
     if (!this.data.userName) {
       wx.showToast({
-        title: '请输入手机号',
+        title: '请输入账号',
         icon: 'none'
       })
       return
@@ -122,7 +122,7 @@ Page({
 
     if (!isMobile(this.data.userName)) {
       wx.showToast({
-        title: '手机号格式不正确',
+        title: '格式不正确',
         icon: 'none'
       })
       return

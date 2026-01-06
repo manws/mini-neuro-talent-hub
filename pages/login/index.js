@@ -20,7 +20,7 @@ Page({
   async handleLogin() {
     if (!this.data.userName) {
       wx.showToast({
-        title: '请输入手机号',
+        title: '请输入账号',
         icon: 'none'
       })
       return

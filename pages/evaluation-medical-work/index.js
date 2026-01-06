@@ -60,6 +60,9 @@ Page({
     if (res) {
       const { contentResult } = res
       this.loadFormData(contentResult);
+    } else {
+      // 如果没有返回数据，初始化数字类型的默认值
+      this.initializeDefaultValues();
     }
   },
 
@@ -788,8 +791,13 @@ Page({
   },
 
   async saveContent(scoreTypeId, levelId, param) {
+    wx.showLoading({
+      title: '请求中...',
+      icon: 'loading'
+    })
     const { scoreResult } = await wx.API.SaveContent(scoreTypeId, levelId, param)
     console.log('saveContent', JSON.stringify(scoreResult))
+    wx.hideLoading()
     wx.redirectTo({
       url: "/pages/evaluation-result/index?scoreResult=" + scoreResult,
     });
@@ -1098,6 +1106,82 @@ Page({
     this.checkAndUpdatePageCompleteness();
     
     console.log('数据回显完成');
+  },
+
+  /**
+   * 初始化数字类型字段的默认值
+   */
+  initializeDefaultValues() {
+    console.log('开始初始化默认值');
+    
+    const formData = {};
+    const param = {};
+    
+    // 遍历所有字段，为数字类型设置默认值
+    this.data.scoreList.forEach(item => {
+      if (item.isGroup && item.groupChildren) {
+        // 处理分组项目
+        item.groupChildren.forEach(subItem => {
+          this.setDefaultValueForField(formData, param, subItem);
+        });
+      } else {
+        // 处理单个项目
+        this.setDefaultValueForField(formData, param, item);
+      }
+    });
+    
+    // 更新数据
+    this.setData({
+      formData: formData,
+      param: param
+    });
+    
+    // 更新依赖项的显示状态
+    this.updateAllDependentItemsVisibility();
+    
+    // 检查页面完整性
+    this.checkAndUpdatePageCompleteness();
+    
+    console.log('默认值初始化完成:', { formData, param });
+  },
+
+  /**
+   * 为单个字段设置默认值
+   */
+  setDefaultValueForField(formData, param, item) {
+    const fieldCode = item.level2Code || item.fieldCode;
+    
+    // 初始化 formData
+    if (!formData[fieldCode]) {
+      formData[fieldCode] = {};
+    }
+    
+    // 处理有 subField 的情况
+    if (item.subField) {
+      // 主字段
+      if (item.type === 'number' && item.defaultValue !== undefined) {
+        formData[fieldCode].value = item.defaultValue;
+        param[item.fieldCode] = item.defaultValue;
+        console.log(`设置主字段默认值 - ${item.fieldCode}: ${item.defaultValue}`);
+      }
+      
+      // subField
+      if (item.subField.type === 'number' && item.subField.defaultValue !== undefined) {
+        // 根据 subField 类型设置相应的值
+        if (item.type === 'text') {
+          formData[fieldCode].subSelectedValue = item.subField.defaultValue;
+        }
+        param[item.subField.fieldCode] = item.subField.defaultValue;
+        console.log(`设置subField默认值 - ${item.subField.fieldCode}: ${item.subField.defaultValue}`);
+      }
+    } else {
+      // 普通字段
+      if (item.type === 'number' && item.defaultValue !== undefined) {
+        formData[fieldCode].value = item.defaultValue;
+        param[item.fieldCode] = item.defaultValue;
+        console.log(`设置字段默认值 - ${item.fieldCode}: ${item.defaultValue}`);
+      }
+    }
   },
 
   /**
