@@ -606,5 +606,10 @@ export default [
         "label": "是"
       }
     ]
+  },
+  {
+    "fieldCode": "QR",
+    "title": "有关科研工作其他信息补充说明（评分遗漏或者建议皆可）",
+    "type": "text"
   }
 ];

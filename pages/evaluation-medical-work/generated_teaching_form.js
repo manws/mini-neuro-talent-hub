@@ -504,5 +504,11 @@ export default [
         "defaultValue": "0"
       }
     ]
+  },
+  {
+    "fieldCode": "QR",
+    "title": "有关教学工作其他信息补充说明（评分遗漏或者建议皆可）",
+    "description": "",
+    "type": "text"
   }
 ];

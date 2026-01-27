@@ -348,6 +348,18 @@ Page({
       console.log(`纯文本字段跳过验证: ${item.fieldCode}`);
       return true;
     }
+
+    // 如果当前字段有dependsOn，只需要检查依赖的字段不为空就返回true
+    if (item.dependsOn) {
+      const dependentFieldData = this.data.formData[item.dependsOn];
+      const isDependentFieldNotEmpty = dependentFieldData && 
+        dependentFieldData.selectedValue !== undefined && 
+        dependentFieldData.selectedValue !== '' && 
+        dependentFieldData.selectedValue !== null;
+      
+      console.log(`依赖字段检查 - 依赖于: ${item.dependsOn}, 依赖字段数据:`, dependentFieldData, `依赖字段不为空: ${isDependentFieldNotEmpty}`);
+      return isDependentFieldNotEmpty;
+    }
     
     // 其他类型：如果是单选、多选和number必须要有值不能为空
     if (!fieldData) {
@@ -476,7 +488,7 @@ Page({
    */
   handleInput(e) {
     const { value } = e.detail;
-    const { fieldcode, inputtype, datakey } = e.currentTarget.dataset;
+    const { fieldcode, inputtype, datakey, datatype } = e.currentTarget.dataset;
     
     // 使用datakey作为最终数据的key
     const finalKey = datakey || fieldcode;
@@ -491,7 +503,7 @@ Page({
       this.data.param[finalKey] = value;
     } else {
       this.data.formData[fieldcode].value = value;
-      this.data.param[finalKey] = value || "0";
+      this.data.param[finalKey] = value || (datatype === "text" ? "" : "0");
     }
     
     // 检查并更新页面完整性状态
@@ -797,9 +809,25 @@ Page({
     })
     const { scoreResult } = await wx.API.SaveContent(scoreTypeId, levelId, param)
     console.log('saveContent', JSON.stringify(scoreResult))
+    let isGood = '0'
+    if (this.data.id == '1' && scoreResult >= 81) {
+      isGood = '1'
+    }
+    if (this.data.id == '2' && scoreResult >= 36) {
+      isGood = '1'
+    }
+    if (this.data.id == '3' && scoreResult >= 63) {
+      isGood = '1'
+    }
+    if (this.data.id == '4' && scoreResult >= 30) {
+      isGood = '1'
+    }
+    if (this.data.id == '5' && scoreResult >= 30) {
+      isGood = '1'
+    }
     wx.hideLoading()
     wx.redirectTo({
-      url: "/pages/evaluation-result/index?scoreResult=" + scoreResult,
+      url: `/pages/evaluation-result/index?scoreResult=${scoreResult}&isGood=${isGood}`,
     });
   },
 
@@ -826,6 +854,9 @@ Page({
           // number 类型使用默认值，如果没有默认值则用 null
           result[key] = fieldInfo.defaultValue !== undefined ? fieldInfo.defaultValue : null;
         } else if (fieldInfo.type === 'text') {
+          // text 类型使用空字符串
+          result[key] = '';
+        } else if (fieldInfo.type === 'multiple_choice') {
           // text 类型使用空字符串
           result[key] = '';
         } else {

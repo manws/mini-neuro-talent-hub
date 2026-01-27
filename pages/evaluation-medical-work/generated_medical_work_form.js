@@ -614,5 +614,12 @@ export default [
         ]
       }
     ]
+  },
+  {
+    "fieldCode": "QR",
+    "title": "有关医疗工作其他信息补充说明（评分遗漏或者建议皆可）",
+    "description": "",
+    "type": "text",
+    "description": "",
   }
 ]
